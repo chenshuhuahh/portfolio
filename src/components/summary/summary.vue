@@ -1,5 +1,5 @@
 <template>
-  <section class="topBlock" ref="topBlockSec" :style="{backgroundPosition: '50% -'+ getTopBlock() + 'px'}">
+  <section class="topBlock" ref="topBlockSec" :style="{backgroundPosition: '50% -'+ topBlockPosition/2 + 'px'}">
     <div>nihao</div>
   </section>
 </template>
@@ -13,9 +13,11 @@ export default {
   },
   methods: {
     getTopBlock() {
-      this.topBlockPosition = document.documentElement.scrollTop;
-      return this.topBlockPosition;
+      this.topBlockPosition = document.body.scrollTop;
     }
+  },
+  created() {
+    window.addEventListener('scroll', this.getTopBlock);
   }
 };
 </script>
