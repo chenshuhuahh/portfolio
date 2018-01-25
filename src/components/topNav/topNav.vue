@@ -39,10 +39,10 @@ export default {
   ul {
     list-style: none;
   }
-}
-.mainContainer {
-  max-width: 100%;
-  margin: 0 auto;
+  .mainContainer {
+    max-width: 100%;
+    margin: 0 auto;
+  }
 }
 .logo {
   width: 100px;

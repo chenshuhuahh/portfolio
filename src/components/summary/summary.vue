@@ -1,7 +1,16 @@
 <template>
-  <section class="topBlock" ref="topBlockSec" :style="{backgroundPosition: '50% -'+ topBlockPosition/2 + 'px'}">
-    <div>nihao</div>
-  </section>
+  <div>
+    <section class="topBlock" ref="topBlockSec" :style="{backgroundPosition: '50% -'+ topBlockPosition/3 + 'px'}">
+      <div class="mainContainer">
+        <h1>Grow Your Brand,<br/>Get Published.</h1>
+      </div>
+    </section>
+    <section class="smallBlock">
+      <span>今天就开始创建您的免费在线作品展示网站。</span>
+      <div class="button ">立即开始</div>
+    </section>
+    <section class="nicheBlock"></section>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
@@ -32,9 +41,50 @@ export default {
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
-  div {
-    margin-top: 80px;
-    margin-bottom: 0px;
+  .mainContainer {
+    margin-top: 165px;
+    font-family: proxima_nova_rgregular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+    color: #fff;
+    h1 {
+      text-align: center;
+      font-size: 55px;
+      font-weight: 700;
+      line-height: 115%;
+    }
   }
 }
+
+.smallBlock {
+  background-color: #27272b;
+  text-align: center;
+  color: gray;
+  font-family: proxima_novasemibold,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  padding: 12px 20px;
+  span {
+    color: #fff;
+  }
+  .button {
+    display: inline-block;
+    color: #44b2e2;
+    margin: 0 0 0 10px;
+    padding: 6px 12px;
+    border: 1px solid #44b2e2;
+    cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+}
+
+.nicheBlock {
+  background-image: url(bg02.jpg);
+  background-size: cover;
+  background-position: top center;
+  text-align: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 200px;
+}
+
 </style>
