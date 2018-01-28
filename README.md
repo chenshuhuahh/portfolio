@@ -1,6 +1,6 @@
 # portfolio
 
-> graduation project
+> my project
 
 ## Build Setup
 

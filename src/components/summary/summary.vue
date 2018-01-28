@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="topBlock" ref="topBlockSec" :style="{backgroundPositionY: '-' + topBlockPosition/3 + 'px'}">
+    <section class="topBlock" :style="{backgroundPositionY: '-' + topBlockPosition/3 + 'px'}">
       <div class="mainContainer">
         <h1>Grow Your Brand,<br/>Get Published.</h1>
       </div>
@@ -43,12 +43,12 @@ export default {
   position: relative;
   overflow: hidden;
   .mainContainer {
-    margin-top: 165px;
+    margin-top: 185px;
     font-family: proxima_nova_rgregular,'Helvetica Neue',Helvetica,Arial,sans-serif;
     color: #fff;
     h1 {
       text-align: center;
-      font-size: 55px;
+      font-size: 49px;
       font-weight: 700;
       line-height: 115%;
     }
@@ -88,6 +88,12 @@ export default {
 @media (min-width: 768px) {
   .topBlock {
     background-position-x: 50%;
+    .mainContainer {
+      margin-top: 165px;
+      h1 {
+        font-size: 55px;
+      }
+    }
   }
   .smallBlock {
     padding: 12px 20px;

@@ -2,11 +2,18 @@
   <div>
     <nav class="topNav">
       <div class="mainContainer">
+        <div class="foldMenu" @click="toggleMenu">
+          <img src="./hamburger.png" alt="" v-show="!isShowMobileMenu">
+          <i class="el-icon-close" v-show="isShowMobileMenu"></i>
+        </div>
+        <div class="foldActionMenu" @click="toggleActionMenu">
+          <img src="./hamburger.png" alt="" v-show="!isShowMobileActionMenu">
+          <i class="el-icon-close" v-show="isShowMobileActionMenu"></i>
+        </div>
         <div class="logo">logo</div>
         <ul class="actionMenu">
           <li class="signUp"><a href="">Sign Up</a></li>
           <li class="logIn"><a href="">Log In</a></li>
-          <li class="foldMenu" @click="toggleMenu" :class="{active: isShowMobileMenu}"><i class="el-icon-minus"></i></li>
         </ul>
         <ul class="mainMenu">
           <li><a href="" class="active">概述</a></li>
@@ -15,12 +22,20 @@
         </ul>
       </div>
     </nav>
-    <transition name="fold">
+    <transition name="foldLeft">
       <nav class="mobileMenu" v-show="isShowMobileMenu">
         <ul>
           <li><a href="" class="active">概述</a></li>
           <li><a href="">作品栏</a></li>
           <li><a href="">学生/企业</a></li>
+        </ul>
+      </nav>
+    </transition>
+    <transition name="foldRight">
+      <nav class="mobileActionMenu" v-show="isShowMobileActionMenu">
+        <ul>
+          <li><a href="">Sign Up</a></li>
+          <li><a href="">Log In</a></li>
         </ul>
       </nav>
     </transition>
@@ -31,15 +46,16 @@
   export default {
     data () {
       return {
-        isShowMobileMenu: false
+        isShowMobileMenu: false,
+        isShowMobileActionMenu: false
       };
     },
     methods: {
       toggleMenu() {
         this.isShowMobileMenu = !this.isShowMobileMenu;
-        if (this.isShowMobileMenu) {
-          this.$refs.foldMenu.style.color = '#44b2e2';
-        }
+      },
+      toggleActionMenu() {
+        this.isShowMobileActionMenu = !this.isShowMobileActionMenu;
       }
     }
   };
@@ -64,41 +80,37 @@
     .mainContainer {
       max-width: 100%;
       margin: 0 auto;
+      .foldMenu {
+        float: left;
+        margin-left: 20px;
+        img {
+          width: 25px;
+          height: 16px;
+        }
+        i {
+          font-size: 20px;
+          color: #44b2e2;
+        }
+      }
       .logo {
         width: 100px;
         height: 20px;
-        float: left;
-        margin-left: 20px;
         background: #f82d2d;
+        margin: 0 auto;
       }
-      .actionMenu {
+      .foldActionMenu {
         float: right;
-        margin: 0 5px 0 0;
-        li {
-          display: block;
-          float: left;
-          color: gray;
-          text-transform: uppercase;
-          padding: 0 10px;
-          border-left: 1px solid gray;
-          &:first-child {
-            border: none;
-          }
-          &:last-child {
-            display: block;
-          }
-          &.active {
-            color: #44b2e2;
-          }
-          a {
-            text-decoration: none;
-            color: #bebebe;
-          }
+        margin-right: 20px;
+        img {
+          width: 25px;
+          height: 16px;
         }
-        .logIn {
-          padding-left: 7px;
+        i {
+          font-size: 20px;
+          color: #44b2e2;
         }
       }
+      .actionMenu,
       .mainMenu {
         display: none;
       }
@@ -108,21 +120,20 @@
   .mobileMenu {
     z-index: 100;
     width: 132px;
-    height: 100%;
     background-color: #27272b;
     position: fixed;
-    right: -210px;
+    left: 0;
     top: 55px;
-    transform: translate3d(-150%, 0, 0);
-    &.fold-enter-active, &.fold-leave-active {
+    transform: translate3d(0, 0, 0);
+    &.foldLeft-enter-active, &.foldLeft-leave-active {
       transition: all 0.8s;
     }
-    &.fold-enter, &.fold-leave-active{
-      transform: translate3d(0, 0, 0);
+    &.foldLeft-enter, &.foldLeft-leave-active{
+      transform: translate3d(-150%, 0, 0);
     }
     ul {
-      padding: 20px;
-      font-size: 12px;
+      padding: 20px 20px 0;
+      font-size: 14px;
       li {
         display: block;
         padding-bottom: 27px;
@@ -138,21 +149,72 @@
       }
     }
   }
+  .mobileActionMenu {
+    z-index: 100;
+    width: 132px;
+    background-color: #27272b;
+    position: fixed;
+    right: -210px;
+    top: 55px;
+    transform: translate3d(-150%, 0, 0);
+    &.foldRight-enter-active, &.foldRight-leave-active {
+      transition: all 0.8s;
+    }
+    &.foldRight-enter, &.foldRight-leave-active{
+      transform: translate3d(0, 0, 0);
+    }
+    ul {
+      padding: 20px 20px 0;
+      font-size: 15px;
+      li {
+        display: block;
+        padding-bottom: 27px;
+        a {
+          text-decoration: none;
+          color: #bebebe;
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
 
   @media (min-width: 768px) {
     .topNav {
       .mainContainer {
+        .foldMenu {
+          display: none;
+        }
+        .logo {
+          float: left;
+          margin-left: 20px;
+        }
+        .foldActionMenu {
+          display: none;
+        }
         .actionMenu {
-          margin: 0 20px 0 0;
+          display: block;
+          float: right;
+          margin: 0 5px 0 0;
           li {
-            &:last-child {
-              display: none;
+            display: block;
+            float: left;
+            color: gray;
+            text-transform: uppercase;
+            padding: 0 10px;
+            border-left: 1px solid gray;
+            &:first-child {
+              border: none;
+            }
+            &.active {
+              color: #44b2e2;
             }
             a {
-              &:hover {
-                color: #44b2e2;
-              }
+              text-decoration: none;
+              color: #bebebe;
             }
+          }
+          .logIn {
+            padding-left: 7px;
           }
         }
         .mainMenu {
