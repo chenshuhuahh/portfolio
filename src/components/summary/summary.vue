@@ -1,64 +1,33 @@
 <template>
   <div>
-    <section class="topBlock" :style="{backgroundPositionY: '-' + topBlockPosition/3 + 'px'}">
-      <div class="mainContainer">
-        <h1>Grow Your Brand,<br/>Get Published.</h1>
-      </div>
-    </section>
+    <top-block></top-block>
     <section class="smallBlock">
       <span>今天就开始创建您的免费在线作品展示网站。</span>
       <div class="button">立即开始</div>
     </section>
-    <section class="nicheBlock"></section>
+    <niche-block></niche-block>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import topBlock from './topBlock/topBlock';
+import nicheBlock from './nicheBlock/nicheBlock';
 export default {
   data() {
-    return {
-      topBlockPosition: 0
-    };
+    return {};
   },
-  methods: {
-    getTopBlock() {
-      this.topBlockPosition = document.body.scrollTop;
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.getTopBlock);
+  components: {
+    topBlock,
+    nicheBlock
   }
 };
 </script>
 
 <style lang="scss" type="text/scss">
-.topBlock {
-  margin-top: 50px;
-  height: 640px;
-  background-image: url(bg01.jpg);
-  background-position-x: 60%;
-  background-position-y: bottom;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  position: relative;
-  overflow: hidden;
-  .mainContainer {
-    margin-top: 185px;
-    font-family: proxima_nova_rgregular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-    color: #fff;
-    h1 {
-      text-align: center;
-      font-size: 49px;
-      font-weight: 700;
-      line-height: 115%;
-    }
-  }
-}
 .smallBlock {
   background-color: #27272b;
   text-align: center;
   color: gray;
-  font-family: proxima_novasemibold,'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-size: 14px;
   padding: 20px;
   span {
@@ -76,25 +45,8 @@ export default {
     border-radius: 3px;
   }
 }
-.nicheBlock {
-  background-image: url(bg02.jpg);
-  background-size: cover;
-  background-position: top center;
-  text-align: center;
-  padding: 0 20px;
-  height: 200px;
-}
 
 @media (min-width: 768px) {
-  .topBlock {
-    background-position-x: 50%;
-    .mainContainer {
-      margin-top: 165px;
-      h1 {
-        font-size: 55px;
-      }
-    }
-  }
   .smallBlock {
     padding: 12px 20px;
     .button {
@@ -102,5 +54,4 @@ export default {
     }
   }
 }
-
 </style>

@@ -1,18 +1,16 @@
 <template>
   <div id="app">
     <topNav></topNav>
-    <summary-section></summary-section>
+    <router-view></router-view>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import topNav from './components/topNav/topNav';
-import summarySection from './components/summary/summary';
 export default {
   name: 'App',
   components: {
-    topNav,
-    summarySection
+    topNav
   }
 };
 </script>

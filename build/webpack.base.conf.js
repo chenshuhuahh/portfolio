@@ -59,11 +59,11 @@ module.exports = {
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
-      {
-        test: /.scss$/,  //正则，匹配到的文件的后缀名
-        loaders: ['style-loader', 'css-loader', 'sass-loader'],  //匹配处理到的文件
-        exclude: "/node_modules/"   //排除的文件夹
-      },
+      // {
+      //   test: /.scss$/,  //正则，匹配到的文件的后缀名
+      //   loaders: ['style-loader', 'css-loader', 'sass-loader'],  //匹配处理到的文件
+      //   exclude: "/node_modules/"   //排除的文件夹
+      // },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',

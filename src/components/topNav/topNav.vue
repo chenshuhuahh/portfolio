@@ -12,11 +12,11 @@
         </div>
         <div class="logo">logo</div>
         <ul class="actionMenu">
-          <li class="signUp"><a href="">Sign Up</a></li>
+          <li class="signUp"><router-link to="/signUp">Sign Up</router-link></li>
           <li class="logIn"><a href="">Log In</a></li>
         </ul>
         <ul class="mainMenu">
-          <li><a href="" class="active">概述</a></li>
+          <li><router-link to="/summary">概述</router-link></li>
           <li><a href="">作品栏</a></li>
           <li><a href="">学生/企业</a></li>
         </ul>
@@ -25,7 +25,7 @@
     <transition name="foldLeft">
       <nav class="mobileMenu" v-show="isShowMobileMenu">
         <ul>
-          <li><a href="" class="active">概述</a></li>
+          <li @click="toggleMenu"><router-link to="/summary">概述</router-link></li>
           <li><a href="">作品栏</a></li>
           <li><a href="">学生/企业</a></li>
         </ul>
@@ -34,7 +34,7 @@
     <transition name="foldRight">
       <nav class="mobileActionMenu" v-show="isShowMobileActionMenu">
         <ul>
-          <li><a href="">Sign Up</a></li>
+          <li @click="toggleActionMenu"><router-link to="/signUp">Sign Up</router-link></li>
           <li><a href="">Log In</a></li>
         </ul>
       </nav>
@@ -53,9 +53,15 @@
     methods: {
       toggleMenu() {
         this.isShowMobileMenu = !this.isShowMobileMenu;
+        if (this.isShowMobileActionMenu) {
+          this.isShowMobileActionMenu = false;
+        }
       },
       toggleActionMenu() {
         this.isShowMobileActionMenu = !this.isShowMobileActionMenu;
+        if (this.isShowMobileMenu) {
+          this.isShowMobileMenu = false;
+        }
       }
     }
   };
@@ -137,7 +143,7 @@
       li {
         display: block;
         padding-bottom: 27px;
-        a {
+        & a {
           text-decoration: none;
           color: gray;
           padding-bottom: 5px;
@@ -169,10 +175,13 @@
       li {
         display: block;
         padding-bottom: 27px;
-        a {
+        & a {
           text-decoration: none;
           color: #bebebe;
           padding-bottom: 5px;
+          &.active {
+            color: #44b2e2;
+          }
         }
       }
     }
@@ -205,12 +214,12 @@
             &:first-child {
               border: none;
             }
-            &.active {
-              color: #44b2e2;
-            }
-            a {
+            & a {
               text-decoration: none;
               color: #bebebe;
+              &.active {
+                color: #44b2e2;
+              }
             }
           }
           .logIn {
@@ -225,7 +234,7 @@
             display: inline;
             padding-right: 27px;
             text-transform: uppercase;
-            a {
+            & a {
               text-decoration: none;
               color: gray;
               padding-bottom: 6px;
