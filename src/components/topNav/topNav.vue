@@ -17,7 +17,7 @@
         </ul>
         <ul class="mainMenu">
           <li><router-link to="/summary">概述</router-link></li>
-          <li><a href="">作品栏</a></li>
+          <li><router-link to="/workShow">作品栏</router-link></li>
           <li><a href="">学生/企业</a></li>
         </ul>
       </div>
@@ -26,7 +26,7 @@
       <nav class="mobileMenu" v-show="isShowMobileMenu">
         <ul>
           <li @click="toggleMenu"><router-link to="/summary">概述</router-link></li>
-          <li @click="toggleMenu"><a href="">作品栏</a></li>
+          <li @click="toggleMenu"><router-link to="/workShow">作品栏</router-link></li>
           <li @click="toggleMenu"><a href="">学生/企业</a></li>
         </ul>
       </nav>

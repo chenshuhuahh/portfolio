@@ -4,8 +4,8 @@
       <div class="mainContainer">
         <h1>Grow Your Brand,<br/>Get Published.</h1>
         <div class="buttonGroup">
-          <div class="buttonG viewButton">立即欣赏</div>
-          <div class="buttonG startButton">开始使用</div>
+          <div class="buttonG viewButton"><router-link to="/workShow">立即欣赏</router-link></div>
+          <div class="buttonG startButton"><router-link to="/signUp">开始使用</router-link></div>
         </div>
       </div>
       <div class="plexus" :style="{marginTop: topBlockPosition/5 + 'px'}"></div>
@@ -65,6 +65,9 @@
           -webkit-border-radius: 3px;
           -moz-border-radius: 3px;
           border-radius: 3px;
+          a {
+            color: #fff;
+          }
         }
         .viewButton {
           border: 2px solid #fff;
@@ -73,7 +76,6 @@
         .startButton {
           width: 152px;
           background: #44b2e2;
-          color: #fff;
           border: 2px solid #47bbed;
         }
       }

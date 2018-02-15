@@ -3,7 +3,7 @@
     <top-block></top-block>
     <section class="smallBlock">
       <span>今天就开始创建您的免费在线作品展示网站。</span>
-      <div class="button">立即开始</div>
+      <div class="button"><router-link to="/signUp">立即开始</router-link></div>
     </section>
     <niche-block></niche-block>
   </div>
@@ -35,7 +35,6 @@ export default {
   }
   .button {
     display: inline-block;
-    color: #44b2e2;
     margin-top: 10px;
     padding: 6px 12px;
     border: 1px solid #44b2e2;
@@ -43,6 +42,9 @@ export default {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    a {
+      color: #44b2e2;
+    }
   }
 }
 

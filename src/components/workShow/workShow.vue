@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <p>hello</p>
   </div>
 </template>
 
@@ -13,5 +13,7 @@
 </script>
 
 <style lang="scss" type="text/scss">
-
+p {
+  margin-top: 200px;
+}
 </style>

@@ -9,6 +9,7 @@ import signUp from './components/signUp/signUp.vue';
 import logIn from './components/logIn/logIn.vue';
 import studentSignUp from './components/signUp/studentSignUp/studentSignUp.vue';
 import companySignUp from './components/signUp/companySignUp/companySignUp.vue';
+import workShow from './components/workShow/workShow.vue';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
@@ -40,6 +41,10 @@ const routes = [
   {
     path: '/signUp/company',
     component: companySignUp
+  },
+  {
+    path: '/workShow',
+    component: workShow
   }
 ];
 

@@ -2,42 +2,48 @@
   <div class="companySignUp">
     <h1>Company Sign Up</h1>
     <div class="companySignUpSection">
-      <el-form ref="signUpForm" :model="signUpForm" label-width="80px">
+      <el-form ref="companycompanySignUpForm" :model="companySignUpForm" label-width="80px">
         <el-form-item label="公司名称">
-          <el-input id="cName" v-model="signUpForm.cName" placeholder="请输入公司名称"></el-input>
+          <el-input id="cName" v-model="companySignUpForm.cName" placeholder="请输入公司名称"></el-input>
         </el-form-item>
         <el-form-item label="公司地址">
-          <el-select v-model="signUpForm.province" clearable filterable placeholder="省" size="10px">
+          <el-select v-model="companySignUpForm.province" clearable filterable placeholder="省" size="10px">
             <el-option
-              v-for="item in signUpForm.grades"
+              v-for="item in companySignUpForm.grades"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
           </el-select>
-          <el-select v-model="signUpForm.city" class="cAddressSelect" clearable filterable placeholder="市" size="10px">
+          <el-select v-model="companySignUpForm.city" class="cAddressSelect" clearable filterable placeholder="市" size="10px">
             <el-option
-              v-for="item in signUpForm.grades"
+              v-for="item in companySignUpForm.grades"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
           </el-select>
-          <el-select v-model="signUpForm.town" class="cAddressSelect" clearable filterable placeholder="区/镇" size="10px">
+          <el-select v-model="companySignUpForm.town" class="cAddressSelect" clearable filterable placeholder="区/镇" size="10px">
             <el-option
-              v-for="item in signUpForm.grades"
+              v-for="item in companySignUpForm.grades"
               :key="item.value"
               :label="item.label"
               :value="item.value">
             </el-option>
           </el-select>
-          <el-input id="cAddress" class="cAddress" v-model="signUpForm.cAddress" placeholder="请输入详细地址"></el-input>
+          <el-input id="cAddress" class="cAddress" v-model="companySignUpForm.cAddress" placeholder="请输入详细地址"></el-input>
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input id="cPhone" v-model="signUpForm.cPhone" placeholder="请输入联系电话"></el-input>
+          <el-input id="cPhone" v-model="companySignUpForm.cPhone" placeholder="请输入联系电话"></el-input>
         </el-form-item>
         <el-form-item label="联系邮箱">
-          <el-input id="cEMail" v-model="signUpForm.cEMail" placeholder="请输入联系邮箱"></el-input>
+          <el-input id="cEMail" v-model="companySignUpForm.cEMail" placeholder="请输入联系邮箱"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input id="cPassword" v-model="companySignUpForm.cPassword" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码">
+          <el-input id="cPasswordAgain" v-model="companySignUpForm.cPasswordAgain" placeholder="请再次确认密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" class="registry">立即注册</el-button>
@@ -52,7 +58,7 @@
   export default {
     data () {
       return {
-        signUpForm: {
+        companySignUpForm: {
           cName: '',
           grades: [{
             value: '选项1',
@@ -144,6 +150,7 @@
         margin: auto;
         padding-top: 20px;
         padding-bottom: 10px;
+        margin-bottom: 80px;
         -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.4);
         -moz-box-shadow: 0 2px 5px rgba(0,0,0,.4);
         box-shadow: 0 2px 5px rgba(0,0,0,.4);
