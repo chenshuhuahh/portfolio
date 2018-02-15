@@ -44,7 +44,6 @@
     overflow: hidden;
     .mainContainer {
       margin-top: 185px;
-      font-family: proxima_nova_rgregular, 'Helvetica Neue', Helvetica, Arial, sans-serif;
       color: #fff;
       h1 {
         text-align: center;

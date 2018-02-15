@@ -13,7 +13,7 @@
         <div class="logo">logo</div>
         <ul class="actionMenu">
           <li class="signUp"><router-link to="/signUp">Sign Up</router-link></li>
-          <li class="logIn"><a href="">Log In</a></li>
+          <li class="logIn"><router-link to="/logIn">Log In</router-link></li>
         </ul>
         <ul class="mainMenu">
           <li><router-link to="/summary">概述</router-link></li>
@@ -26,8 +26,8 @@
       <nav class="mobileMenu" v-show="isShowMobileMenu">
         <ul>
           <li @click="toggleMenu"><router-link to="/summary">概述</router-link></li>
-          <li><a href="">作品栏</a></li>
-          <li><a href="">学生/企业</a></li>
+          <li @click="toggleMenu"><a href="">作品栏</a></li>
+          <li @click="toggleMenu"><a href="">学生/企业</a></li>
         </ul>
       </nav>
     </transition>
@@ -35,7 +35,7 @@
       <nav class="mobileActionMenu" v-show="isShowMobileActionMenu">
         <ul>
           <li @click="toggleActionMenu"><router-link to="/signUp">Sign Up</router-link></li>
-          <li><a href="">Log In</a></li>
+          <li @click="toggleActionMenu"><router-link to="/logIn">Log In</router-link>></li>
         </ul>
       </nav>
     </transition>
@@ -126,7 +126,7 @@
   .mobileMenu {
     z-index: 100;
     width: 132px;
-    background-color: #27272b;
+    background-color: rgba(0,0,0,0.8);
     position: fixed;
     left: 0;
     top: 55px;
@@ -158,7 +158,7 @@
   .mobileActionMenu {
     z-index: 100;
     width: 132px;
-    background-color: #27272b;
+    background-color: rgba(0,0,0,0.8);
     position: fixed;
     right: -210px;
     top: 55px;

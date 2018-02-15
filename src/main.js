@@ -6,8 +6,12 @@ import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
 import summary from './components/summary/summary.vue';
 import signUp from './components/signUp/signUp.vue';
+import logIn from './components/logIn/logIn.vue';
+import studentSignUp from './components/signUp/studentSignUp/studentSignUp.vue';
+import companySignUp from './components/signUp/companySignUp/companySignUp.vue';
 
 import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/display.css';
 import './common/styles/index.scss';
 
 Vue.use(VueRouter);
@@ -24,6 +28,18 @@ const routes = [
   {
     path: '/signUp',
     component: signUp
+  },
+  {
+    path: '/logIn',
+    component: logIn
+  },
+  {
+    path: '/signUp/student',
+    component: studentSignUp
+  },
+  {
+    path: '/signUp/company',
+    component: companySignUp
   }
 ];
 
@@ -43,4 +59,4 @@ new Vue({
 });
 
 // 编程式导航
-router.push({path: 'summary'});
+router.push({path: '/summary'});
