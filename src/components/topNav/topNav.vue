@@ -3,11 +3,11 @@
     <nav class="topNav">
       <div class="mainContainer">
         <div class="foldMenu" @click="toggleMenu">
-          <img src="./hamburger.png" alt="" v-show="!isShowMobileMenu">
+          <i class="el-icon-more" v-show="!isShowMobileMenu"></i>
           <i class="el-icon-close" v-show="isShowMobileMenu"></i>
         </div>
         <div class="foldActionMenu" @click="toggleActionMenu">
-          <img src="./hamburger.png" alt="" v-show="!isShowMobileActionMenu">
+          <i class="icon-reddit" v-show="!isShowMobileActionMenu"></i>
           <i class="el-icon-close" v-show="isShowMobileActionMenu"></i>
         </div>
         <div class="logo">logo</div>
@@ -94,8 +94,10 @@
           height: 16px;
         }
         i {
-          font-size: 20px;
-          color: #44b2e2;
+          font-size: 25px;
+          &:last-child {
+            color: #44b2e2;
+          }
         }
       }
       .logo {
@@ -112,8 +114,10 @@
           height: 16px;
         }
         i {
-          font-size: 20px;
-          color: #44b2e2;
+          font-size: 25px;
+          &:last-child {
+            color: #44b2e2;
+          }
         }
       }
       .actionMenu,

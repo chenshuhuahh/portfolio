@@ -1,5 +1,5 @@
 <template>
-  <div class="logIn">
+  <div class="logInSection">
     <h1>Log In</h1>
     <div class="studentLogInSection">
       <el-form ref="studentLogInForm" :model="studentLogInForm" label-width="40px">
@@ -63,15 +63,17 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  body {
+  .logInSection {
     background-image: url(bg03.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-  }
-
-  .logIn {
+    position:fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     text-align: center;
     color: #fff;
     h1 {
@@ -114,7 +116,7 @@
   }
 
   @media (min-width: 768px) {
-    .logIn {
+    .logInSection {
       h1 {
         padding-top: 135px;
         font-size: 35px;

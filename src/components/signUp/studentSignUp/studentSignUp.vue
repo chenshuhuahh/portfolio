@@ -81,14 +81,17 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  body {
+  .studentSignUp {
     background-image: url(../bg03.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
-  }
-  .studentSignUp {
+    position:fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     text-align: center;
     color: #fff;
     h1 {
