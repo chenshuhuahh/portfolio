@@ -31,11 +31,8 @@
           <p>more</p>
         </div>
         <div class="itemContainer">
-          <div class="imageContainer">
-            <img src="./6.jpg" alt="">
-          </div>
-          <div class="imageContainer">
-            <img src="./9.jpg" alt="">
+          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+            <photoCard :item="item"></photoCard>
           </div>
         </div>
       </section>
@@ -45,11 +42,8 @@
           <p>more</p>
         </div>
         <div class="itemContainer">
-          <div class="imageContainer">
-            <img src="./6.jpg" alt="">
-          </div>
-          <div class="imageContainer">
-            <img src="./9.jpg" alt="">
+          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+            <photoCard :item="item"></photoCard>
           </div>
         </div>
       </section>
@@ -75,11 +69,6 @@
         <div class="itemContainer">
           <div class="imageContainer">
             <img src="./6.jpg" alt="">
-            <div class="introduction">
-              <h3 class="studentName">雷神索尔</h3>
-              <span class="workTitle">卡通恶搞造型</span>
-              <div class="iconLink"><a href="#"><i class="el-icon-view"></i></a></div>
-            </div>
           </div>
           <div class="imageContainer">
             <img src="./9.jpg" alt="">
@@ -91,27 +80,42 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import photoCard from './photoCard.vue';
   export default {
     data() {
       return {
-        isCollapse: true
+        isCollapse: true,
+        photoIntroduction: [
+          {
+            id: 1,
+            imgSrc: './static/img/6.jpg',
+            workTitle: '卡通恶搞造型',
+            studentName: '雷神索尔'
+          },
+          {
+            id: 2,
+            imgSrc: './static/img/9.jpg',
+            workTitle: '卡通恶搞造型',
+            studentName: '雷神索尔'
+          }
+        ]
       };
+    },
+    components: {
+      photoCard
     }
   };
 </script>
 
 <style lang="scss" type="text/scss">
-  body {
-    background-color: #fff;
-  }
   .workShowSection {
     margin-top: 62px;
     .selectMenu {
       position: fixed;
+      z-index: 999;
       .el-menu-vertical:not(.el-menu--collapse) {
         width: 170px;
         min-height: 235px;
-        z-index: 999;
         .el-menu-item {
           span {
             margin-left: 5px;
@@ -141,74 +145,8 @@
           }
         }
         .itemContainer {
-          .imageContainer {
-            height: 250px;
-            margin: 10px 5px;
+          .itemCard {
             display: inline-block;
-            -webkit-box-shadow: 0 2px 13px 1px rgba(0,0,0,.25);
-            -moz-box-shadow: 0 2px 13px 1px rgba(0,0,0,.25);
-            box-shadow: 0 2px 13px 1px rgba(0,0,0,.25);
-            text-align: center;
-            overflow: hidden;
-            position: relative;
-            &:before {
-              content: "";
-              width: 0;
-              height: 100%;
-              background: #000;
-              padding: 14px 18px;
-              position: absolute;
-              top: 0;
-              left: 50%;
-              opacity: 0;
-              transition: all 500ms cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
-            }
-            &:hover:before {
-              width: 100%;
-              left: 0;
-              opacity: 0.5;
-            }
-            img {
-              margin: auto;
-              height: auto;
-              max-height: 100%;
-              border-radius: 4px;
-            }
-            .introduction {
-              width: 100%;
-              padding: 14px 18px;
-              color: #fff;
-              position: absolute;
-              top: 38%;
-              left: 0;
-              .studentName {
-                font-size: 25px;
-                font-weight: 600;
-                line-height: 30px;
-                text-transform: uppercase;
-                margin: 0;
-                opacity: 0;
-                transition: all 0.5s ease 0s;
-              }
-              .workTitle{
-                font-size: 15px;
-                text-transform: capitalize;
-                opacity: 0;
-                transition: all 0.5s ease 0s;
-              }
-              .iconLink {
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
-                border-radius: 50%;
-                background: #f74e55;
-                font-size: 20px;
-                font-weight: 700;
-                color: #fff;
-                margin-right: 5px;
-                opacity: 0;
-              }
-            }
           }
         }
       }
