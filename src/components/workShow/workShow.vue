@@ -6,26 +6,34 @@
         <el-radio-button :label="true" v-show="!isCollapse"><i class="el-icon-arrow-up"></i></el-radio-button>
       </el-radio-group>
       <el-menu class="el-menu-vertical" :collapse="isCollapse">
-        <el-menu-item index="1">
-          <i class="icon-camera"></i>
-          <span slot="title">小摄影师</span>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <i class="icon-ruler"></i>
-          <span slot="title">小设计师</span>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <i class="icon-pen"></i>
-          <span slot="title">小作家</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="icon-coder"></i>
-          <span slot="title">小程序员</span>
-        </el-menu-item>
+        <a href="#photos">
+          <el-menu-item index="1">
+              <i class="icon-camera"></i>
+              <span slot="title">小摄影师</span>
+          </el-menu-item>
+        </a>
+        <a href="#designs">
+          <el-menu-item index="2">
+            <i class="icon-ruler"></i>
+            <span slot="title">小设计师</span>
+          </el-menu-item>
+        </a>
+        <a href="#articles">
+          <el-menu-item index="3">
+            <i class="icon-pen"></i>
+            <span slot="title">小作家</span>
+          </el-menu-item>
+        </a>
+        <a href="#programs">
+          <el-menu-item index="4">
+            <i class="icon-coder"></i>
+            <span slot="title">小程序员</span>
+          </el-menu-item>
+        </a>
       </el-menu>
     </div>
     <div class="workMain">
-      <section class="photos">
+      <section class="photos" id="photos">
         <div class="text">
           <h4>摄影作品</h4>
           <p>more</p>
@@ -36,7 +44,7 @@
           </div>
         </div>
       </section>
-      <section class="designer">
+      <section class="designs" id="designs">
         <div class="text">
           <h4>设计作品</h4>
           <p>more</p>
@@ -47,31 +55,25 @@
           </div>
         </div>
       </section>
-      <section class="articles">
+      <section class="articles" id="articles">
         <div class="text">
           <h4>文章作品</h4>
           <p>more</p>
         </div>
         <div class="itemContainer">
-          <div class="imageContainer">
-            <img src="./6.jpg" alt="">
-          </div>
-          <div class="imageContainer">
-            <img src="./9.jpg" alt="">
+          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+            <photoCard :item="item"></photoCard>
           </div>
         </div>
       </section>
-      <section class="coder">
+      <section class="programs" id="programs">
         <div class="text">
           <h4>程序作品</h4>
           <p>more</p>
         </div>
         <div class="itemContainer">
-          <div class="imageContainer">
-            <img src="./6.jpg" alt="">
-          </div>
-          <div class="imageContainer">
-            <img src="./9.jpg" alt="">
+          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+            <photoCard :item="item"></photoCard>
           </div>
         </div>
       </section>
