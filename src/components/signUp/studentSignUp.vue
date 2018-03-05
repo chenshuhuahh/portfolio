@@ -83,7 +83,7 @@
 
 <style lang="scss" type="text/scss">
   .studentSignUp {
-    background-image: url(../bg03.jpg);
+    background-image: url(bg03.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

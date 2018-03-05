@@ -1,40 +1,31 @@
 <template>
   <div class="studentContainer">
-    <div class="leftBox">
-      <div class="info">
-        <div class="portrait"></div>
-        <div class="studentInfo"></div>
-      </div>
-      <div class="menu"></div>
-    </div>
-    <div class="contentBox"></div>
+    <stuLeftBox></stuLeftBox>
+    <stuContentBox></stuContentBox>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import stuLeftBox from './stuLeftBox';
+  import stuContentBox from './stuContentBox';
   export default {
     data () {
       return {};
+    },
+    components: {
+      stuLeftBox,
+      stuContentBox
     }
   };
 </script>
 
 <style lang="scss" type="text/scss">
   .studentContainer {
+    position: relative;
     width: 100%;
-    height: 500px;
+    height: 100%;
+    padding-top: 100px;
     background-color: #f1f1f1;
     text-align: center;
-    .leftBox {
-      margin: auto;
-      padding-top: 150px;
-      .info {
-        background: #fff;
-        width: 300px;
-        height: 180px;
-        text-align: left;
-      }
-
-    }
   }
 </style>

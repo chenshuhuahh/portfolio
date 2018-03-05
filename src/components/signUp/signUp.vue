@@ -31,9 +31,6 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  body {
-
-  }
   .signUpSection {
     background-image: url(bg03.jpg);
     background-size: cover;
