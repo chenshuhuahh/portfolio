@@ -33,7 +33,6 @@
 
 <style lang="scss" type="text/scss">
   .topBlock {
-    margin-top: 50px;
     height: 640px;
     background-image: url(bg01.jpg);
     background-position-x: 60%;
@@ -43,7 +42,7 @@
     position: relative;
     overflow: hidden;
     .mainContainer {
-      margin-top: 185px;
+      margin-top: 198px;
       color: #fff;
       h1 {
         text-align: center;
@@ -91,7 +90,7 @@
     .topBlock {
       background-position-x: 50%;
       .mainContainer {
-        margin-top: 165px;
+        margin-top: 205px;
         h1 {
           font-size: 55px;
         }

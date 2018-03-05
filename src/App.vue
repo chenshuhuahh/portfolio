@@ -16,9 +16,14 @@ export default {
 </script>
 
 <style lang="scss" type="text/css">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .el-cascader-menus {
+    .is-active {
+      color: #fff !important;
+    }
+  }
 </style>

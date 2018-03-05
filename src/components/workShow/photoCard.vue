@@ -29,7 +29,7 @@
 <style lang="scss" type="text/scss">
   .imageContainer {
     height: 250px;
-    margin: 10px 5px;
+    margin: 30px 5px;
     display: inline-block;
     -webkit-box-shadow: 0 2px 13px 1px rgba(0, 0, 0, .25);
     -moz-box-shadow: 0 2px 13px 1px rgba(0, 0, 0, .25);
@@ -117,4 +117,5 @@
       }
     }
   }
+
 </style>

@@ -7,31 +7,11 @@
           <el-input id="cName" v-model="companySignUpForm.cName" placeholder="请输入公司名称"></el-input>
         </el-form-item>
         <el-form-item label="公司地址">
-          <el-select v-model="companySignUpForm.province" clearable filterable placeholder="省" size="10px">
-            <el-option
-              v-for="item in companySignUpForm.grades"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-select v-model="companySignUpForm.city" class="cAddressSelect" clearable filterable placeholder="市" size="10px">
-            <el-option
-              v-for="item in companySignUpForm.grades"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-select v-model="companySignUpForm.town" class="cAddressSelect" clearable filterable placeholder="区/镇" size="10px">
-            <el-option
-              v-for="item in companySignUpForm.grades"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-input id="cAddress" class="cAddress" v-model="companySignUpForm.cAddress" placeholder="请输入详细地址"></el-input>
+          <area-cascader :level='1' v-model="companySignUpForm.province" placeholder="请选择省市区"></area-cascader>
+          <el-input id="cAddress" class="cAddress" v-model="companySignUpForm.cAddress" placeholder="请输入街道地址"></el-input>
+        </el-form-item>
+        <el-form-item label="法定人">
+          <el-input id="cBoss" class="cBoss" v-model="companySignUpForm.cBoss" placeholder="请输入公司法定人姓名"></el-input>
         </el-form-item>
         <el-form-item label="联系电话">
           <el-input id="cPhone" v-model="companySignUpForm.cPhone" placeholder="请输入联系电话"></el-input>
@@ -44,6 +24,17 @@
         </el-form-item>
         <el-form-item label="确认密码">
           <el-input id="cPasswordAgain" v-model="companySignUpForm.cPasswordAgain" placeholder="请再次确认密码"></el-input>
+        </el-form-item>
+        <el-form-item label="营业执照">
+          <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit" class="registry">立即注册</el-button>
@@ -59,6 +50,7 @@
   export default {
     data () {
       return {
+        imageUrl: '',
         companySignUpForm: {
           cName: '',
           grades: [{
@@ -78,8 +70,12 @@
           city: '',
           town: '',
           cAddress: '',
+          cBoss: '',
           cPhone: '',
-          cEMail: ''
+          cEMail: '',
+          cPassword: '',
+          cPasswordAgain: '',
+          cLicence: ''
         }
       };
     },
@@ -89,7 +85,23 @@
       },
       goLogIn() {
         this.$router.push({path: '/logIn'});
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
+
     }
   };
 </script>
@@ -114,7 +126,7 @@
     }
     .companySignUpSection {
       text-align: left;
-      padding: 0 30px;
+      padding: 0 30px 0 15px;
       .el-form-item__label {
         color: #fff;
       }
@@ -135,6 +147,29 @@
           color: #fff;
         }
       }
+      .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+      }
+      .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 250px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+      }
+      .avatar {
+        width: 250px;
+        height: 178px;
+        display: block;
+      }
     }
     .transparentBox {
       width: 100%;
@@ -151,8 +186,7 @@
       .companySignUpSection {
         width: 600px;
         margin: auto;
-        padding-top: 20px;
-        padding-bottom: 10px;
+        padding: 20px 30px 10px 20px;
         margin-bottom: 80px;
         -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.4);
         -moz-box-shadow: 0 2px 5px rgba(0,0,0,.4);

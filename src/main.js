@@ -4,12 +4,14 @@ import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
+import VueAreaLinkage from 'vue-area-linkage';
 import summary from './components/summary/summary.vue';
 import signUp from './components/signUp/signUp.vue';
 import logIn from './components/logIn/logIn.vue';
 import studentSignUp from './components/signUp/studentSignUp/studentSignUp.vue';
 import companySignUp from './components/signUp/companySignUp/companySignUp.vue';
 import workShow from './components/workShow/workShow.vue';
+import student from './components/student/student.vue';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
@@ -17,6 +19,7 @@ import './common/styles/index.scss';
 
 Vue.use(VueRouter);
 Vue.use(ElementUI);
+Vue.use(VueAreaLinkage);
 
 Vue.config.productionTip = false;
 
@@ -45,6 +48,10 @@ const routes = [
   {
     path: '/workShow',
     component: workShow
+  },
+  {
+    path: '/student',
+    component: student
   }
 ];
 

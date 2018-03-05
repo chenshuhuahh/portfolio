@@ -52,7 +52,7 @@
       font-size: 31px;
       font-weight: 400;
       line-height: 115%;
-      padding-top: 135px;
+      padding-top: 180px;
       letter-spacing: 0.7px;
       margin-bottom: 55px;
     }

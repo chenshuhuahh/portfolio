@@ -2,21 +2,11 @@
   <div>
     <section class="nicheBlock">
       <div class="niches clearfix">
-        <div class="block">
-          <img src="./photographers.jpg" alt="小摄影师">
-          <div class="text">小摄影师</div>
-        </div>
-        <div class="block">
-          <img src="./architects.jpg" alt="小设计师">
-          <div class="text">小设计师</div>
-        </div>
-        <div class="block">
-          <img src="./writer.jpg" alt="小作家">
-          <div class="text">小作家</div>
-        </div>
-        <div class="block">
-          <img src="./coder.jpg" alt="小程序员">
-          <div class="text">小程序员</div>
+        <div v-for="item in workType" class="block" :key="item.id">
+          <router-link :to="item.linkTo">
+          <img :src="item.imgSrc" alt="item.typeTitle">
+          <div class="text">{{item.typeTitle}}</div>
+          </router-link>
         </div>
       </div>
     </section>
@@ -26,7 +16,34 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
-      return {};
+      return {
+        workType: [
+          {
+            id: 1,
+            linkTo: '/workShow',
+            imgSrc: './static/img/photographers.jpg',
+            typeTitle: '小摄影师'
+          },
+          {
+            id: 2,
+            linkTo: '/workShow',
+            imgSrc: './static/img/architects.jpg',
+            typeTitle: '小设计师'
+          },
+          {
+            id: 3,
+            linkTo: '/workShow',
+            imgSrc: './static/img/writer.jpg',
+            typeTitle: '小作家'
+          },
+          {
+            id: 4,
+            linkTo: '/workShow',
+            imgSrc: './static/img/coder.jpg',
+            typeTitle: '小程序员'
+          }
+        ]
+      };
     }
   };
 </script>

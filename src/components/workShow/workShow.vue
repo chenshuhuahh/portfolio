@@ -113,6 +113,7 @@
   .workShowSection {
     margin-top: 62px;
     .selectMenu {
+      display: none;
       position: fixed;
       z-index: 999;
       .el-menu-vertical:not(.el-menu--collapse) {
@@ -133,12 +134,13 @@
       }
     }
     .workMain {
-      margin-left: 80px;
+      margin-left: 0px;
       section {
-        padding: 55px;
+        padding: 0px;
         .text {
           padding: 10px 20px;
           border-bottom: 1px solid #0a6999;
+          color: gray;
           h4 {
             display: inline-block;
           }
@@ -150,6 +152,19 @@
           .itemCard {
             display: inline-block;
           }
+        }
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    .workShowSection {
+      .selectMenu {
+        display: block;
+      }
+      .workMain {
+        margin-left: 80px;
+        section {
+          padding: 55px;
         }
       }
     }

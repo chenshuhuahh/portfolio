@@ -18,7 +18,7 @@
         <ul class="mainMenu">
           <li><router-link to="/summary">概述</router-link></li>
           <li><router-link to="/workShow">作品栏</router-link></li>
-          <li><a href="">学生/企业</a></li>
+          <li><router-link to="/student">学生/企业</router-link></li>
         </ul>
       </div>
     </nav>
@@ -27,7 +27,7 @@
         <ul>
           <li @click="toggleMenu"><router-link to="/summary">概述</router-link></li>
           <li @click="toggleMenu"><router-link to="/workShow">作品栏</router-link></li>
-          <li @click="toggleMenu"><a href="">学生/企业</a></li>
+          <li @click="toggleMenu"><router-link to="/student">学生/企业</router-link></li>
         </ul>
       </nav>
     </transition>
@@ -70,11 +70,11 @@
 <style lang="scss" type="text/scss">
   .topNav {
     font-size: 14px;
-    background-color: #27272b;
+    background-color: rgba(0, 0, 0, .6);
     padding: 18px 0 16px;
-    -webkit-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .75);
-    -moz-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .75);
-    box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .75);
+    -webkit-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
+    box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
     position: fixed;
     top: 0;
     width: 100%;
@@ -130,7 +130,7 @@
   .mobileMenu {
     z-index: 100;
     width: 132px;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.5);
     position: fixed;
     left: 0;
     top: 55px;
@@ -149,10 +149,10 @@
         padding-bottom: 27px;
         & a {
           text-decoration: none;
-          color: gray;
+          color: #bebebe;
           padding-bottom: 5px;
           &.active {
-            color: #bebebe;
+            color: #fff;
             border-bottom: 2px solid #44b2e2;
           }
         }
@@ -162,7 +162,7 @@
   .mobileActionMenu {
     z-index: 100;
     width: 132px;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.5);
     position: fixed;
     right: -210px;
     top: 55px;
@@ -193,6 +193,7 @@
 
   @media (min-width: 768px) {
     .topNav {
+      background-color: rgba(0, 0, 0, .5);
       .mainContainer {
         .foldMenu {
           display: none;
@@ -240,13 +241,13 @@
             text-transform: uppercase;
             & a {
               text-decoration: none;
-              color: gray;
+              color: #bebebe;
               padding-bottom: 6px;
               &:hover {
-                color: #bebebe;
+                color: #fff;
               }
               &.active {
-                color: #bebebe;
+                color: #fff;
                 border-bottom: 2px solid #44b2e2;
               }
             }
