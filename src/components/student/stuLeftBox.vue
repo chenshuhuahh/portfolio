@@ -4,11 +4,15 @@
       <div class="portrait">
         <img src="./18.jpg" width="80" height="80" />
       </div>
-      <div class="studentInfo"></div>
+      <div class="studentInfo">
+        <div class="sName">chen</div>
+        <div class="sSchool">college</div>
+        <div class="sLoveNum">555</div>
+      </div>
     </div>
     <div class="menu">
       <ul class="menu-ul">
-        <router-link class="menu-link" to="/student/stuInfoBox" tag="li">信息修改</router-link>
+        <router-link class="menu-link" to="/student/stuInfoBox" tag="li">信息完善</router-link>
         <router-link class="menu-link" to="/student/stuWorkUploadBox" tag="li">作品上传</router-link>
         <router-link class="menu-link" to="/student/stuWorkShowBox" tag="li">作品展示</router-link>
       </ul>
@@ -32,9 +36,10 @@
     .info {
       background: #fff;
       width: 300px;
-      height: 180px;
+      height: 170px;
       text-align: left;
       .portrait {
+        display: inline-block;
         width: 80px;
         height: 80px;
         overflow: hidden;
@@ -47,11 +52,22 @@
           border-radius: 40px;
         }
       }
+      .studentInfo {
+        display: inline-block;
+        margin: 38px 0 0;
+        vertical-align: top;
+        .sName {
+          font-size: 20px;
+        }
+        .sSchool, .sLoveNum {
+          margin-top: 14px;
+        }
+      }
     }
     .menu {
       background: #fff;
       width: 300px;
-      height: 500px;
+      height: 647px;
       margin-top: 15px;
       text-align: left;
       color: #737373;

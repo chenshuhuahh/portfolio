@@ -18,7 +18,6 @@
   .stuContentBox {
     margin-left: 400px;
     margin-right: 50px;
-    height: 800px;
-    background-color: #fff;
+    height: 835px;
   }
 </style>

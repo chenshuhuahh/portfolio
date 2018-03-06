@@ -25,6 +25,7 @@
     width: 100%;
     height: 100%;
     padding-top: 100px;
+    padding-bottom: 80px;
     background-color: #f1f1f1;
     text-align: center;
   }
