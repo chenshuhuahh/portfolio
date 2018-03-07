@@ -28,8 +28,8 @@
 
 <style lang="scss" type="text/scss">
   .imageContainer {
-    height: 250px;
-    margin: 30px 5px;
+    height: 180px;
+    margin: 15px 0;
     display: inline-block;
     -webkit-box-shadow: 0 2px 13px 1px rgba(0, 0, 0, .25);
     -moz-box-shadow: 0 2px 13px 1px rgba(0, 0, 0, .25);
@@ -64,7 +64,7 @@
       width: 100%;
       color: #fff;
       position: absolute;
-      top: 27%;
+      top: 22%;
       left: 0;
       &.roll-enter-active, &.roll-leave-active {
         transition: all 0.8s ease;
@@ -90,7 +90,7 @@
         }
       }
       .workTitle {
-        font-size: 25px;
+        font-size: 19px;
         font-weight: 600;
         line-height: 30px;
         text-transform: uppercase;
@@ -117,5 +117,16 @@
       }
     }
   }
-
+  @media (min-width: 768px) {
+    .imageContainer {
+      height: 250px;
+      margin: 30px 5px;
+      .introduction {
+        top: 27%;
+        .workTitle {
+          font-size: 25px;
+        }
+      }
+    }
+  }
 </style>

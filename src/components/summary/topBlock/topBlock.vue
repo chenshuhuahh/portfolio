@@ -70,7 +70,6 @@
         }
         .viewButton {
           border: 2px solid #fff;
-          margin-right: 10px;
         }
         .startButton {
           width: 152px;

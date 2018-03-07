@@ -15,9 +15,12 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .stuContentBox {
-    margin-left: 400px;
-    margin-right: 50px;
-    height: 835px;
+  .stuContentBox {}
+  @media (min-width: 768px) {
+    .stuContentBox {
+      margin-left: 350px;
+      margin-right: 50px;
+      height: 835px;
+    }
   }
 </style>

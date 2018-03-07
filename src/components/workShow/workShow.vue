@@ -1,11 +1,11 @@
 <template>
   <div class="workShowSection">
     <div class="selectMenu">
-      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+<!--      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
         <el-radio-button :label="false" v-show="isCollapse"><i class="el-icon-arrow-down"></i></el-radio-button>
         <el-radio-button :label="true" v-show="!isCollapse"><i class="el-icon-arrow-up"></i></el-radio-button>
-      </el-radio-group>
-      <el-menu class="el-menu-vertical" :collapse="isCollapse">
+      </el-radio-group>-->
+      <el-menu class="el-menu-vertical" :collapse="true">
         <a href="#photos">
           <el-menu-item index="1">
               <i class="icon-camera"></i>
@@ -86,7 +86,7 @@
   export default {
     data() {
       return {
-        isCollapse: true,
+//        isCollapse: true,
         photoIntroduction: [
           {
             id: 1,
@@ -114,29 +114,11 @@
     margin-top: 62px;
     .selectMenu {
       display: none;
-      position: fixed;
-      z-index: 999;
-      .el-menu-vertical:not(.el-menu--collapse) {
-        width: 170px;
-        min-height: 235px;
-        .el-menu-item {
-          span {
-            margin-left: 5px;
-          }
-        }
-      }
-      .el-menu-vertical {
-        .el-menu-item {
-          i {
-            font-size: 21px;
-          }
-        }
-      }
     }
     .workMain {
-      margin-left: 0px;
+      margin: 40px;
       section {
-        padding: 0px;
+        padding: 30px 0;
         .text {
           padding: 10px 20px;
           border-bottom: 1px solid #0a6999;
@@ -149,8 +131,9 @@
           }
         }
         .itemContainer {
+          text-align: center;
           .itemCard {
-            display: inline-block;
+            display: block;
           }
         }
       }
@@ -160,11 +143,35 @@
     .workShowSection {
       .selectMenu {
         display: block;
+        margin-top: 50px;
+        position: fixed;
+        z-index: 999;
+        /*.el-menu-vertical:not(.el-menu--collapse) {*/
+        /*width: 170px;*/
+        /*min-height: 235px;*/
+        /*.el-menu-item {*/
+        /*span {*/
+        /*margin-left: 5px;*/
+        /*}*/
+        /*}*/
+        /*}*/
+        .el-menu-vertical {
+          .el-menu-item {
+            i {
+              font-size: 21px;
+            }
+          }
+        }
       }
       .workMain {
         margin-left: 80px;
         section {
           padding: 55px;
+          .itemContainer {
+            .itemCard {
+              display: inline-block;
+            }
+          }
         }
       }
     }
