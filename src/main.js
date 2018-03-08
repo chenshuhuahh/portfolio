@@ -92,4 +92,4 @@ new Vue({
 });
 
 // 编程式导航
-router.push({path: '/student/stuInfoBox'});
+router.push({path: '/student/stuWorkShowBox'});
