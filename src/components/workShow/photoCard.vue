@@ -28,7 +28,7 @@
 
 <style lang="scss" type="text/scss">
   .imageContainer {
-    height: 180px;
+    height: 222px;
     margin: 15px 0;
     display: inline-block;
     -webkit-box-shadow: 0 2px 13px 1px rgba(0, 0, 0, .25);

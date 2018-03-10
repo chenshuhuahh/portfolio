@@ -1,15 +1,15 @@
 <template>
   <div class="workShowSection">
     <div class="selectMenu">
-<!--      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-        <el-radio-button :label="false" v-show="isCollapse"><i class="el-icon-arrow-down"></i></el-radio-button>
-        <el-radio-button :label="true" v-show="!isCollapse"><i class="el-icon-arrow-up"></i></el-radio-button>
-      </el-radio-group>-->
+      <!--      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+              <el-radio-button :label="false" v-show="isCollapse"><i class="el-icon-arrow-down"></i></el-radio-button>
+              <el-radio-button :label="true" v-show="!isCollapse"><i class="el-icon-arrow-up"></i></el-radio-button>
+            </el-radio-group>-->
       <el-menu class="el-menu-vertical" :collapse="true">
         <a href="#photos">
           <el-menu-item index="1">
-              <i class="icon-camera"></i>
-              <span slot="title">小摄影师</span>
+            <i class="icon-camera"></i>
+            <span slot="title">小摄影师</span>
           </el-menu-item>
         </a>
         <a href="#designs">
@@ -33,20 +33,25 @@
       </el-menu>
     </div>
     <div class="workMain">
-      <section style="padding-bottom: 0; width: 500px">
-        <el-input placeholder="请输入内容" v-model="input5" class="input-with-select">
+      <!--<section class="selectionBox">
+        <el-input placeholder="请输入内容" v-model="selectBox" class="input-with-select">
           <el-select v-model="select" slot="prepend" placeholder="请选择">
-            <el-option label="餐厅名" value="1"></el-option>
-            <el-option label="订单号" value="2"></el-option>
-            <el-option label="用户电话" value="3"></el-option>
+            <el-option label="摄影作品" value="1"></el-option>
+            <el-option label="设计作品" value="3"></el-option>
+            <el-option label="文章作品" value="2"></el-option>
+            <el-option label="程序作品" value="4"></el-option>
           </el-select>
           <el-button slot="append" icon="el-icon-search"></el-button>
         </el-input>
-      </section>
+      </section>-->
       <section class="photos" id="photos">
         <div class="text">
           <h4>摄影作品</h4>
-          <p>more</p>
+          <router-link :to="{name: 'sectionWorkShow',
+                             params: { dataObj: '摄影'}}"
+          >
+            <i class="el-icon-d-arrow-right"></i>
+          </router-link>
         </div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
@@ -57,7 +62,11 @@
       <section class="designs" id="designs">
         <div class="text">
           <h4>设计作品</h4>
-          <p>more</p>
+          <router-link :to="{name: 'sectionWorkShow',
+                             params: { dataObj: '设计'}}"
+          >
+            <i class="el-icon-d-arrow-right"></i>
+          </router-link>
         </div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
@@ -68,7 +77,11 @@
       <section class="articles" id="articles">
         <div class="text">
           <h4>文章作品</h4>
-          <p>more</p>
+          <router-link :to="{name: 'sectionWorkShow',
+                             params: { dataObj: '文章'}}"
+          >
+            <i class="el-icon-d-arrow-right"></i>
+          </router-link>
         </div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
@@ -79,7 +92,11 @@
       <section class="programs" id="programs">
         <div class="text">
           <h4>程序作品</h4>
-          <p>more</p>
+          <router-link :to="{name: 'sectionWorkShow',
+                             params: { dataObj: '程序'}}"
+          >
+            <i class="el-icon-d-arrow-right"></i>
+          </router-link>
         </div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
@@ -96,7 +113,8 @@
   export default {
     data() {
       return {
-          select: '',
+        select: '',
+        selectBox: '',
 //        isCollapse: true,
         photoIntroduction: [
           {
@@ -128,22 +146,26 @@
     }
     .workMain {
       margin: 40px;
-      .el-select .el-input {
-        width: 100px;
-      }
-      .input-with-select .el-input-group__prepend {
-        background-color: #fff;
-      }
+      /*.selectionBox {
+        padding-bottom: 0;
+        width: 500px;
+        .el-select .el-input {
+          width: 110px;
+        }
+        .input-with-select .el-input-group__prepend {
+          background-color: #fff;
+        }
+      }*/
       section {
         padding: 30px 0;
         .text {
-          padding: 10px 20px;
+          padding: 10px;
           border-bottom: 1px solid #0a6999;
           color: gray;
           h4 {
             display: inline-block;
           }
-          p {
+          a {
             float: right;
           }
         }
@@ -156,6 +178,7 @@
       }
     }
   }
+
   @media (min-width: 768px) {
     .workShowSection {
       .selectMenu {
@@ -184,6 +207,9 @@
         margin-left: 80px;
         section {
           padding: 55px;
+          .text {
+            padding: 10px 20px;
+          }
           .itemContainer {
             text-align: left;
             .itemCard {

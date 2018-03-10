@@ -3,7 +3,8 @@
     <section class="nicheBlock">
       <div class="niches clearfix">
         <div v-for="item in workType" class="block" :key="item.id">
-          <router-link :to="item.linkTo">
+          <router-link :to="{name: 'sectionWorkShow',
+                             params: { dataObj: item.typeTitle}}">
           <img :src="item.imgSrc" alt="item.typeTitle">
           <div class="text">{{item.typeTitle}}</div>
           </router-link>
@@ -20,25 +21,21 @@
         workType: [
           {
             id: 1,
-            linkTo: '/workShow',
             imgSrc: './static/img/photographers.jpg',
             typeTitle: '小摄影师'
           },
           {
             id: 2,
-            linkTo: '/workShow',
             imgSrc: './static/img/architects.jpg',
             typeTitle: '小设计师'
           },
           {
             id: 3,
-            linkTo: '/workShow',
             imgSrc: './static/img/writer.jpg',
             typeTitle: '小作家'
           },
           {
             id: 4,
-            linkTo: '/workShow',
             imgSrc: './static/img/coder.jpg',
             typeTitle: '小程序员'
           }
@@ -60,7 +57,6 @@
       margin: 0 auto;
       padding-bottom: 42px;
       .block {
-        float: left;
         background-color: #27272b;
         padding: 10px 10px 7px;
         margin: 15px 1.5%;
@@ -85,10 +81,8 @@
   @media (min-width: 768px) {
     .nicheBlock {
       .niches {
-        max-width: 760px;
-        margin: 0 auto;
-        padding-bottom: 42px;
         .block {
+          float: left;
           margin: 15px 3%;
           width: calc(44% - 20px);
         }

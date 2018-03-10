@@ -26,4 +26,9 @@ export default {
       color: #fff !important;
     }
   }
+  /*.el-select-dropdown {
+    .selected {
+      color: #fff !important;
+    }
+  }*/
 </style>

@@ -2,12 +2,10 @@
   <div class="stuWorkShowBox">
     <div class="worksGrid">
       <div class="imageGrid">
-        <a href="#" class="workImage" target="_blank">
-          <img src="./15.jpg" alt="" class="imgResponsive"/>
-        </a>
-        <a class="imagePos" href="#" target="_blank">
-          <div class="seeIcon"><i class="el-icon-view"></i></div>
-        </a>
+        <img src="./15.jpg" alt="" class="imgResponsive"/>
+        <div class="imagePos">
+          <a class="seeIcon" href="#"><i class="el-icon-view"></i></a>
+        </div>
       </div>
       <div class="infoGrid">
         <div class="workName"><h4>指鹿为马</h4><i class="el-icon-star-off">5</i></div>
@@ -36,16 +34,42 @@
       .imageGrid {
         position: relative;
         height: 250px;
-        .workImage {
-          img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 100%;
-          }
+        img {
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
         }
         .imagePos {
           display: none;
+        }
+        &:hover {
+          .imagePos {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.5);
+            .seeIcon {
+              display: inline-block;
+              width: 40px;
+              height: 40px;
+              line-height: 40px;
+              border-radius: 50%;
+              background: #f74e55;
+              font-size: 20px;
+              font-weight: 700;
+              color: #fff;
+              margin-top: 11%;
+            }
+          }
         }
       }
       .infoGrid {
@@ -74,32 +98,6 @@
     .stuWorkShowBox {
       .worksGrid {
         margin: 0;
-        .imageGrid {
-          &:hover {
-            .imagePos {
-              display: block;
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              top: 0;
-              left: 0;
-              text-align: center;
-              background-color: rgba(255, 255, 255, 0.5);
-              .seeIcon {
-                display: inline-block;
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
-                border-radius: 50%;
-                background: #f74e55;
-                font-size: 20px;
-                font-weight: 700;
-                color: #fff;
-                margin-top: 37%;
-              }
-            }
-          }
-        }
       }
     }
   }

@@ -11,6 +11,7 @@ import logIn from './components/logIn/logIn.vue';
 import studentSignUp from './components/signUp/studentSignUp.vue';
 import companySignUp from './components/signUp/companySignUp.vue';
 import workShow from './components/workShow/workShow.vue';
+import sectionWorkShow from './components/workShow/sectionWorkShow.vue';
 import student from './components/student/student.vue';
 import stuInfoBox from './components/student/stuInfoBox.vue';
 import stuWorkUploadBox from './components/student/stuWorkUploadBox.vue';
@@ -53,12 +54,17 @@ const routes = [
     component: workShow
   },
   {
+    path: '/workShow/sectionWorkShow',
+    name: 'sectionWorkShow',
+    component: sectionWorkShow
+  },
+  {
     path: '/student',
     component: student,
     children: [
-      { path: '/student/stuInfoBox', component: stuInfoBox },
-      { path: '/student/stuWorkUploadBox', component: stuWorkUploadBox },
-      { path: '/student/stuWorkShowBox', component: stuWorkShowBox }
+      {path: '/student/stuInfoBox', component: stuInfoBox},
+      {path: '/student/stuWorkUploadBox', component: stuWorkUploadBox},
+      {path: '/student/stuWorkShowBox', component: stuWorkShowBox}
     ]
   }
 ];
@@ -68,28 +74,32 @@ const router = new VueRouter({
   routes,
   mode: 'history',
   linkActiveClass: 'active',
+  // 所有路由新页面滚动到顶部：
   scrollBehavior (to, from, savedPosition) {
-    // 如果你的連結是帶 # 這種
-    // to.hash 就會有值(值就是連結)
-    // 例如 #3
-    if (to.hash) {
-      return {
-        // 這個是透過 to.hash 的值來找到對應的元素
-        // 照你的 html 來看是不用多加處理這樣就可以了
-        // 例如你按下 #3 的連結，就會變成 querySelector('#3')，自然會找到 id = 3 的元素
-        selector: to.hash
-      };
-    }
+    return {x: 0, y: 0};
   }
+  /* scrollBehavior (to, from, savedPosition) {
+   // 如果你的連結是帶 # 這種
+   // to.hash 就會有值(值就是連結)
+   // 例如 #3
+   if (to.hash) {
+   return {
+   // 這個是透過 to.hash 的值來找到對應的元素
+   // 照你的 html 來看是不用多加處理這樣就可以了
+   // 例如你按下 #3 的連結，就會變成 querySelector('#3')，自然會找到 id = 3 的元素
+   selector: to.hash
+   };
+   }
+   } */
 });
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 });
 
 // 编程式导航
-router.push({path: '/student/stuWorkShowBox'});
+router.push({path: '/workShow/sectionWorkShow'});
