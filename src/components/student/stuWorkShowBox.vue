@@ -1,24 +1,38 @@
 <template>
   <div class="stuWorkShowBox">
-    <div class="worksGrid">
-      <div class="imageGrid">
-        <img src="./15.jpg" alt="" class="imgResponsive"/>
-        <div class="imagePos">
-          <a class="seeIcon" href="#"><i class="el-icon-view"></i></a>
-        </div>
-      </div>
-      <div class="infoGrid">
-        <div class="workName"><h4>指鹿为马</h4><i class="el-icon-star-off">5</i></div>
-        <p class="workDesc">怕的金额宿舍顶顶顶顶</p>
-      </div>
+    <div class="worksGrid" v-for="item in photoIntroduction" :key="item.id">
+      <stuPhotoCard :item="item"></stuPhotoCard>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import stuPhotoCard from './stuPhotoCard.vue';
   export default {
     data () {
-      return {};
+      return {
+        photoIntroduction: [
+          {
+            id: 1,
+            imgSrc: '../static/img/15.jpg',
+            workTitle: '卡通恶搞造型',
+            workDesc: '身陈建安死哦车非常的成交出纳室',
+            studentName: '雷神索尔',
+            loveNum: 10
+          },
+          {
+            id: 2,
+            imgSrc: '../static/img/11.jpg',
+            workTitle: '恶搞造型',
+            workDesc: '身陈建安死哦车非常的成交出纳室',
+            studentName: '雷神索尔',
+            loveNum: 5
+          }
+        ]
+      };
+    },
+    components: {
+      stuPhotoCard
     }
   };
 </script>
@@ -26,78 +40,19 @@
 <style lang="scss" type="text/scss">
   .stuWorkShowBox {
     .worksGrid {
-      margin: auto;
+      margin: auto auto 20px;
       padding: 15px;
       width: 250px;
       height: 350px;
       background: #fff;
-      .imageGrid {
-        position: relative;
-        height: 250px;
-        img {
-          width: auto;
-          height: auto;
-          max-width: 100%;
-          max-height: 100%;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        .imagePos {
-          display: none;
-        }
-        &:hover {
-          .imagePos {
-            display: block;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.5);
-            .seeIcon {
-              display: inline-block;
-              width: 40px;
-              height: 40px;
-              line-height: 40px;
-              border-radius: 50%;
-              background: #f74e55;
-              font-size: 20px;
-              font-weight: 700;
-              color: #fff;
-              margin-top: 11%;
-            }
-          }
-        }
-      }
-      .infoGrid {
-        text-align: left;
-        margin-top: 20px;
-        .workName {
-          font-size: 20px;
-          h4 {
-            display: inline-block;
-          }
-          i {
-            vertical-align: top;
-            float: right;
-          }
-        }
-        .workDesc {
-          margin-top: 20px;
-          font-size: 12px;
-          color: #999;
-        }
-      }
     }
   }
 
   @media (min-width: 768px) {
     .stuWorkShowBox {
       .worksGrid {
-        margin: 0;
+        display: inline-block;
+        margin: 0 10px 20px;
       }
     }
   }

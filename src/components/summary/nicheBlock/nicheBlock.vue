@@ -4,7 +4,7 @@
       <div class="niches clearfix">
         <div v-for="item in workType" class="block" :key="item.id">
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { dataObj: item.typeTitle}}">
+                             params: { workType: item.typeTitle}}">
           <img :src="item.imgSrc" alt="item.typeTitle">
           <div class="text">{{item.typeTitle}}</div>
           </router-link>

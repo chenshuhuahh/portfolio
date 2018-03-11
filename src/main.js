@@ -12,6 +12,7 @@ import studentSignUp from './components/signUp/studentSignUp.vue';
 import companySignUp from './components/signUp/companySignUp.vue';
 import workShow from './components/workShow/workShow.vue';
 import sectionWorkShow from './components/workShow/sectionWorkShow.vue';
+import workDetail from './components/workShow/workDetail.vue';
 import student from './components/student/student.vue';
 import stuInfoBox from './components/student/stuInfoBox.vue';
 import stuWorkUploadBox from './components/student/stuWorkUploadBox.vue';
@@ -59,6 +60,11 @@ const routes = [
     component: sectionWorkShow
   },
   {
+    path: '/workShow/workDetail',
+    name: 'workDetail',
+    component: workDetail
+  },
+  {
     path: '/student',
     component: student,
     children: [
@@ -102,4 +108,4 @@ new Vue({
 });
 
 // 编程式导航
-router.push({path: '/workShow/sectionWorkShow'});
+router.push({path: '/summary'});

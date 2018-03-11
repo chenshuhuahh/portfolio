@@ -1,10 +1,10 @@
 <template>
   <div class="sectionImageContainer" @mouseenter="isShow=true" @mouseleave="isShow=false">
     <img :src="item.imgSrc" alt="">
-    <a href="" class="introduction" v-show="isShow">
+    <router-link class="introduction" v-show="isShow" :to="{name: 'workDetail', params: { workItem: item}}">
       <h3 class="workTitle">{{item.workTitle}}</h3>
       <span class="studentName">{{item.studentName}}</span>
-    </a>
+    </router-link>
   </div>
 </template>
 

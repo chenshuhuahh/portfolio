@@ -48,7 +48,7 @@
         <div class="text">
           <h4>摄影作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { dataObj: '摄影'}}"
+                             params: { workType: '摄影'}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -63,7 +63,7 @@
         <div class="text">
           <h4>设计作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { dataObj: '设计'}}"
+                             params: { workType: '设计'}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -78,7 +78,7 @@
         <div class="text">
           <h4>文章作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { dataObj: '文章'}}"
+                             params: { workType: '文章'}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -93,7 +93,7 @@
         <div class="text">
           <h4>程序作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { dataObj: '程序'}}"
+                             params: { workType: '程序'}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -119,15 +119,19 @@
         photoIntroduction: [
           {
             id: 1,
-            imgSrc: './static/img/6.jpg',
+            imgSrc: '../static/img/6.jpg',
             workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
+            workDesc: '身陈建安死哦车非常的成交出纳室',
+            studentName: '雷神索尔1',
+            loveNum: 10
           },
           {
             id: 2,
-            imgSrc: './static/img/9.jpg',
-            workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
+            imgSrc: '../static/img/9.jpg',
+            workTitle: '恶搞造型',
+            workDesc: '身陈建安死哦车非常的成交出纳室',
+            studentName: '雷神索尔2',
+            loveNum: 5
           }
         ]
       };

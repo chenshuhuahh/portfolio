@@ -1,7 +1,7 @@
 <template>
   <div class="sectionWorkShow">
     <div class="text">
-      <h3>{{$route.params.dataObj}}作品</h3>
+      <h3>{{$route.params.workType}}作品</h3>
       <p>在Portfolio展示的优秀作品</p>
       <div class="puzzleIcon"></div>
     </div>
@@ -28,19 +28,19 @@
           {
             id: 2,
             imgSrc: '../static/img/9.jpg',
-            workTitle: '卡通恶搞造型',
+            workTitle: '恶搞造型',
             studentName: '雷神索尔'
           },
           {
             id: 3,
             imgSrc: '../static/img/6.jpg',
-            workTitle: '卡通恶搞造型',
+            workTitle: '卡通造型',
             studentName: '雷神索尔'
           },
           {
             id: 4,
             imgSrc: '../static/img/9.jpg',
-            workTitle: '卡通恶搞造型',
+            workTitle: '卡通恶搞',
             studentName: '雷神索尔'
           },
           {

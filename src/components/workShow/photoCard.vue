@@ -5,7 +5,13 @@
       <div class="introduction" v-show="isShow">
         <h3 class="workTitle">{{item.workTitle}}</h3>
         <span class="studentName">{{item.studentName}}</span>
-        <div class="iconLink"><a href="#"><i class="el-icon-view"></i></a></div>
+        <div class="iconLink">
+          <router-link  :to="{name: 'workDetail',
+                             params: { workItem: item}}"
+          >
+            <i class="el-icon-view"></i>
+          </router-link>
+        </div>
       </div>
     </transition>
   </div>
@@ -117,6 +123,7 @@
       }
     }
   }
+
   @media (min-width: 768px) {
     .imageContainer {
       height: 250px;
