@@ -21,7 +21,10 @@ import stuWorkShowBox from './components/student/stuWorkShowBox.vue';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import './common/styles/index.scss';
+import './assets/css/iconfont.css';
+import { emoji } from './api/emoji.js';
 
+Vue.prototype.emoji = emoji;
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 Vue.use(VueAreaLinkage);
