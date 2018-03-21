@@ -18,7 +18,7 @@
         <ul class="mainMenu">
           <li><router-link to="/summary">概述</router-link></li>
           <li><router-link to="/workShow">作品栏</router-link></li>
-          <li><router-link to="/student/stuInfoBox">学生/企业</router-link></li>
+          <li><router-link to="/company/comInfoBox">学生/企业</router-link></li>
         </ul>
       </div>
     </nav>

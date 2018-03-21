@@ -9,11 +9,10 @@
     </el-input>
     <div class="icon clearfix">
       <i class="icon iconfont icon-face" @click="showEmoji = !showEmoji"></i>
-      <el-button type="success" size="small" @click="submit" class="submit">提交</el-button>
+      <el-button type="success" size="small" @click="submit" class="submit">回复评论</el-button>
       <transition name="fade" mode="">
-        <div class="emoji-box" v-if="showEmoji" >
+        <div class="emoji-box" v-if="showEmoji">
           <emoji @select="selectEmoji"></emoji>
-          <span class="pop-arrow arrow"></span>
         </div>
       </transition>
     </div>
@@ -27,7 +26,8 @@
       return {
         value: '',
         showEmoji: false,
-        data: []
+//        data: []
+        data: ''
       };
     },
     methods: {
@@ -36,8 +36,10 @@
         this.value += code;
       },
       submit () {
-        this.data.push(this.value);
+//        this.data.push(this.value);
+        this.data = this.value;
         this.value = '';
+        this.$emit('ievent', this.data);
       }
     },
     components: {
@@ -47,39 +49,32 @@
 </script>
 
 <style lang="scss" type="text/scss">
-.emojiBigBox {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin: 60px auto ;
-  width: 500px;
-  z-index: 10;
-  .icon {
-    position: relative;
-    margin-top: 20px;
-    width: 100%;
-    .iconfont {
-      cursor: pointer;
-      color: #F7BA2A;
-    }
-    .fade-enter-active, .fade-leave-active { transition: opacity .5s; }
-    .fade-enter, .fade-leave-active { opacity: 0; }
-    .fade-move { transition: transform .4s; }
-    .emoji-box {
-      position: absolute;
-      z-index: 10;
-      left: -10px;
-      top: 24px;
-      box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.2);
-      background: white;
-      .arrow {
-        left: 10px;
+  .emojiBigBox {
+    color: #2c3e50;
+    margin: 20px 20px 0;
+    .icon {
+      margin-top: 20px;
+      width: 100%;
+      .iconfont {
+        cursor: pointer;
+        color: #F7BA2A;
+      }
+      .emoji-box {
+        box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.2);
+        background: white;
+      }
+      .fade-enter-active, .fade-leave-active {
+        transition: opacity .5s;
+      }
+      .fade-enter, .fade-leave-active {
+        opacity: 0;
+      }
+      .fade-move {
+        transition: transform .4s;
       }
     }
+    .submit {
+      float: right;
+    }
   }
-  .submit {
-    float: right;
-  }
-}
 </style>

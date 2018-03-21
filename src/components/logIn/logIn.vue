@@ -4,8 +4,8 @@
     <div class="studentLogInSection">
       <el-form ref="studentLogInForm" :model="studentLogInForm" label-width="40px">
         <p class="title">Student</p>
-        <el-form-item label="手机">
-          <el-input id="sPhone" v-model="studentLogInForm.sPhone" placeholder="请输入手机号"></el-input>
+        <el-form-item label="邮箱">
+          <el-input id="sEmail" v-model="studentLogInForm.sEmail" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item label="密码">
           <el-input id="sPassword" v-model="studentLogInForm.sPassword" placeholder="请输入密码"></el-input>
@@ -43,7 +43,7 @@
           cPassword: ''
         },
         studentLogInForm: {
-          sPhone: '',
+          sEmail: '',
           sPassword: ''
         }
       };

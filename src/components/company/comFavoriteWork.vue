@@ -1,6 +1,6 @@
 <template>
-  <div class="componyContainer">
-
+  <div>
+    comFavoriteWork
   </div>
 </template>
 
@@ -13,7 +13,5 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .componyContainer {
-    background-color: #f1f1f1;
-  }
+
 </style>

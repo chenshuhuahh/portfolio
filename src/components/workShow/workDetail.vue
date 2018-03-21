@@ -18,17 +18,18 @@
     <div class="introductionBox">
       <h3>{{$route.params.workItem.workTitle}}</h3>
       <span>({{$route.params.workItem.studentName}})</span>
-      <i class="el-icon-star-off">{{$route.params.workItem.loveNum}}</i>
+      <span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i class="icon-heart"></i>{{$route.params.workItem.loveNum}}</span>
       <p>{{$route.params.workItem.workDesc}}</p>
     </div>
     <div class="commentBox">
       <el-collapse v-model="activeNames">
         <el-collapse-item title="企业1" name="1">
           <div class="comComment"><i class="el-icon-edit"></i>留言：与现实生活一致，与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；</div>
-          <div class="stuComment">在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
+          <div class="stuComment" >
+            <span v-html="emoji(data)"></span>
             <i class="icon-compass"></i>回复
           </div>
-          <emojiBigBox></emojiBigBox>
+          <emojiBigBox @ievent="ievent"></emojiBigBox>
         </el-collapse-item>
         <el-collapse-item title="企业2" name="2">
           <div class="comComment"><i class="el-icon-edit"></i>留言：控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
@@ -65,11 +66,21 @@
           {imgItem: '../static/img/9.jpg'},
           {imgItem: '../static/img/11.jpg'},
           {imgItem: '../static/img/15.jpg'}
-        ]
+        ],
+        data: '',
+        favorite: false
       };
     },
     components: {
       emojiBigBox
+    },
+    methods: {
+      ievent(data) {
+        this.data = data;// data为包含传过来所有数据的数组，第一个元素是对象，第二个元素是字符串
+      },
+      toggleFavorite() {
+        this.favorite = !this.favorite;
+      }
     }
   };
 </script>
@@ -127,6 +138,15 @@
         margin: 10px 0;
         font-size: 14px;
       }
+      .iconFavorite {
+        cursor: pointer;
+        &.active {
+          color: #DC143C;
+        }
+        .icon-heart {
+          padding-right: 5px;
+        }
+      }
     }
     .commentBox {
       text-align: left;
@@ -139,17 +159,18 @@
       .el-collapse-item {
         z-index: 10;
       }
-      div {
-        margin-bottom: 10px;
-        i {
-          font-size: 20px;
-          margin-right: 5px;
-        }
+      i {
+        font-size: 20px;
+        margin-right: 5px;
       }
       .stuComment {
         text-align: right;
       }
+      .stuComment, .comComment {
+        margin-bottom: 10px;
+      }
       .commentButton {
+        margin-bottom: 10px;
         text-align: center;
       }
     }
@@ -178,7 +199,7 @@
           margin-bottom: 10px;
           font-size: 14px;
         }
-        i {
+        .iconFavorite {
           vertical-align: top;
           float: right;
           font-size: 20px;

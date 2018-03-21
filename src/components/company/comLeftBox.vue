@@ -1,28 +1,27 @@
 <template>
-  <div class="stuLeftBox">
+  <div class="comLeftBox">
     <div class="info">
       <div class="portrait">
         <img src="./18.jpg" />
       </div>
-      <div class="studentInfo">
-        <div class="sName">Chloe</div>
-        <div class="sSchool">仲恺农业工程学院</div>
-        <div class="sLoveNum"><i class="icon-heart"></i>555</div>
+      <div class="companyInfo">
+        <div class="cName">有道翻译科技有限公司</div>
+        <div class="cBoss">张三</div>
       </div>
     </div>
     <div class="menu">
       <ul class="menu-ul">
-        <router-link class="menu-link" to="/student/stuInfoBox" tag="li">
+        <router-link class="menu-link" to="/company/comInfoBox" tag="li">
           <i class="el-icon-edit-outline"></i>
           <span>信息完善</span>
         </router-link>
-        <router-link class="menu-link" to="/student/stuWorkUploadBox" tag="li">
-          <i class="el-icon-upload2"></i>
-          <span>作品上传</span>
-        </router-link>
-        <router-link class="menu-link" to="/student/stuWorkShowBox" tag="li">
+        <router-link class="menu-link" to="/company/comInfoModify" tag="li">
           <i class="el-icon-menu"></i>
-          <span>作品展示</span>
+          <span>信息修改</span>
+        </router-link>
+        <router-link class="menu-link" to="/company/comFavoriteWork" tag="li">
+          <i class="icon-heart"></i>
+          <span>作品收藏</span>
         </router-link>
       </ul>
     </div>
@@ -38,7 +37,7 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .stuLeftBox {
+  .comLeftBox {
     .info {
       background: #fff;
       width: 100%;
@@ -56,18 +55,12 @@
           border-radius: 40px;
         }
       }
-      .studentInfo {
+      .companyInfo {
         margin-top: 14px;
-        .sName {
-          font-size: 20px;
-        }
-        .sSchool, .sLoveNum {
+        .cName {
           display: inline-block;
           margin: 14px 10px;
-        }
-        i {
-          padding-right: 5px;
-          color: #DC143C;
+          width: 100%;
         }
       }
     }
@@ -105,7 +98,7 @@
     }
   }
   @media (min-width: 768px) {
-    .stuLeftBox {
+    .comLeftBox {
       position: absolute;
       top: 100px;
       left: 50px;
@@ -118,13 +111,15 @@
           overflow: hidden;
           padding: 40px 18px 0 15px;
         }
-        .studentInfo {
+        .companyInfo {
           display: inline-block;
-          margin: 38px 0 0;
+          margin: 30px 0 0;
           vertical-align: top;
-          .sSchool, .sLoveNum {
+          .cName {
             display: block;
             margin: 14px 0;
+            width: 135px;
+            line-height: 20px;
           }
         }
       }

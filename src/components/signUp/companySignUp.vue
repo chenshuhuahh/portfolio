@@ -2,7 +2,7 @@
   <div class="companySignUp">
     <h1>Company Sign Up</h1>
     <div class="companySignUpSection">
-      <el-form ref="companycompanySignUpForm" :model="companySignUpForm" label-width="80px">
+      <el-form ref="companySignUpForm" :model="companySignUpForm" label-width="80px">
         <el-form-item label="公司名称">
           <el-input id="cName" v-model="companySignUpForm.cName" placeholder="请输入公司名称"></el-input>
         </el-form-item>
@@ -53,19 +53,6 @@
         imageUrl: '',
         companySignUpForm: {
           cName: '',
-          grades: [{
-            value: '选项1',
-            label: '大一'
-          }, {
-            value: '选项2',
-            label: '大二'
-          }, {
-            value: '选项3',
-            label: '大三'
-          }, {
-            value: '选项4',
-            label: '大四'
-          }],
           province: '',
           city: '',
           town: '',
@@ -101,7 +88,6 @@
         }
         return isJPG && isLt2M;
       }
-
     }
   };
 </script>
@@ -129,10 +115,6 @@
       padding: 0 30px 0 15px;
       .el-form-item__label {
         color: #fff;
-      }
-      .cAddressSelect {
-        margin-top: 10px;
-        margin-left: 0;
       }
       .cAddress {
         margin-top: 10px;
@@ -192,10 +174,6 @@
         -moz-box-shadow: 0 2px 5px rgba(0,0,0,.4);
         box-shadow: 0 2px 5px rgba(0,0,0,.4);
         border-radius: 5px;
-        .cAddressSelect {
-          margin-top: 0;
-          margin-left: 10px;
-        }
       }
     }
   }

@@ -17,12 +17,16 @@ import student from './components/student/student.vue';
 import stuInfoBox from './components/student/stuInfoBox.vue';
 import stuWorkUploadBox from './components/student/stuWorkUploadBox.vue';
 import stuWorkShowBox from './components/student/stuWorkShowBox.vue';
+import company from './components/company/company.vue';
+import comInfoBox from './components/company/comInfoBox.vue';
+import comInfoModify from './components/company/comInfoModify.vue';
+import comFavoriteWork from './components/company/comFavoriteWork.vue';
 
 import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import './common/styles/index.scss';
 import './assets/css/iconfont.css';
-import { emoji } from './api/emoji.js';
+import {emoji} from './api/emoji.js';
 
 Vue.prototype.emoji = emoji;
 Vue.use(VueRouter);
@@ -75,6 +79,15 @@ const routes = [
       {path: '/student/stuWorkUploadBox', component: stuWorkUploadBox},
       {path: '/student/stuWorkShowBox', component: stuWorkShowBox}
     ]
+  },
+  {
+    path: '/company',
+    component: company,
+    children: [
+      {path: '/company/comInfoBox', component: comInfoBox},
+      {path: '/company/comInfoModify', component: comInfoModify},
+      {path: '/company/comFavoriteWork', component: comFavoriteWork}
+    ]
   }
 ];
 
@@ -83,23 +96,22 @@ const router = new VueRouter({
   routes,
   mode: 'history',
   linkActiveClass: 'active',
-  // 所有路由新页面滚动到顶部：
   scrollBehavior (to, from, savedPosition) {
-    return {x: 0, y: 0};
+    // 如果你的連結是帶 # 這種
+    // to.hash 就會有值(值就是連結)
+    // 例如 #3
+    if (to.hash) {
+      return {
+        // 這個是透過 to.hash 的值來找到對應的元素
+        // 照你的 html 來看是不用多加處理這樣就可以了
+        // 例如你按下 #3 的連結，就會變成 querySelector('#3')，自然會找到 id = 3 的元素
+        selector: to.hash
+      };
+    } else {
+      // 所有路由新页面滚动到顶部：
+      return {x: 0, y: 0};
+    }
   }
-  /* scrollBehavior (to, from, savedPosition) {
-   // 如果你的連結是帶 # 這種
-   // to.hash 就會有值(值就是連結)
-   // 例如 #3
-   if (to.hash) {
-   return {
-   // 這個是透過 to.hash 的值來找到對應的元素
-   // 照你的 html 來看是不用多加處理這樣就可以了
-   // 例如你按下 #3 的連結，就會變成 querySelector('#3')，自然會找到 id = 3 的元素
-   selector: to.hash
-   };
-   }
-   } */
 });
 
 /* eslint-disable no-new */
@@ -111,4 +123,4 @@ new Vue({
 });
 
 // 编程式导航
-router.push({path: '/summary'});
+router.push({path: '/company'});

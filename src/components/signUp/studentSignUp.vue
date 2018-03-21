@@ -6,8 +6,8 @@
         <el-form-item label="姓名">
           <el-input id="sName" v-model="studentSignUpForm.sName" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="手机">
-          <el-input id="sPhone" v-model="studentSignUpForm.sPhone" placeholder="请输入手机号"></el-input>
+        <el-form-item label="邮箱">
+          <el-input id="sEmail" v-model="studentSignUpForm.sEmail" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item label="学校">
           <el-input id="sSchool" v-model="studentSignUpForm.sSchool" placeholder="请输入学校"></el-input>
@@ -48,7 +48,7 @@
       return {
         studentSignUpForm: {
           sName: '',
-          sPhone: '',
+          sEmail: '',
           sSchool: '',
           grades: [{
             value: '选项1',

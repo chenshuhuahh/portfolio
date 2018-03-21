@@ -1,26 +1,26 @@
 <template>
-  <div class="studentContainer">
-    <stuLeftBox></stuLeftBox>
+  <div class="companyContainer">
+    <comLeftBox></comLeftBox>
     <bothContentBox></bothContentBox>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import stuLeftBox from './stuLeftBox';
+  import comLeftBox from './comLeftBox';
   import bothContentBox from '../bothContentBox/bothContentBox';
   export default {
     data () {
       return {};
     },
     components: {
-      stuLeftBox,
+      comLeftBox,
       bothContentBox
     }
   };
 </script>
 
 <style lang="scss" type="text/scss">
-  .studentContainer {
+  .companyContainer {
     width: 100%;
     height: 100%;
     padding-top: 60px;
@@ -28,7 +28,7 @@
     text-align: center;
   }
   @media (min-width: 768px) {
-    .studentContainer {
+    .companyContainer {
       position: relative;
       padding-top: 100px;
       padding-bottom: 80px;

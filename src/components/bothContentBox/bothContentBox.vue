@@ -1,5 +1,5 @@
 <template>
-  <div class="stuContentBox">
+  <div class="bothContentBox">
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
@@ -15,9 +15,9 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .stuContentBox {}
+  .bothContentBox {}
   @media (min-width: 768px) {
-    .stuContentBox {
+    .bothContentBox {
       margin-left: 350px;
       margin-right: 50px;
       height: 835px;
