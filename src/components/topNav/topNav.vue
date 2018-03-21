@@ -7,7 +7,7 @@
           <i class="el-icon-close" v-show="isShowMobileMenu"></i>
         </div>
         <div class="foldActionMenu" @click="toggleActionMenu">
-          <i class="icon-reddit" v-show="!isShowMobileActionMenu"></i>
+          <i class="icon-smile" v-show="!isShowMobileActionMenu"></i>
           <i class="el-icon-close" v-show="isShowMobileActionMenu"></i>
         </div>
         <div class="logo">logo</div>

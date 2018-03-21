@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'sell-icon';
-  src:  url('../fonts/sell-icon.eot?hgp43e');
-  src:  url('../fonts/sell-icon.eot?hgp43e#iefix') format('embedded-opentype'),
-    url('../fonts/sell-icon.ttf?hgp43e') format('truetype'),
-    url('../fonts/sell-icon.woff?hgp43e') format('woff'),
-    url('../fonts/sell-icon.svg?hgp43e#sell-icon') format('svg');
+  src:  url('../fonts/sell-icon.eot?ckqq5q');
+  src:  url('../fonts/sell-icon.eot?ckqq5q#iefix') format('embedded-opentype'),
+    url('../fonts/sell-icon.ttf?ckqq5q') format('truetype'),
+    url('../fonts/sell-icon.woff?ckqq5q') format('woff'),
+    url('../fonts/sell-icon.svg?ckqq5q#sell-icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -30,6 +30,9 @@
 .icon-ruler:before {
   content: "\e901";
 }
+.icon-quill:before {
+  content: "\e907";
+}
 .icon-pen:before {
   content: "\e908";
 }
@@ -39,8 +42,29 @@
 .icon-pacman:before {
   content: "\e916";
 }
+.icon-compass:before {
+  content: "\e949";
+}
+.icon-user:before {
+  content: "\e971";
+}
+.icon-user-tie:before {
+  content: "\e976";
+}
+.icon-airplane:before {
+  content: "\e9af";
+}
 .icon-menu:before {
   content: "\e9bd";
+}
+.icon-heart:before {
+  content: "\e9da";
+}
+.icon-smile:before {
+  content: "\e9e1";
+}
+.icon-hipster:before {
+  content: "\e9f9";
 }
 .icon-reddit:before {
   content: "\eac6";
