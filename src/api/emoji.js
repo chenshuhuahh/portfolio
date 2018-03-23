@@ -13,11 +13,10 @@ Object.values(data).forEach(item => {
  */
 
 export function emoji(value) {
-  if (!value) {
-    return Object.keys(emojiData).forEach(item => {
-      value = value.replace(new RegExp(item, 'g'), createIcon(item));
-    });
-  }
+  if (!value) return;
+  Object.keys(emojiData).forEach(item => {
+    value = value.replace(new RegExp(item, 'g'), createIcon(item));
+  });
   return value;
 };
 

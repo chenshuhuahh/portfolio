@@ -10,7 +10,7 @@
           <i class="icon-smile" v-show="!isShowMobileActionMenu"></i>
           <i class="el-icon-close" v-show="isShowMobileActionMenu"></i>
         </div>
-        <div class="logo">logo</div>
+        <div class="logo"></div>
         <ul class="actionMenu">
           <li class="signUp"><router-link to="/signUp">Sign Up</router-link></li>
           <li class="logIn"><router-link to="/logIn">Log In</router-link></li>
@@ -18,7 +18,7 @@
         <ul class="mainMenu">
           <li><router-link to="/summary">概述</router-link></li>
           <li><router-link to="/workShow">作品栏</router-link></li>
-          <li><router-link to="/company/comInfoBox">学生/企业</router-link></li>
+          <li><router-link to="/student/stuInfoBox">学生/企业</router-link></li>
         </ul>
       </div>
     </nav>
@@ -71,7 +71,6 @@
   .topNav {
     font-size: 14px;
     background-color: rgba(0, 0, 0, .6);
-    padding: 18px 0 16px;
     -webkit-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
     -moz-box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
     box-shadow: 0 7px 47px -10px rgba(0, 0, 0, .5);
@@ -89,6 +88,7 @@
       .foldMenu {
         float: left;
         margin-left: 20px;
+        padding: 18px 0 16px;
         img {
           width: 25px;
           height: 16px;
@@ -101,14 +101,18 @@
         }
       }
       .logo {
-        width: 100px;
-        height: 20px;
-        background: #f82d2d;
+        width: 50px;
+        height: 59px;
         margin: 0 auto;
+        background-image: url("logo2.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
       }
       .foldActionMenu {
         float: right;
         margin-right: 20px;
+        padding: 18px 0 16px;
         img {
           width: 25px;
           height: 16px;
@@ -200,7 +204,9 @@
         }
         .logo {
           float: left;
-          margin-left: 20px;
+          width: 200px;
+          height: 45px;
+          background-image: url("logo1.png");
         }
         .foldActionMenu {
           display: none;
@@ -209,6 +215,7 @@
           display: block;
           float: right;
           margin: 0 5px 0 0;
+          padding: 18px 0 16px;
           li {
             display: block;
             float: left;
@@ -235,6 +242,7 @@
           display: block;
           text-align: center;
           margin: 3px 0 0;
+          padding: 18px 0 16px;
           li {
             display: inline;
             padding-right: 27px;

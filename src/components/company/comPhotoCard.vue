@@ -1,23 +1,17 @@
 <template>
-  <div class="stuPhotoCard">
+  <div class="comPhotoCard">
     <div class="imageGrid">
       <img :src="item.imgSrc" alt="" class="imgResponsive"/>
       <div class="imagePos">
         <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
           <i class="el-icon-view"></i>
         </router-link>
-        <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
-          <i class="el-icon-edit"></i>
-        </router-link>
-        <div class="iconBox" @click="openDelMassage">
-          <i class="el-icon-delete"></i>
-        </div>
       </div>
     </div>
     <div class="infoGrid">
       <div class="workTitle">
         <h4>{{item.workTitle}}</h4>
-        <span><i class="icon-heart"></i>{{item.loveNum}}</span>
+        <span @click="cancleCollect"><i class="icon-heart"></i>{{item.loveNum}}</span>
       </div>
       <p class="workDesc">{{item.workDesc}}</p>
     </div>
@@ -35,22 +29,22 @@
       return {};
     },
     methods: {
-      openDelMassage() {
-        this.$confirm('此操作将永久删除该作品, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+      cancleCollect() {
+        this.$confirm('是否要取消对该商品的收藏?', '提示', {
+          confirmButtonText: '是',
+          cancelButtonText: '否',
           type: 'warning',
           center: true
         }).then(() => {
-          // 在这里做一些删除该作品的操作
+          // 在这里做一些删除该作品收藏记录的操作
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: '取消收藏成功!'
           });
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '未取消收藏'
           });
         });
       }
@@ -59,7 +53,7 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .stuPhotoCard {
+  .comPhotoCard {
     .imageGrid {
       position: relative;
       height: 250px;
@@ -111,6 +105,7 @@
         }
         span {
           float: right;
+          cursor: pointer;
           i {
             vertical-align: text-top;
             padding-right: 3px;
