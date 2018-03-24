@@ -31,7 +31,7 @@
     .studentContainer {
       position: relative;
       padding-top: 100px;
-      padding-bottom: 80px;
+      padding-bottom: 35px;
     }
   }
 </style>

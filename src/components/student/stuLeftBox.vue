@@ -130,7 +130,7 @@
       }
       .menu {
         width: 275px;
-        height: 647px;
+        height: 587px;
         text-align: left;
         .menu-ul {
           display: block;

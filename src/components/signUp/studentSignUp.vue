@@ -2,17 +2,17 @@
   <div class="studentSignUp">
     <h1>Student Sign Up</h1>
     <div class="studentSignUpSection">
-      <el-form ref="studentSignUpForm" :model="studentSignUpForm" label-width="75px">
-        <el-form-item label="姓名">
+      <el-form ref="studentSignUpForm" :model="studentSignUpForm" :rules="stuSignUpRules" label-width="77px">
+        <el-form-item label="姓名" prop="sName">
           <el-input id="sName" v-model="studentSignUpForm.sName" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="邮箱" prop="sEmail">
           <el-input id="sEmail" v-model="studentSignUpForm.sEmail" placeholder="请输入邮箱"></el-input>
         </el-form-item>
-        <el-form-item label="学校">
+        <el-form-item label="学校" prop="sSchool">
           <el-input id="sSchool" v-model="studentSignUpForm.sSchool" placeholder="请输入学校"></el-input>
         </el-form-item>
-        <el-form-item label="年级">
+        <el-form-item label="年级" prop="sGrade">
           <el-select v-model="studentSignUpForm.sGrade" clearable filterable placeholder="请选择年级">
             <el-option
               v-for="item in studentSignUpForm.grades"
@@ -22,18 +22,20 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="性别">
-          <el-radio v-model="studentSignUpForm.sex" label="1" border>男</el-radio>
-          <el-radio v-model="studentSignUpForm.sex" label="2" border>女</el-radio>
+        <el-form-item label="性别" prop="sex">
+          <el-radio-group v-model="studentSignUpForm.sex">
+            <el-radio label="1" border>男</el-radio>
+            <el-radio label="2" border>女</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input id="sPassword" v-model="studentSignUpForm.sPassword" placeholder="请输入密码"></el-input>
+        <el-form-item label="密码" prop="sPassword">
+          <el-input type="password" id="sPassword" v-model="studentSignUpForm.sPassword" placeholder="请输入密码"></el-input>
         </el-form-item>
-        <el-form-item label="确认密码">
-          <el-input id="sPasswordAgain" v-model="studentSignUpForm.sPasswordAgain" placeholder="请再次确认密码"></el-input>
+        <el-form-item label="确认密码" prop="sPasswordAgain">
+          <el-input type="password" id="sPasswordAgain" v-model="studentSignUpForm.sPasswordAgain" placeholder="请再次确认密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" class="registry">立即注册</el-button>
+          <el-button type="primary" @click="onSubmit('studentSignUpForm')" class="registry">立即注册</el-button>
           <a class="toLogIn" @click="goLogIn">已有账号，立即登录</a>
         </el-form-item>
       </el-form>
@@ -45,6 +47,25 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
+      var sPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入密码'));
+        } else {
+          if (this.studentSignUpForm.sPasswordAgain !== '') {
+            this.$refs.studentSignUpForm.validateField('sPasswordAgain');
+          }
+          callback();
+        }
+      };
+      var checksPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+        } else if (value !== this.studentSignUpForm.sPassword) {
+          callback(new Error('两次输入密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         studentSignUpForm: {
           sName: '',
@@ -67,12 +88,44 @@
           sPassword: '',
           sPasswordAgain: '',
           sex: '1'
+        },
+        stuSignUpRules: {
+          sName: [
+            { required: true, message: '请输入姓名', trigger: 'blur' }
+//            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          ],
+          sEmail: [
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+          ],
+          sSchool: [
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' }
+          ],
+          sGrade: [
+            { required: true, message: '请选择年级', trigger: 'change' }
+          ],
+          sPassword: [
+            { required: true, validator: sPass, trigger: 'blur' }
+          ],
+          sPasswordAgain: [
+            { required: true, validator: checksPass, trigger: 'blur' }
+          ],
+          sex: [
+            { required: true, message: '请选择性别', trigger: 'change' }
+          ]
         }
       };
     },
     methods: {
-      onSubmit() {
-        console.log('registry');
+      onSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
       goLogIn() {
         this.$router.push({path: '/logIn'});
@@ -102,7 +155,7 @@
     .studentSignUpSection {
       text-align: left;
       padding: 0 30px;
-      .el-form-item__label {
+      .el-form-item__label, .el-radio {
         color: #fff;
       }
       .registry {

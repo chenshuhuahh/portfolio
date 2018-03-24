@@ -14,30 +14,27 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
-          <el-form-item label="昵称">
-            <el-input v-model="basicInfoForm.stuNickname" placeholder="给自己取个特别的昵称"></el-input>
-          </el-form-item>
           <el-form-item label="简介">
             <el-input type="textarea" :rows="3" v-model="basicInfoForm.stuIntro" placeholder="简单介绍自己"></el-input>
           </el-form-item>
-          <el-button plain class="submit">提交</el-button>
+          <el-button plain class="submit" @click="onExtendSubmit">提交</el-button>
         </el-form>
       </div>
     </div>
     <div class="passwordModify">
       <div class="grayBox">
         <div class="pswMain">
-          <el-form ref="pwsModifyForm" :model="pwsModifyForm" label-width="82px">
-            <el-form-item label="原始密码">
-              <el-input v-model="pwsModifyForm.sOldPassword"></el-input>
+          <el-form ref="pswModifyForm" :model="pswModifyForm" :rules="pswModifyRules" label-width="91px">
+            <el-form-item label="原始密码" prop="sOldPassword">
+              <el-input type="password" v-model="pswModifyForm.sOldPassword"></el-input>
             </el-form-item>
-            <el-form-item label="新密码">
-              <el-input v-model="pwsModifyForm.sNewPassword"></el-input>
+            <el-form-item label="新密码" prop="sNewPassword">
+              <el-input type="password" v-model="pswModifyForm.sNewPassword"></el-input>
             </el-form-item>
-            <el-form-item label="确认新密码">
-              <el-input v-model="pwsModifyForm.sNewPasswordAgain"></el-input>
+            <el-form-item label="确认新密码" prop="sNewPasswordAgain">
+              <el-input type="password" v-model="pswModifyForm.sNewPasswordAgain"></el-input>
             </el-form-item>
-            <el-button plain class="submit">确认修改</el-button>
+            <el-button plain class="submit" @click="onPasswordSubmit('pswModifyForm')">确认修改</el-button>
           </el-form>
         </div>
       </div>
@@ -48,16 +45,45 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
+      var sNewPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入新密码'));
+        } else {
+          if (this.pswModifyForm.sNewPasswordAgain !== '') {
+            this.$refs.pswModifyForm.validateField('sNewPasswordAgain');
+          }
+          callback();
+        }
+      };
+      var checksNewPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入新密码'));
+        } else if (value !== this.pswModifyForm.sNewPassword) {
+          callback(new Error('两次输入的新密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         imageUrl: '',
         basicInfoForm: {
-          stuNickname: '',
           stuIntro: ''
         },
-        pwsModifyForm: {
+        pswModifyForm: {
           sOldPassword: '',
           sNewPassword: '',
           sNewPasswordAgain: ''
+        },
+        pswModifyRules: {
+          sOldPassword: [
+            {required: true, message: '请输入旧密码', trigger: 'change'}
+          ],
+          sNewPassword: [
+            {required: true, validator: sNewPass, trigger: 'blur'}
+          ],
+          sNewPasswordAgain: [
+            {required: true, validator: checksNewPass, trigger: 'blur'}
+          ]
         }
       };
     },
@@ -76,6 +102,26 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      onExtendSubmit() {
+        if (this.imageUrl || this.basicInfoForm.stuIntro) {
+          this.$message({
+            message: '个人信息补充成功！',
+            type: 'success'
+          });
+        } else {
+          this.$message.error('请填写相关信息！');
+        }
+      },
+      onPasswordSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     }
   };
@@ -135,7 +181,7 @@
         .pswMain {
           width: 270px;
           margin: auto;
-          padding: 30px;
+          padding: 30px 9px;
           .el-form-item__label {
             text-align: left;
           }

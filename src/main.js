@@ -4,7 +4,8 @@ import Vue from 'vue';
 import App from './App';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
-import VueAreaLinkage from 'vue-area-linkage';
+import VueAreaLinkage from 'vue-area-linkage'; // 引入省市区多级联动
+import vueQuillEditor from 'vue-quill-editor'; // 引入富文本工具
 import summary from './components/summary/summary.vue';
 import signUp from './components/signUp/signUp.vue';
 import logIn from './components/logIn/logIn.vue';
@@ -22,16 +23,20 @@ import comInfoBox from './components/company/comInfoBox.vue';
 import comInfoModify from './components/company/comInfoModify.vue';
 import comFavoriteWork from './components/company/comFavoriteWork.vue';
 
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css'; // element-ui的样式
 import 'element-ui/lib/theme-chalk/display.css';
-import './common/styles/index.scss';
-import './assets/css/iconfont.css';
-import {emoji} from './api/emoji.js';
+import './common/styles/index.scss'; // 自己设计的样式
+import './assets/css/iconfont.css'; // 表情emoji的样式
+import 'quill/dist/quill.core.css'; // 富文本编辑器的样式
+import 'quill/dist/quill.snow.css';
+import 'quill/dist/quill.bubble.css';
+import {emoji} from './api/emoji.js'; // 表情emoji的js文件
 
-Vue.prototype.emoji = emoji;
+Vue.prototype.emoji = emoji; //
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 Vue.use(VueAreaLinkage);
+Vue.use(vueQuillEditor);
 
 Vue.config.productionTip = false;
 
@@ -123,4 +128,4 @@ new Vue({
 });
 
 // 编程式导航
-router.push({path: '/company'});
+router.push({path: '/summary'});

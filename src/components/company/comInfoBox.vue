@@ -15,26 +15,26 @@
             </el-upload>
           </el-form-item>
           <el-form-item label="简介">
-            <el-input type="textarea" :rows="6" v-model="basicInfoForm.stuIntro" placeholder="简单介绍公司情况"></el-input>
+            <el-input type="textarea" :rows="6" v-model="basicInfoForm.comIntro" placeholder="简单介绍公司情况"></el-input>
           </el-form-item>
-          <el-button plain class="submit">提交</el-button>
+          <el-button plain class="submit" @click="onExtendSubmit">提交</el-button>
         </el-form>
       </div>
     </div>
     <div class="passwordModify">
       <div class="grayBox">
         <div class="pswMain">
-          <el-form ref="pwsModifyForm" :model="pwsModifyForm" label-width="82px">
-            <el-form-item label="原始密码">
-              <el-input v-model="pwsModifyForm.sOldPassword"></el-input>
+          <el-form ref="pswModifyForm" :model="pswModifyForm" :rules="pswModifyRules" label-width="91px">
+            <el-form-item label="原始密码" prop="cOldPassword">
+              <el-input type="password" v-model="pswModifyForm.cOldPassword"></el-input>
             </el-form-item>
-            <el-form-item label="新密码">
-              <el-input v-model="pwsModifyForm.sNewPassword"></el-input>
+            <el-form-item label="新密码" prop="cNewPassword">
+              <el-input type="password" v-model="pswModifyForm.cNewPassword"></el-input>
             </el-form-item>
-            <el-form-item label="确认新密码">
-              <el-input v-model="pwsModifyForm.sNewPasswordAgain"></el-input>
+            <el-form-item label="确认新密码" prop="cNewPasswordAgain">
+              <el-input type="password" v-model="pswModifyForm.cNewPasswordAgain"></el-input>
             </el-form-item>
-            <el-button plain class="submit">确认修改</el-button>
+            <el-button plain class="submit" @click="onPasswordSubmit('pswModifyForm')">确认修改</el-button>
           </el-form>
         </div>
       </div>
@@ -45,15 +45,45 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
+      var cNewPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入新密码'));
+        } else {
+          if (this.pswModifyForm.cNewPasswordAgain !== '') {
+            this.$refs.pswModifyForm.validateField('cNewPasswordAgain');
+          }
+          callback();
+        }
+      };
+      var checkcNewPass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入新密码'));
+        } else if (value !== this.pswModifyForm.cNewPassword) {
+          callback(new Error('两次输入的新密码不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         imageUrl: '',
         basicInfoForm: {
           comIntro: ''
         },
-        pwsModifyForm: {
+        pswModifyForm: {
           cOldPassword: '',
           cNewPassword: '',
           cNewPasswordAgain: ''
+        },
+        pswModifyRules: {
+          cOldPassword: [
+            {required: true, message: '请输入旧密码', trigger: 'change'}
+          ],
+          cNewPassword: [
+            {required: true, validator: cNewPass, trigger: 'blur'}
+          ],
+          cNewPasswordAgain: [
+            {required: true, validator: checkcNewPass, trigger: 'blur'}
+          ]
         }
       };
     },
@@ -72,6 +102,26 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      onExtendSubmit() {
+        if (this.imageUrl || this.basicInfoForm.comIntro) {
+          this.$message({
+            message: '个人信息补充成功！',
+            type: 'success'
+          });
+        } else {
+          this.$message.error('请填写相关信息！');
+        }
+      },
+      onPasswordSubmit(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       }
     }
   };
@@ -131,7 +181,7 @@
         .pswMain {
           width: 270px;
           margin: auto;
-          padding: 30px;
+          padding: 30px 9px;
           .el-form-item__label {
             text-align: left;
           }

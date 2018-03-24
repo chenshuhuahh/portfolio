@@ -17,7 +17,11 @@
     </div>
     <div class="introductionBox">
       <h3>{{$route.params.workItem.workTitle}}</h3>
-      <span>({{$route.params.workItem.studentName}})</span>
+      <router-link :to="{name: 'sectionWorkShow',
+                             params: { workType: $route.params.workItem.studentName}}"
+      >
+        ({{$route.params.workItem.studentName}})
+      </router-link>
       <span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i class="icon-heart"></i>{{$route.params.workItem.loveNum}}</span>
       <p>{{$route.params.workItem.workDesc}}</p>
     </div>
