@@ -13,12 +13,12 @@
         <el-input v-model="workUploadForm.wName"></el-input>
       </el-form-item>
       <el-form-item label="作品简介">
-        <el-input v-model="workUploadForm.wSummary"></el-input>
+        <el-input type="textarea" :rows="2" v-model="workUploadForm.wSummary"></el-input>
       </el-form-item>
       <el-form-item label="图片上传(最多上传5张)" v-show="isUploadArticle">
         <!--action为必选参数，上传的地址-->
         <el-upload
-          style="margin-top: 50px;"
+          style="margin-top: 50px; text-align: left"
           v-model="workUploadForm.wPhoto"
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card"
@@ -32,7 +32,7 @@
           <img width="100%" :src="workUploadForm.dialogImageUrl" alt="">
         </el-dialog>
       </el-form-item>
-      <el-form-item label="作品描述 (若是*程序作品*最好附加作品链接方便进一步了解该作品)">
+      <el-form-item label="作品描述 (若是程序作品最好附加作品链接方便进一步了解该作品)">
         <quill-editor
           style="margin-top: 50px;"
           v-model="workUploadForm.detailContent"
@@ -40,14 +40,15 @@
         >
         </quill-editor>
       </el-form-item>
+      <el-button plain class="submit" @click="onUploadSubmit">上传作品</el-button>
     </el-form>
-    <div class="photoUpload"></div>
+    <!--<div class="photoUpload"></div>
     <div class="ql-container ql-snow">
       <div class="ql-editor" v-html="this.workUploadForm.detailContent">
       </div>
     </div>
     <div class="editorBox">
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -93,14 +94,19 @@
 <style lang="scss" type="text/scss">
   .stuWorkUploadBox {
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 50px;
     .ql-image, .ql-video {
       display: none !important;
     }
-    .el-form-item__content {
-      &:nth-child(3) {
-        margin-top: 50px !important;
-      }
+    .ql-picker {
+      height: 40px !important;
+    }
+    .submit {
+      width: 150px;
+      background: #50e3ce;
+      color: #fff;
+      border-radius: 5px;
+      text-align: center;
     }
   }
 </style>

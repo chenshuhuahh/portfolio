@@ -15,7 +15,6 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  .bothContentBox {}
   @media (min-width: 768px) {
     .bothContentBox {
       margin-left: 350px;
