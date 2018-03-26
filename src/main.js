@@ -2,6 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
+import Vuex from 'vuex';
+import store from './vuex/store';
+import axios from 'axios';
 import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
 import VueAreaLinkage from 'vue-area-linkage'; // 引入省市区多级联动
@@ -32,7 +35,9 @@ import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
 import {emoji} from './api/emoji.js'; // 表情emoji的js文件
 
-Vue.prototype.emoji = emoji; //
+Vue.prototype.emoji = emoji; // 改写原型链
+Vue.prototype.$ajax = axios;
+Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 Vue.use(VueAreaLinkage);
@@ -122,6 +127,7 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   components: {App},
   template: '<App/>'
