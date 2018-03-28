@@ -2,12 +2,15 @@
   <div class="stuLeftBox">
     <div class="info">
       <div class="portrait">
-        <img src="./18.jpg" />
+        <img src="./18.jpg"/>
       </div>
       <div class="studentInfo">
-        <div class="sName">Chloe</div>
-        <div class="sSchool">仲恺农业工程学院</div>
-        <div class="sLoveNum"><i class="icon-heart"></i>555</div>
+        <div class="sName">{{stuInfo.stu_name}}</div>
+        <div class="sSchool">{{stuInfo.stu_school}}</div>
+        <div class="sLoveNum"><i class="icon-heart"></i>222</div>
+        <el-tag type="info" size="medium" v-show="beforePass">未审核</el-tag>
+        <el-tag type="success" size="medium" v-show="isPass">审核通过</el-tag>
+        <el-tag type="danger" size="medium" v-show="notPass">审核不通过</el-tag>
       </div>
     </div>
     <div class="menu">
@@ -16,11 +19,11 @@
           <i class="el-icon-edit-outline"></i>
           <span>信息完善</span>
         </router-link>
-        <router-link class="menu-link" to="/student/stuWorkUploadBox" tag="li">
+        <router-link class="menu-link" to="/student/stuWorkUploadBox" tag="li" v-show="isPass">
           <i class="el-icon-upload2"></i>
           <span>作品上传</span>
         </router-link>
-        <router-link class="menu-link" to="/student/stuWorkShowBox" tag="li">
+        <router-link class="menu-link" to="/student/stuWorkShowBox" tag="li" v-show="isPass">
           <i class="el-icon-menu"></i>
           <span>作品展示</span>
         </router-link>
@@ -30,9 +33,32 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
-    data () {
-      return {};
+    data() {
+      return {
+        stuInfo: {},
+        isPass: false,
+        notPass: false,
+        beforePass: false
+      };
+    },
+    mounted() {
+      let params = new URLSearchParams();
+      params.append('action', 'showBaseInfo');
+      params.append('stuEmail', getCookie('stuEmail'));
+      this.$ajax.post('/api/studentBox.php', params)
+        .then((res) => {
+          console.log('res:', res);
+          this.stuInfo = res.data;
+          if (res.data.stu_status === '1') {
+            this.isPass = true;
+          } else if (res.data.stu_status === '-1') {
+            this.notPass = true;
+          } else {
+            this.beforePass = true;
+          }
+        });
     }
   };
 </script>
@@ -104,6 +130,7 @@
       }
     }
   }
+
   @media (min-width: 768px) {
     .stuLeftBox {
       position: absolute;
@@ -120,7 +147,7 @@
         }
         .studentInfo {
           display: inline-block;
-          margin: 38px 0 0;
+          margin: 28px 0 0;
           vertical-align: top;
           .sSchool, .sLoveNum {
             display: block;

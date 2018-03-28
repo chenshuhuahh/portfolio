@@ -33,7 +33,7 @@ import './assets/css/iconfont.css'; // 表情emoji的样式
 import 'quill/dist/quill.core.css'; // 富文本编辑器的样式
 import 'quill/dist/quill.snow.css';
 import 'quill/dist/quill.bubble.css';
-import {emoji} from './emojiapi/emoji.js'; // 表情emoji的js文件
+import {emoji} from './assets/js/emoji.js'; // 表情emoji的js文件
 
 Vue.prototype.emoji = emoji; // 改写原型链
 Vue.prototype.$ajax = axios;

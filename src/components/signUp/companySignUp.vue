@@ -17,7 +17,7 @@
           <el-input id="cPhone" v-model="companySignUpForm.cPhone" placeholder="请输入联系电话"></el-input>
         </el-form-item>
         <el-form-item label="联系邮箱" prop="cEMail">
-          <el-input id="cEMail" v-model="companySignUpForm.cEMail" placeholder="请输入联系邮箱"></el-input>
+          <el-input id="cEMail" v-model="companySignUpForm.cEMail" placeholder="联系邮箱将作为登录账号"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="cPassword">
           <el-input type="password" id="cPassword" v-model="companySignUpForm.cPassword" placeholder="请输入密码"></el-input>
@@ -99,7 +99,8 @@
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
           ],
           cPassword: [
-            { required: true, validator: cPass, trigger: 'blur' }
+            { required: true, validator: cPass, trigger: 'blur' },
+            { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
           ],
           cPasswordAgain: [
             { required: true, validator: checkcPass, trigger: 'blur' }

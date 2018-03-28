@@ -79,7 +79,8 @@
             {required: true, message: '请输入旧密码', trigger: 'change'}
           ],
           sNewPassword: [
-            {required: true, validator: sNewPass, trigger: 'blur'}
+            {required: true, validator: sNewPass, trigger: 'blur'},
+            { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
           ],
           sNewPasswordAgain: [
             {required: true, validator: checksNewPass, trigger: 'blur'}

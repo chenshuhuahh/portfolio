@@ -17,12 +17,6 @@
       <el-form-item label="联系邮箱">
         <el-input id="cEMail" v-model="comInfoModifyForm.cEMail" placeholder="请输入联系邮箱"></el-input>
       </el-form-item>
-      <el-form-item label="密码">
-        <el-input id="cPassword" v-model="comInfoModifyForm.cPassword" placeholder="请输入密码"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码">
-        <el-input id="cPasswordAgain" v-model="comInfoModifyForm.cPasswordAgain" placeholder="请再次确认密码"></el-input>
-      </el-form-item>
       <el-form-item label="营业执照">
         <el-upload
           class="avatar-uploader"
@@ -55,8 +49,6 @@
           cBoss: '',
           cPhone: '',
           cEMail: '',
-          cPassword: '',
-          cPasswordAgain: '',
           cLicence: ''
         }
       };

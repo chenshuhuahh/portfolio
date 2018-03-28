@@ -1,7 +1,7 @@
 <template>
   <div class="logInSection">
     <h1>Log In</h1>
-    <div class="bothLogInSection">
+    <div class="userLogInSection">
       <el-form ref="logInForm" :model="logInForm" :rules="logInRules" label-width="50px">
         <el-form-item label="角色" prop="role">
           <el-radio-group v-model="logInForm.role">
@@ -21,25 +21,11 @@
         </el-form-item>
       </el-form>
     </div>
-    <!--<div class="companyLogInSection">-->
-    <!--<el-form ref="companyLogInForm" :model="companyLogInForm" label-width="40px">-->
-    <!--<p class="title">Company</p>-->
-    <!--<el-form-item label="邮箱">-->
-    <!--<el-input id="cEMail" v-model="companyLogInForm.cEMail" placeholder="请输入联系邮箱"></el-input>-->
-    <!--</el-form-item>-->
-    <!--<el-form-item label="密码">-->
-    <!--<el-input id="cPassword" v-model="companyLogInForm.cPassword" placeholder="请输入密码"></el-input>-->
-    <!--</el-form-item>-->
-    <!--<el-form-item>-->
-    <!--<el-button type="primary" @click="onSubmit" class="log">登录</el-button>-->
-    <!--<a class="toCompanySignUp" @click="goCompanySignUp">还没账号，立即注册</a>-->
-    <!--</el-form-item>-->
-    <!--</el-form>-->
-    <!--</div>-->
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {setCookie, getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       return {
@@ -53,11 +39,10 @@
             {required: true, message: '请选择登录角色', trigger: 'change'}
           ],
           email: [
-            {required: true, message: '请输入登录邮箱', trigger: 'blur'},
-            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
+            {required: true, message: '请输入登录邮箱', trigger: 'blur'}
           ],
           pass: [
-            {required: true, message: '请输入密码', trigger: 'change'}
+            {required: true, message: '请输入密码', trigger: 'blur'}
           ]
         }
       };
@@ -66,7 +51,37 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let params = new URLSearchParams();
+            params.append('action', 'login');
+            params.append('user_email', this.logInForm.email);
+            params.append('user_psw', this.logInForm.pass);
+            params.append('role', this.logInForm.role);
+            this.$ajax.post('/api/loginAndSignUp.php', params)
+              .then((res) => {
+                console.log('res:', res);
+                if (res.data === '-1') {
+                  this.$message.error('该邮箱不存在');
+                } else if (res.data === '0') {
+                  this.$message.error('密码输入错误');
+                } else {
+                  this.$store.state.isRole = true;
+                  if (this.logInForm.role === '1') {
+                    setCookie('stuEmail', this.logInForm.email, 1000 * 60);
+                    setTimeout(function () {
+                      this.$router.push('/student/stuInfoBox');
+                    }.bind(this), 1000);
+                    this.$store.state.userRole = '学生';
+                    this.$store.state.userLink = '/student/stuInfoBox';
+                  } else {
+                    setTimeout(function () {
+                      setCookie('comEmail', this.logInForm.email, 1000 * 60);
+                      this.$router.push('/company/comInfoBox');
+                    }.bind(this), 1000);
+                    this.$store.state.userRole = '企业';
+                    this.$store.state.userLink = '/company/comInfoBox';
+                  }
+                }
+              });
           } else {
             console.log('error submit!!');
             return false;
@@ -80,9 +95,21 @@
           this.$router.push({path: '/signUp/company'});
         }
       }
-      /* goCompanySignUp() {
-       this.$router.push({path: '/signUp/company'});
-       } */
+    },
+    mounted() {
+      /* 页面挂载获取cookie，如果存在username的cookie，则跳转到主页，不需登录 */
+      if (getCookie('stuEmail')) {
+        this.$store.state.isRole = true;
+        this.$store.state.userRole = '学生';
+        this.$store.state.userLink = '/student/stuInfoBox';
+        this.$router.push('/student/stuInfoBox');
+      }
+      if (getCookie('comEmail')) {
+        this.$store.state.isRole = true;
+        this.$store.state.userRole = '企业';
+        this.$store.state.userLink = '/company/comInfoBox';
+        this.$router.push('/company/comInfoBox');
+      }
     }
   };
 </script>
@@ -110,7 +137,7 @@
       letter-spacing: 0.7px;
       margin-bottom: 16px;
     }
-    .bothLogInSection {
+    .userLogInSection {
       text-align: left;
       margin: 0 30px;
       padding-top: 20px;
@@ -137,7 +164,7 @@
         font-size: 35px;
         margin-bottom: 50px;
       }
-      .bothLogInSection {
+      .userLogInSection {
         display: inline-block;
         width: 350px;
         margin: auto;

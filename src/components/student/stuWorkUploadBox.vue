@@ -86,6 +86,9 @@
       handlePictureCardPreview(file) {
         this.dialogImageUrl = file.url;
         this.dialogVisible = true;
+      },
+      onUploadSubmit() {
+          alert('upload');
       }
     }
   };
@@ -107,6 +110,9 @@
       color: #fff;
       border-radius: 5px;
       text-align: center;
+    }
+    .el-radio {
+      margin-bottom: 10px;
     }
   }
 </style>

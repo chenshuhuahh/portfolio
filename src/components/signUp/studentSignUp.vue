@@ -7,7 +7,10 @@
           <el-input id="sName" v-model="studentSignUpForm.sName" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="邮箱" prop="sEmail">
-          <el-input id="sEmail" v-model="studentSignUpForm.sEmail" placeholder="请输入邮箱"></el-input>
+          <el-input id="sEmail" v-model="studentSignUpForm.sEmail" placeholder="邮箱将作为登录账号"></el-input>
+        </el-form-item>
+        <el-form-item label="学号" prop="sno">
+          <el-input id="sno" v-model.number="studentSignUpForm.sno" placeholder="请输入学号"></el-input>
         </el-form-item>
         <el-form-item label="学校" prop="sSchool">
           <el-input id="sSchool" v-model="studentSignUpForm.sSchool" placeholder="请输入学校"></el-input>
@@ -32,7 +35,8 @@
           <el-input type="password" id="sPassword" v-model="studentSignUpForm.sPassword" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="sPasswordAgain">
-          <el-input type="password" id="sPasswordAgain" v-model="studentSignUpForm.sPasswordAgain" placeholder="请再次确认密码"></el-input>
+          <el-input type="password" id="sPasswordAgain" v-model="studentSignUpForm.sPasswordAgain"
+                    placeholder="请再次确认密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit('studentSignUpForm')" class="registry">立即注册</el-button>
@@ -47,7 +51,7 @@
 <script type="text/ecmascript-6">
   export default {
     data () {
-      var sPass = (rule, value, callback) => {
+      let sPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
@@ -57,7 +61,7 @@
           callback();
         }
       };
-      var checksPass = (rule, value, callback) => {
+      let checksPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.studentSignUpForm.sPassword) {
@@ -70,18 +74,19 @@
         studentSignUpForm: {
           sName: '',
           sEmail: '',
+          sno: '',
           sSchool: '',
           grades: [{
-            value: '选项1',
+            value: '大一',
             label: '大一'
           }, {
-            value: '选项2',
+            value: '大二',
             label: '大二'
           }, {
-            value: '选项3',
+            value: '大三',
             label: '大三'
           }, {
-            value: '选项4',
+            value: '大四',
             label: '大四'
           }],
           sGrade: '',
@@ -91,27 +96,31 @@
         },
         stuSignUpRules: {
           sName: [
-            { required: true, message: '请输入姓名', trigger: 'blur' }
-//            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+            {required: true, message: '请输入姓名', trigger: 'blur'}
           ],
           sEmail: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-            { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+            {required: true, message: '请输入邮箱地址', trigger: 'blur'},
+            {type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change'}
+          ],
+          sno: [
+            {required: true, message: '请输入学号', trigger: 'blur'},
+            {type: 'number', message: '请输入正确的学号格式', trigger: 'blur,change'}
           ],
           sSchool: [
-            { required: true, message: '请输入邮箱地址', trigger: 'blur' }
+            {required: true, message: '请输入学校名称', trigger: 'blur'}
           ],
           sGrade: [
-            { required: true, message: '请选择年级', trigger: 'change' }
+            {required: true, message: '请选择年级', trigger: 'change'}
           ],
           sPassword: [
-            { required: true, validator: sPass, trigger: 'blur' }
+            {required: true, validator: sPass, trigger: 'blur'},
+            {min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur'}
           ],
           sPasswordAgain: [
-            { required: true, validator: checksPass, trigger: 'blur' }
+            {required: true, validator: checksPass, trigger: 'blur'}
           ],
           sex: [
-            { required: true, message: '请选择性别', trigger: 'change' }
+            {required: true, message: '请选择性别', trigger: 'change'}
           ]
         }
       };
@@ -120,7 +129,27 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let params = new URLSearchParams();
+            params.append('action', 'stuSignUp');
+            params.append('sName', this.studentSignUpForm.sName);
+            params.append('sno', this.studentSignUpForm.sno);
+            params.append('sSchool', this.studentSignUpForm.sSchool);
+            params.append('sGrade', this.studentSignUpForm.sGrade);
+            params.append('sex', this.studentSignUpForm.sex);
+            params.append('sEmail', this.studentSignUpForm.sEmail);
+            params.append('sPassword', this.studentSignUpForm.sPassword);
+            this.$ajax.post('/api/loginAndSignUp.php', params)
+              .then((res) => {
+                console.log('res:', res);
+                if (res.data === '1') {
+                  // 可以做一些邮箱的验证再跳转登录界面！！！
+                  setTimeout(function() {
+                    this.$router.push({path: '/logIn'});
+                  }.bind(this), 1000);
+                } else {
+                  this.$message.error('该邮箱已被注册，请检查邮箱是否填写正确！');
+                }
+              });
           } else {
             console.log('error submit!!');
             return false;
@@ -187,9 +216,9 @@
         padding-top: 20px;
         padding-bottom: 10px;
         margin-bottom: 0px;
-        -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.4);
-        -moz-box-shadow: 0 2px 5px rgba(0,0,0,.4);
-        box-shadow: 0 2px 5px rgba(0,0,0,.4);
+        -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+        -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
         border-radius: 5px;
       }
     }
