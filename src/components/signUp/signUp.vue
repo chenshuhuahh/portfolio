@@ -32,7 +32,7 @@
 
 <style lang="scss" type="text/scss">
   .signUpSection {
-    background-image: url(bg03.jpg);
+    background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg03.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -71,14 +71,14 @@
         border-bottom: 2px solid #fff;
         .studentImg {
           margin-bottom: 0;
-          background-image: url(studentIcon.png);
+          background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/studentIcon.png');
         }
       }
       .company {
         padding-top: 50px;
         padding-left: 0;
         .companyImg {
-          background-image: url(companyIcon.png);
+          background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/companyIcon.png');
         }
       }
     }

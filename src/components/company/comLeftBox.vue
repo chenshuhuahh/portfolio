@@ -5,8 +5,8 @@
         <img src="./18.jpg" />
       </div>
       <div class="companyInfo">
-        <div class="cName">有道翻译科技有限公司</div>
-        <div class="cBoss">张三</div>
+        <div class="cName">米莫印品</div>
+        <div class="cBoss">张雷</div>
       </div>
     </div>
     <div class="menu">

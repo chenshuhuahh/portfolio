@@ -2,7 +2,23 @@
   <div class="stuLeftBox">
     <div class="info">
       <div class="portrait">
-        <img src="./18.jpg"/>
+        <img :src="stuInfo.stu_avatar" @click="avatarUploadVisible = true"/>
+        <el-dialog title="头像上传" :visible.sync="avatarUploadVisible">
+          <el-upload
+            class="avatar-uploader"
+            action="http://upload-z2.qiniup.com/"
+            :show-file-list="false"
+            :data="postData"
+            :before-upload="beforeAvatarUpload"
+            :on-success="handleAvatarSuccess">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="avatarUploadVisible = false">取 消</el-button>
+            <el-button type="primary" @click="onAvatarSubmit">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
       <div class="studentInfo">
         <div class="sName">{{stuInfo.stu_name}}</div>
@@ -17,7 +33,7 @@
       <ul class="menu-ul">
         <router-link class="menu-link" to="/student/stuInfoBox" tag="li">
           <i class="el-icon-edit-outline"></i>
-          <span>信息完善</span>
+          <span>个人信息</span>
         </router-link>
         <router-link class="menu-link" to="/student/stuWorkUploadBox" tag="li" v-show="isPass">
           <i class="el-icon-upload2"></i>
@@ -25,7 +41,7 @@
         </router-link>
         <router-link class="menu-link" to="/student/stuWorkShowBox" tag="li" v-show="isPass">
           <i class="el-icon-menu"></i>
-          <span>作品展示</span>
+          <span>作品管理</span>
         </router-link>
       </ul>
     </div>
@@ -37,11 +53,57 @@
   export default {
     data() {
       return {
-        stuInfo: {},
+        postData: {
+          token: ''
+        },
+        imageUrl: '',
+        avatarUploadVisible: false,
+        stuInfo: {
+          stu_avatar: '../../assets/6.jpg'
+        },
         isPass: false,
         notPass: false,
         beforePass: false
       };
+    },
+    methods: {
+      handleAvatarSuccess(res) {
+        this.imageUrl = 'http://p6c2yqflv.bkt.clouddn.com/' + res.key;
+        console.log(res);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
+      onAvatarSubmit() {
+        if (this.imageUrl) {
+          this.avatarUploadVisible = false;
+          let params = new URLSearchParams();
+          params.append('action', 'uploadStuAvatar');
+          params.append('stuEmail', getCookie('stuEmail'));
+          params.append('stuAvatar', this.imageUrl);
+          this.$ajax.post('/api/studentBox.php', params)
+            .then((res) => {
+              console.log('555res:', res);
+              if (res.data === 1) {
+                this.$message({message: '头像上传成功！', type: 'success'});
+                this.stuInfo.stu_avatar = this.imageUrl;
+              } else {
+                this.$message.error('666！');
+              }
+            });
+        } else {
+          this.$message.error('请填写相关信息！');
+        }
+      }
     },
     mounted() {
       let params = new URLSearchParams();
@@ -59,6 +121,12 @@
             this.beforePass = true;
           }
         });
+    },
+    created() {
+      this.$ajax.get('/api/getUpToken.php').then(res => {
+        console.log('res', res);
+        this.postData.token = res.data;
+      });
     }
   };
 </script>
@@ -73,6 +141,7 @@
       .portrait {
         padding-top: 20px;
         img {
+          cursor: pointer;
           width: 80px;
           height: 80px;
           -webkit-border-radius: 40px;
@@ -80,6 +149,29 @@
           -ms-border-radius: 40px;
           -o-border-radius: 40px;
           border-radius: 40px;
+        }
+        .avatar-uploader .el-upload {
+          border: 1px dashed #d9d9d9;
+          border-radius: 65px;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+          border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+          font-size: 28px;
+          color: #8c939d;
+          width: 130px;
+          height: 130px;
+          line-height: 130px;
+          text-align: center;
+        }
+        .avatar {
+          width: 130px;
+          height: 130px;
+          display: block;
         }
       }
       .studentInfo {

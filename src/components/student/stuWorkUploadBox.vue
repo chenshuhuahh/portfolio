@@ -40,10 +40,11 @@
         >
         </quill-editor>
       </el-form-item>
+      <div class="photoUpload">{{workUploadForm.detailContent}}</div>
       <el-button plain class="submit" @click="onUploadSubmit">上传作品</el-button>
     </el-form>
-    <!--<div class="photoUpload"></div>
-    <div class="ql-container ql-snow">
+
+    <!--<div class="ql-container ql-snow">
       <div class="ql-editor" v-html="this.workUploadForm.detailContent">
       </div>
     </div>

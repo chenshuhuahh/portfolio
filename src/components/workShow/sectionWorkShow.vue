@@ -12,7 +12,7 @@
       <div class="puzzleIcon"></div>
     </div>
     <div class="searchWrong">
-      <img src="./timg.gif">
+      <img src="http://p6c2yqflv.bkt.clouddn.com/staticImg/timg.gif">
       <div class="wrongText"><span class="el-icon-warning"></span>&nbsp;抱歉 没搜索到您想要的作品</div>
     </div>
     <div class="sectionItemContainer">
@@ -32,9 +32,10 @@
         photoIntroduction: [
           {
             id: 1,
-            imgSrc: '../static/img/6.jpg',
+            imgSrc: '../static/img/24.jpg',
             workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
+            studentName: '雷神索尔',
+            loveNum: 2
           },
           {
             id: 2,
@@ -44,25 +45,32 @@
           },
           {
             id: 3,
-            imgSrc: '../static/img/6.jpg',
-            workTitle: '卡通造型',
-            studentName: '雷神索尔'
+            imgSrc: '../static/img/7.jpg',
+            workTitle: 'Dream',
+            studentName: '陈淑华',
+            loveNum: 10
           },
           {
             id: 4,
-            imgSrc: '../static/img/9.jpg',
+            imgSrc: '../static/img/19.jpg',
             workTitle: '卡通恶搞',
             studentName: '雷神索尔'
           },
           {
             id: 5,
-            imgSrc: '../static/img/9.jpg',
+            imgSrc: '../static/img/16.jpg',
             workTitle: '卡通恶搞造型',
             studentName: '雷神索尔'
           },
           {
             id: 6,
-            imgSrc: '../static/img/6.jpg',
+            imgSrc: '../static/img/25.jpg',
+            workTitle: '卡通恶搞造型',
+            studentName: '雷神索尔'
+          },
+          {
+            id: 7,
+            imgSrc: '../static/img/23.jpg',
             workTitle: '卡通恶搞造型',
             studentName: '雷神索尔'
           }
@@ -115,7 +123,7 @@
         width: 50px;
         height: 50px;
         margin: auto;
-        background-image: url(./puzzle.png);
+        background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/puzzle.png');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;

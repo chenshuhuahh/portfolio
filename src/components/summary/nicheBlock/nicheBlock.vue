@@ -21,22 +21,22 @@
         workType: [
           {
             id: 1,
-            imgSrc: './static/img/photographers.jpg',
+            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/photographers.jpg',
             typeTitle: '小摄影师'
           },
           {
             id: 2,
-            imgSrc: './static/img/architects.jpg',
+            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/architects.jpg',
             typeTitle: '小设计师'
           },
           {
             id: 3,
-            imgSrc: './static/img/writer.jpg',
+            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/writer.jpg',
             typeTitle: '小作家'
           },
           {
             id: 4,
-            imgSrc: './static/img/coder.jpg',
+            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/coder.jpg',
             typeTitle: '小程序员'
           }
         ]
@@ -47,7 +47,7 @@
 
 <style lang="scss" type="text/scss">
   .nicheBlock {
-    background-image: url(bg02.jpg);
+    background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg02.jpg');
     background-size: cover;
     background-position: top center;
     text-align: center;

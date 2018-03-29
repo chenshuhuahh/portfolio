@@ -177,7 +177,7 @@
         width: 50px;
         height: 59px;
         margin: 0 auto;
-        background-image: url("logo2.png");
+        background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/logo2.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: contain;
@@ -284,7 +284,7 @@
           float: left;
           width: 200px;
           height: 45px;
-          background-image: url("logo1.png");
+          background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/logo1.png');
         }
         .foldActionMenu {
           display: none;

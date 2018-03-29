@@ -146,7 +146,7 @@
 
 <style lang="scss" type="text/scss">
   .companySignUp {
-    background-image: url(bg03.jpg);
+    background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg03.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

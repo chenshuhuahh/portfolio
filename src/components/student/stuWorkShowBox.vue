@@ -15,16 +15,16 @@
           {
             id: 1,
             imgSrc: '../static/img/15.jpg',
-            workTitle: '卡通恶搞造型',
-            workDesc: '身陈建安死哦车非常的成交出纳室',
-            studentName: '雷神索尔',
+            workTitle: '明眸',
+            workDesc: '强烈的艺术感染力就是眼睛透出了撼人心魄的魅力',
+            studentName: '陈淑华',
             loveNum: 10
           },
           {
             id: 2,
             imgSrc: '../static/img/11.jpg',
-            workTitle: '恶搞造型',
-            workDesc: '身陈建安死哦车非常的成交出纳室',
+            workTitle: 'Nature',
+            workDesc: '大自然的美莫过于随意',
             studentName: '雷神索尔',
             loveNum: 5
           }
@@ -37,7 +37,7 @@
   };
 </script>
 
-<style lang="scss" type="text/scss">
+<style scoped lang="scss" type="text/scss">
   .stuWorkShowBox {
     .worksGrid {
       margin: auto auto 20px;
@@ -52,6 +52,7 @@
     .stuWorkShowBox {
       .worksGrid {
         display: inline-block;
+        vertical-align: top;
         margin: 0 10px 20px;
       }
     }

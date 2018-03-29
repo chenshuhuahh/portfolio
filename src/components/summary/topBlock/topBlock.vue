@@ -34,7 +34,7 @@
 <style lang="scss" type="text/scss">
   .topBlock {
     height: 640px;
-    background-image: url(bg01.jpg);
+    background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg01.jpg');
     background-position-x: 60%;
     background-position-y: bottom;
     background-attachment: fixed;
@@ -79,7 +79,7 @@
       }
     }
     .plexus {
-      background-image: url(plexus.png);
+      background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/plexus.png');
       width: 100%;
       height: 281px;
       background-repeat: no-repeat;

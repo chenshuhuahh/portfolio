@@ -11,7 +11,8 @@ const store = new Vuex.Store({
   state: {
     isRole: false,
     userRole: '',
-    userLink: ''
+    userLink: '',
+    stuAvatar: '../../assets/6.jpg'
   }
 });
 
