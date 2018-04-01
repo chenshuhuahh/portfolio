@@ -141,7 +141,7 @@
             this.$ajax.post('/api/loginAndSignUp.php', params)
               .then((res) => {
                 console.log('res:', res);
-                if (res.data === '1') {
+                if (res.data === 1) {
                   // 可以做一些邮箱的验证再跳转登录界面！！！
                   setTimeout(function() {
                     this.$router.push({path: '/logIn'});

@@ -53,6 +53,7 @@
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
         </div>
+        <div class="stripeBox"></div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
@@ -68,6 +69,7 @@
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
         </div>
+        <div class="stripeBox"></div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
@@ -83,6 +85,7 @@
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
         </div>
+        <div class="stripeBox"></div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
@@ -98,6 +101,7 @@
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
         </div>
+        <div class="stripeBox"></div>
         <div class="itemContainer">
           <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
@@ -164,7 +168,6 @@
         padding: 30px 0;
         .text {
           padding: 10px;
-          border-bottom: 1px solid #0a6999;
           color: gray;
           h4 {
             display: inline-block;
@@ -172,6 +175,13 @@
           a {
             float: right;
           }
+        }
+        .stripeBox {
+          width: 100%;
+          height: 8px;
+          border-radius: 20px;
+          background: linear-gradient(-45deg, #C0C0C0 16.7%, #D3D3D3 0, #D3D3D3 33.3%, #DCDCDC 0, #DCDCDC 50%, #C0C0C0 0, #C0C0C0 66.7%, #D3D3D3 0, #D3D3D3 83.5%, #DCDCDC 0);
+          background-size:50px 50px;
         }
         .itemContainer {
           text-align: center;

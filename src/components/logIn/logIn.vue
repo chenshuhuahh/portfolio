@@ -59,13 +59,13 @@
             this.$ajax.post('/api/loginAndSignUp.php', params)
               .then((res) => {
                 console.log('res:', res);
-                if (res.data === '-1') {
+                if (res.data === -1) {
                   this.$message.error('该邮箱不存在');
-                } else if (res.data === '0') {
+                } else if (res.data === 0) {
                   this.$message.error('密码输入错误');
                 } else {
                   this.$store.state.isRole = true;
-                  if (this.logInForm.role === '1') {
+                  if (this.logInForm.role === 1) {
                     setCookie('stuEmail', this.logInForm.email, 1000 * 60);
                     setTimeout(function () {
                       this.$router.push('/student/stuInfoBox');
