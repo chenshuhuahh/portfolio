@@ -142,7 +142,7 @@
               .then((res) => {
                 console.log('res:', res);
                 if (res.data === 1) {
-                  // 可以做一些邮箱的验证再跳转登录界面！！！
+                  // 可以做一些邮箱的进一步验证再跳转登录界面！！！
                   setTimeout(function() {
                     this.$router.push({path: '/logIn'});
                   }.bind(this), 1000);
@@ -151,7 +151,7 @@
                 }
               });
           } else {
-            console.log('error submit!!');
+            console.log('student sign up error submit!!');
             return false;
           }
         });
@@ -163,7 +163,7 @@
   };
 </script>
 
-<style lang="scss" type="text/scss">
+<style scoped lang="scss" type="text/scss">
   .studentSignUp {
     background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg03.jpg');
     background-size: cover;

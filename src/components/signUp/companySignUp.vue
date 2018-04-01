@@ -7,17 +7,14 @@
           <el-input id="cName" v-model="companySignUpForm.cName" placeholder="请输入公司名称"></el-input>
         </el-form-item>
         <el-form-item label="公司地址" prop="province">
-          <area-cascader :level='1' v-model="companySignUpForm.province" placeholder="请选择省市区"></area-cascader>
+          <area-cascader type="text" :level='1' v-model="companySignUpForm.province" placeholder="请选择省市区"></area-cascader>
           <el-input id="cAddress" class="cAddress" v-model="companySignUpForm.cAddress" placeholder="请输入街道地址"></el-input>
         </el-form-item>
         <el-form-item label="法定人" prop="cBoss">
           <el-input id="cBoss" class="cBoss" v-model="companySignUpForm.cBoss" placeholder="请输入公司法定人姓名"></el-input>
         </el-form-item>
-        <el-form-item label="联系电话" prop="cPhone">
-          <el-input id="cPhone" v-model="companySignUpForm.cPhone" placeholder="请输入联系电话"></el-input>
-        </el-form-item>
-        <el-form-item label="联系邮箱" prop="cEMail">
-          <el-input id="cEMail" v-model="companySignUpForm.cEMail" placeholder="联系邮箱将作为登录账号"></el-input>
+        <el-form-item label="联系邮箱" prop="cEmail">
+          <el-input id="cEmail" v-model="companySignUpForm.cEmail" placeholder="联系邮箱将作为登录账号"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="cPassword">
           <el-input type="password" id="cPassword" v-model="companySignUpForm.cPassword" placeholder="请输入密码"></el-input>
@@ -28,10 +25,11 @@
         <el-form-item label="营业执照" prop="cLicense">
           <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://upload-z2.qiniup.com/"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
+            :data="postData"
+            :before-upload="beforeAvatarUpload"
+            :on-success="handleAvatarSuccess">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
@@ -62,21 +60,23 @@
       var checkcPass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.studentSignUpForm.cPassword) {
+        } else if (value !== this.companySignUpForm.cPassword) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
         }
       };
       return {
+        postData: {
+          token: ''
+        },
         imageUrl: '',
         companySignUpForm: {
           cName: '',
-          province: '',
+          province: [],
           cAddress: '',
           cBoss: '',
-          cPhone: '',
-          cEMail: '',
+          cEmail: '',
           cPassword: '',
           cPasswordAgain: ''
         },
@@ -90,11 +90,7 @@
           cBoss: [
             { required: true, message: '请输入企业法定人', trigger: 'blur' }
           ],
-          cPhone: [
-            { required: true, message: '请输入企业联系电话', trigger: 'blur' },
-            { type: 'number', message: '请输入正确的联系电话', trigger: 'blur,change' }
-          ],
-          cEMail: [
+          cEmail: [
             { required: true, message: '请输入企业联系邮箱', trigger: 'blur' },
             { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
           ],
@@ -106,7 +102,7 @@
             { required: true, validator: checkcPass, trigger: 'blur' }
           ],
           cLicense: [
-            { required: true, message: '请上传企业营业执照', trigger: 'change' }
+            { required: true, message: '请上传企业营业执照', trigger: 'blur,change' }
           ]
         }
       };
@@ -115,9 +111,34 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            // wholeAddress存储的是完整地址
+            // 首先遍历province数组，拿到省市区，再和详细地址进行拼接
+            let wholeAddress = this.companySignUpForm.province.reduce(function(first, second) {
+              return first + second;
+            }, 0);
+            wholeAddress += this.companySignUpForm.cAddress;
+            let params = new URLSearchParams();
+            params.append('action', 'comSignUp');
+            params.append('cName', this.companySignUpForm.cName);
+            params.append('cAddress', wholeAddress);
+            params.append('cBoss', this.companySignUpForm.cBoss);
+            params.append('cLicense', this.imageUrl);
+            params.append('cEmail', this.companySignUpForm.cEmail);
+            params.append('cPassword', this.companySignUpForm.cPassword);
+            this.$ajax.post('/api/loginAndSignUp.php', params)
+              .then((res) => {
+                console.log('company sign up res:', res);
+                if (res.data === 1) {
+                  // 可以做一些邮箱的验证再跳转登录界面！！！
+                  setTimeout(function() {
+                    this.$router.push({path: '/logIn'});
+                  }.bind(this), 1000);
+                } else {
+                  this.$message.error('该邮箱已被注册，请检查邮箱是否填写正确！');
+                }
+              });
           } else {
-            console.log('error submit!!');
+            console.log('company sign up error submit!!');
             return false;
           }
         });
@@ -125,8 +146,9 @@
       goLogIn() {
         this.$router.push({path: '/logIn'});
       },
-      handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+      handleAvatarSuccess(res) {
+        this.imageUrl = 'http://p6c2yqflv.bkt.clouddn.com/' + res.key;
+        console.log('res cLicense', res);
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -140,11 +162,17 @@
         }
         return isJPG && isLt2M;
       }
+    },
+    created() {
+      this.$ajax.get('/api/getUpToken.php').then(res => {
+        console.log('company token res', res);
+        this.postData.token = res.data;
+      });
     }
   };
 </script>
 
-<style lang="scss" type="text/scss">
+<style scoped lang="scss" type="text/scss">
   .companySignUp {
     background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg03.jpg');
     background-size: cover;
@@ -165,21 +193,8 @@
     .companySignUpSection {
       text-align: left;
       padding: 0 30px 0 15px;
-      .el-form-item__label {
+      .el-form-item__label, .el-radio {
         color: #fff;
-      }
-      .cAddress {
-        margin-top: 10px;
-      }
-      .registry {
-        margin-right: 10px;
-      }
-      .toLogIn {
-        display: inline-block;
-        cursor: pointer;
-        &:hover {
-          color: #fff;
-        }
       }
       .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
@@ -203,6 +218,19 @@
         width: 250px;
         height: 178px;
         display: block;
+      }
+      .cAddress {
+        margin-top: 10px;
+      }
+      .registry {
+        margin-right: 10px;
+      }
+      .toLogIn {
+        display: inline-block;
+        cursor: pointer;
+        &:hover {
+          color: #fff;
+        }
       }
     }
     .transparentBox {
