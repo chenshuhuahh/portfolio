@@ -180,8 +180,9 @@
           width: 100%;
           height: 8px;
           border-radius: 20px;
-          background: linear-gradient(-45deg, #C0C0C0 16.7%, #D3D3D3 0, #D3D3D3 33.3%, #DCDCDC 0, #DCDCDC 50%, #C0C0C0 0, #C0C0C0 66.7%, #D3D3D3 0, #D3D3D3 83.5%, #DCDCDC 0);
-          background-size:50px 50px;
+          background: linear-gradient(-45deg, #C0C0C0 12.5%, #fff 0, #fff 25%, #D3D3D3 0, #D3D3D3 37.5%,
+            #fff 0, #fff 50%, #C0C0C0 0, #C0C0C0 62.5%, #fff 0, #FFF 75%, #D3D3D3 0, #D3D3D3 87.5%, #FFF 0);
+          background-size:60px 60px;
         }
         .itemContainer {
           text-align: center;

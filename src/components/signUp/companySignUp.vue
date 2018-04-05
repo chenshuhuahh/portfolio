@@ -172,7 +172,7 @@
   };
 </script>
 
-<style scoped lang="scss" type="text/scss">
+<style lang="scss" type="text/scss">
   .companySignUp {
     background-image: url('http://p6c2yqflv.bkt.clouddn.com/staticImg/bg03.jpg');
     background-size: cover;

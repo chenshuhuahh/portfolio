@@ -21,14 +21,14 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  /*省市区联动框样式*/
   .el-cascader-menus {
     .is-active {
       color: #fff !important;
     }
   }
-  /*.el-select-dropdown {
-    .selected {
-      color: #fff !important;
-    }
-  }*/
+  /*表单label样式*/
+  .el-form-item__label, .el-radio {
+    color: #fff;
+  }
 </style>
