@@ -150,6 +150,9 @@
           -o-border-radius: 40px;
           border-radius: 40px;
         }
+        .el-dialog {
+          width: 80%;
+        }
         .avatar-uploader .el-upload {
           border: 1px dashed #d9d9d9;
           border-radius: 65px;
@@ -236,6 +239,9 @@
           display: inline-block;
           overflow: hidden;
           padding: 40px 18px 0 15px;
+          .el-dialog {
+            width: 50%;
+          }
         }
         .studentInfo {
           display: inline-block;

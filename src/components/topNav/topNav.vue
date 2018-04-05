@@ -152,6 +152,9 @@
     width: 100%;
     z-index: 200;
     color: #fff;
+    .el-message-box {
+      width: 295px !important;
+    }
     ul {
       list-style: none;
     }

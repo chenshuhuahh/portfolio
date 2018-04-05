@@ -4,7 +4,7 @@
       <div class="infoMain">
         <el-form ref="basicInfoForm" :model="basicInfoForm" label-width="60px">
           <el-form-item label="简介">
-            <el-input type="textarea" :rows="3" v-model="basicInfoForm.stuIntro" placeholder="简单介绍自己"></el-input>
+            <el-input type="textarea" :rows="6" v-model="basicInfoForm.stuIntro" placeholder="简单介绍自己"></el-input>
           </el-form-item>
           <el-button plain class="submit" @click="onExtendSubmit">提交</el-button>
         </el-form>
@@ -112,7 +112,7 @@
       text-align: center;
       background-color: #fff;
       .infoMain {
-        width: 415px;
+        width: 300px;
         margin: auto;
         padding: 50px 0;
         .el-form-item__label {

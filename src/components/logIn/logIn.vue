@@ -65,16 +65,24 @@
                   this.$message.error('密码输入错误');
                 } else {
                   this.$store.state.isRole = true;
-                  if (this.logInForm.role === 1) {
+                  if (this.logInForm.role === '1') {
                     setCookie('stuEmail', this.logInForm.email, 1000 * 60);
+                    this.$message({
+                      message: '成功登录，即将跳转个人中心页面',
+                      type: 'success'
+                    });
                     setTimeout(function () {
                       this.$router.push('/student/stuInfoBox');
-                    }.bind(this), 1000);
+                    }.bind(this), 3000);
                     this.$store.state.userRole = '学生';
                     this.$store.state.userLink = '/student/stuInfoBox';
                   } else {
+                    setCookie('comEmail', this.logInForm.email, 1000 * 60);
+                    this.$message({
+                      message: '成功登录，即将跳转个人中心页面',
+                      type: 'success'
+                    });
                     setTimeout(function () {
-                      setCookie('comEmail', this.logInForm.email, 1000 * 60);
                       this.$router.push('/company/comInfoBox');
                     }.bind(this), 1000);
                     this.$store.state.userRole = '企业';

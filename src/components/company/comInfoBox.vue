@@ -3,17 +3,6 @@
     <div class="basicInfo">
       <div class="infoMain">
         <el-form ref="basicInfoForm" :model="basicInfoForm" label-width="50px">
-          <el-form-item label="公司标志">
-            <el-upload
-              class="avatar-uploader"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
-          </el-form-item>
           <el-form-item label="简介">
             <el-input type="textarea" :rows="6" v-model="basicInfoForm.comIntro" placeholder="简单介绍公司情况"></el-input>
           </el-form-item>
@@ -139,29 +128,6 @@
         padding: 50px 0;
         .el-form-item__label {
           text-align: left;
-        }
-        .avatar-uploader .el-upload {
-          border: 1px dashed #d9d9d9;
-          border-radius: 65px;
-          cursor: pointer;
-          position: relative;
-          overflow: hidden;
-        }
-        .avatar-uploader .el-upload:hover {
-          border-color: #409EFF;
-        }
-        .avatar-uploader-icon {
-          font-size: 28px;
-          color: #8c939d;
-          width: 130px;
-          height: 130px;
-          line-height: 130px;
-          text-align: center;
-        }
-        .avatar {
-          width: 130px;
-          height: 130px;
-          display: block;
         }
         .submit {
           width: 150px;

@@ -22,7 +22,7 @@
         <el-form-item label="确认密码" prop="cPasswordAgain">
           <el-input type="password" id="cPasswordAgain" v-model="companySignUpForm.cPasswordAgain" placeholder="请再次确认密码"></el-input>
         </el-form-item>
-        <el-form-item label="营业执照" prop="cLicense">
+        <el-form-item label="营业执照">
           <el-upload
             class="avatar-uploader"
             action="http://upload-z2.qiniup.com/"
@@ -100,9 +100,6 @@
           ],
           cPasswordAgain: [
             { required: true, validator: checkcPass, trigger: 'blur' }
-          ],
-          cLicense: [
-            { required: true, message: '请上传企业营业执照', trigger: 'blur,change' }
           ]
         }
       };
@@ -115,7 +112,7 @@
             // 首先遍历province数组，拿到省市区，再和详细地址进行拼接
             let wholeAddress = this.companySignUpForm.province.reduce(function(first, second) {
               return first + second;
-            }, 0);
+            });
             wholeAddress += this.companySignUpForm.cAddress;
             let params = new URLSearchParams();
             params.append('action', 'comSignUp');
@@ -130,11 +127,15 @@
                 console.log('company sign up res:', res);
                 if (res.data === 1) {
                   // 可以做一些邮箱的验证再跳转登录界面！！！
+                  this.$message({
+                    message: '注册成功，即将跳转登录界面',
+                    type: 'success'
+                  });
                   setTimeout(function() {
                     this.$router.push({path: '/logIn'});
-                  }.bind(this), 1000);
+                  }.bind(this), 3000);
                 } else {
-                  this.$message.error('该邮箱已被注册，请检查邮箱是否填写正确！');
+                  this.$message.error('注册失败，请重新填写注册信息');
                 }
               });
           } else {
@@ -152,15 +153,16 @@
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 2;
 
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        if (!isJPG && !isPNG) {
+          this.$message.error('上传头像图片是 JPG/PNG 格式!');
         }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
-        return isJPG && isLt2M;
+        return (isJPG || isPNG) && isLt2M;
       }
     },
     created() {

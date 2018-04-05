@@ -143,11 +143,15 @@
                 console.log('res:', res);
                 if (res.data === 1) {
                   // 可以做一些邮箱的进一步验证再跳转登录界面！！！
+                  this.$message({
+                    message: '注册成功，即将跳转登录界面',
+                    type: 'success'
+                  });
                   setTimeout(function() {
                     this.$router.push({path: '/logIn'});
-                  }.bind(this), 1000);
+                  }.bind(this), 3000);
                 } else {
-                  this.$message.error('该邮箱已被注册，请检查邮箱是否填写正确！');
+                  this.$message.error('注册失败，请重新填写注册信息');
                 }
               });
           } else {

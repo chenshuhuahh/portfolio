@@ -27,8 +27,8 @@ export default {
       color: #fff !important;
     }
   }
-  /*表单label样式*/
-  .el-form-item__label, .el-radio {
-    color: #fff;
+  /*弹出消息确认盒子*/
+  .el-message-box {
+    width: 295px !important;
   }
 </style>
