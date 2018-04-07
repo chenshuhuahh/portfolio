@@ -3,10 +3,10 @@
     <el-form ref="workUploadForm" :model="workUploadForm" label="top">
       <el-form-item label="作品分类">
         <el-radio-group v-model="workUploadForm.category" @change="handleCatChange">
-          <el-radio label="1" border >摄影作品</el-radio>
-          <el-radio label="2" border >设计作品</el-radio>
-          <el-radio label="3" border >文章作品</el-radio>
-          <el-radio label="4" border >程序作品</el-radio>
+          <el-radio label="1" border>摄影作品</el-radio>
+          <el-radio label="2" border>设计作品</el-radio>
+          <el-radio label="3" border>文章作品</el-radio>
+          <el-radio label="4" border>程序作品</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="作品标题">
@@ -19,12 +19,11 @@
         <!--action为必选参数，上传的地址-->
         <el-upload
           style="margin-top: 50px; text-align: left"
-          v-model="workUploadForm.wPhoto"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://upload-z2.qiniup.com/"
           list-type="picture-card"
+          :data="postData"
           :limit="5"
           :on-exceed="handleExceed"
-          :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove">
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -57,13 +56,15 @@
   export default {
     data () {
       return {
+        postData: {
+          token: ''
+        },
         isUploadArticle: true,
         editorOption: {}, // 富文本编辑器配置
         workUploadForm: {
           category: '1',
           wName: '',
           wSummary: '',
-          wPhoto: '',
           dialogVisible: false,
           dialogImageUrl: '',
           detailContent: '' // 富文本内容
@@ -78,19 +79,22 @@
           this.isUploadArticle = true;
         }
       },
+      // 超过限制个数时提醒用户
       handleExceed(files, fileList) {
         this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
       },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
       onUploadSubmit() {
-          alert('upload');
+        alert('upload');
       }
+    },
+    created() {
+      this.$ajax.get('/api/getUpToken.php').then(res => {
+        console.log('res', res);
+        this.postData.token = res.data;
+      });
     }
   };
 </script>
