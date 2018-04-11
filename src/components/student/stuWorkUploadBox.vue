@@ -16,14 +16,20 @@
         <el-input type="textarea" :rows="2" v-model="workUploadForm.wSummary"></el-input>
       </el-form-item>
       <el-form-item label="图片上传(最多上传5张)" v-show="isUploadArticle">
-        <!--action为必选参数，上传的地址-->
+        <!--action为必选参数，上传的地址
+            auto-upload是否选取文件后立即上传
+        -->
         <el-upload
           style="margin-top: 50px; text-align: left"
           action="http://upload-z2.qiniup.com/"
           list-type="picture-card"
+          ref="uploadWorks"
           :data="postData"
+          :auto-upload="false"
           :limit="5"
           :on-exceed="handleExceed"
+          :before-upload="beforeUpload"
+          :on-success="handleSuccess"
           :on-remove="handleRemove">
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -39,7 +45,6 @@
         >
         </quill-editor>
       </el-form-item>
-      <div class="photoUpload">{{workUploadForm.detailContent}}</div>
       <el-button plain class="submit" @click="onUploadSubmit">上传作品</el-button>
     </el-form>
 
@@ -53,12 +58,14 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       return {
         postData: {
           token: ''
         },
+        imageUrlList: [],
         isUploadArticle: true,
         editorOption: {}, // 富文本编辑器配置
         workUploadForm: {
@@ -83,18 +90,50 @@
       handleExceed(files, fileList) {
         this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
       },
+      beforeUpload() {
+        return this.$ajax.get('/api/getUpToken.php').then(res => {
+          console.log('res', res);
+          this.postData.token = res.data;
+        });
+      },
+      // 图片上传七牛云后所做的操作
+      handleSuccess(res) {
+        const imageUrl = 'http://p6c2yqflv.bkt.clouddn.com/' + res.key;
+        this.imageUrlList.push(imageUrl);
+      },
+      // 删除图片
       handleRemove(file, fileList) {
         console.log(file, fileList);
+        this.$message('已删除一张图片');
       },
+      // 确认上传作品信息
       onUploadSubmit() {
-        alert('upload');
+        this.$refs['uploadWorks'].submit();// 上传图片到七牛云
+        let photos = this.imageUrlList.join(',');
+        let params = new URLSearchParams();
+        params.append('action', 'workUpload');
+        params.append('stuEmail', getCookie('stuEmail'));
+        params.append('category', this.workUploadForm.category);
+        params.append('wName', this.workUploadForm.wName);
+        params.append('wSummary', this.workUploadForm.wSummary);
+        params.append('photos', photos);
+        params.append('detailContent', this.workUploadForm.detailContent);
+        this.$ajax.post('/api/studentBox.php', params)
+          .then((res) => {
+            console.log('works upload res:', res);
+            if (res.data === 1) {
+              this.$message({
+                message: '作品上传成功',
+                type: 'success'
+              });
+              setTimeout(function() {
+                this.$router.push({path: '/logIn'});
+              }.bind(this), 3000);
+            } else {
+              this.$message.error('作品上传失败，请重新填写上传的作品信息');
+            }
+          });
       }
-    },
-    created() {
-      this.$ajax.get('/api/getUpToken.php').then(res => {
-        console.log('res', res);
-        this.postData.token = res.data;
-      });
     }
   };
 </script>
