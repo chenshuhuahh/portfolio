@@ -32,6 +32,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       var sNewPass = (rule, value, callback) => {
@@ -78,16 +79,20 @@
     },
     methods: {
       onExtendSubmit() {
-        if (this.imageUrl || this.basicInfoForm.stuIntro) {
-//          let params = new URLSearchParams();
-//          params.append('action', 'showBaseInfo');
-//          params.append('stuEmail', getCookie('stuEmail'));
-//          params.append('stuDesc', this.basicInfoForm.stuIntro);
-//          this.$ajax.post('/api/studentBox.php', params)
-//            .then((res) => {
-//              console.log('res:', res);
-          this.$message({message: '个人信息补充成功！', type: 'success'});
-//            });
+        if (this.basicInfoForm.stuIntro) {
+          let params = new URLSearchParams();
+          params.append('action', 'ConsummateStuInfo');
+          params.append('stuEmail', getCookie('stuEmail'));
+          params.append('stuDesc', this.basicInfoForm.stuIntro);
+          this.$ajax.post('/api/studentBox.php', params)
+            .then((res) => {
+              console.log('ConsummateStuInfo res:', res);
+              if (res.data === 1) {
+                this.$message({message: '个人信息补充成功！', type: 'success'});
+              } else {
+                this.$message.error('个人信息补充失败！');
+              }
+            });
         } else {
           this.$message.error('请填写相关信息！');
         }
@@ -96,6 +101,22 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+            let params = new URLSearchParams();
+            params.append('action', 'stuChangePsw');
+            params.append('stuEmail', getCookie('stuEmail'));
+            params.append('stuOldPsw', this.pswModifyForm.sOldPassword);
+            params.append('stuNewPsw', this.pswModifyForm.sNewPassword);
+            this.$ajax.post('/api/studentBox.php', params)
+              .then((res) => {
+                console.log('stuChangePsw res:', res);
+                if (res.data === 1) {
+                  this.$message({message: '新密码修改成功！', type: 'success'});
+                } else if (res.data === -1) {
+                  this.$message.error('旧密码输入错误！');
+                } else {
+                  this.$message.error('密码修改失败！');
+                }
+              });
           } else {
             console.log('error submit!!');
             return false;

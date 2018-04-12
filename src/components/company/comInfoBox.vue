@@ -32,6 +32,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       var cNewPass = (rule, value, callback) => {
@@ -94,11 +95,20 @@
         return isJPG && isLt2M;
       },
       onExtendSubmit() {
-        if (this.imageUrl || this.basicInfoForm.comIntro) {
-          this.$message({
-            message: '个人信息补充成功！',
-            type: 'success'
-          });
+        if (this.basicInfoForm.comIntro) {
+          let params = new URLSearchParams();
+          params.append('action', 'ConsummateComInfo');
+          params.append('comEmail', getCookie('comEmail'));
+          params.append('comDesc', this.basicInfoForm.comIntro);
+          this.$ajax.post('/api/companyBox.php', params)
+            .then((res) => {
+              console.log(' ConsummateComInfo res:', res);
+              if (res.data === 1) {
+                this.$message({message: '企业简介补充成功！', type: 'success'});
+              } else {
+                this.$message.error('企业简介补充失败！');
+              }
+            });
         } else {
           this.$message.error('请填写相关信息！');
         }
@@ -107,6 +117,22 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             alert('submit!');
+            let params = new URLSearchParams();
+            params.append('action', 'comChangePsw');
+            params.append('comEmail', getCookie('comEmail'));
+            params.append('comOldPsw', this.pswModifyForm.cOldPassword);
+            params.append('comNewPsw', this.pswModifyForm.cNewPassword);
+            this.$ajax.post('/api/companyBox.php', params)
+              .then((res) => {
+                console.log('comChangePsw res:', res);
+                if (res.data === 1) {
+                  this.$message({message: '新密码修改成功！', type: 'success'});
+                } else if (res.data === -1) {
+                  this.$message.error('旧密码输入错误！');
+                } else {
+                  this.$message.error('密码修改失败！');
+                }
+              });
           } else {
             console.log('error submit!!');
             return false;
