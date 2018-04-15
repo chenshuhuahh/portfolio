@@ -92,6 +92,7 @@
               } else {
                 this.$message.error('个人信息补充失败！');
               }
+              this.basicInfoForm.stuIntro = '';
             });
         } else {
           this.$message.error('请填写相关信息！');
@@ -100,7 +101,6 @@
       onPasswordSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
             let params = new URLSearchParams();
             params.append('action', 'stuChangePsw');
             params.append('stuEmail', getCookie('stuEmail'));
@@ -116,6 +116,7 @@
                 } else {
                   this.$message.error('密码修改失败！');
                 }
+                this.$refs[formName].resetFields();
               });
           } else {
             console.log('error submit!!');

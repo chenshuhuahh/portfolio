@@ -109,30 +109,44 @@
       // 确认上传作品信息
       onUploadSubmit() {
         this.$refs['uploadWorks'].submit();// 上传图片到七牛云
-        let photos = this.imageUrlList.join(',');
-        let params = new URLSearchParams();
-        params.append('action', 'workUpload');
-        params.append('stuEmail', getCookie('stuEmail'));
-        params.append('category', this.workUploadForm.category);
-        params.append('wName', this.workUploadForm.wName);
-        params.append('wSummary', this.workUploadForm.wSummary);
-        params.append('photos', photos);
-        params.append('detailContent', this.workUploadForm.detailContent);
-        this.$ajax.post('/api/studentBox.php', params)
-          .then((res) => {
-            console.log('works upload res:', res);
-            if (res.data === 1) {
-              this.$message({
-                message: '作品上传成功',
-                type: 'success'
-              });
-              setTimeout(function() {
-                this.$router.push({path: '/logIn'});
-              }.bind(this), 3000);
-            } else {
-              this.$message.error('作品上传失败，请重新填写上传的作品信息');
-            }
-          });
+        // 利用定时保证图片上传七牛云成功，能获取到图片路径
+        setTimeout(function() {
+          let photos = this.imageUrlList.join(',');
+          let params = new URLSearchParams();
+          console.log(this.imageUrlList);
+          console.log(photos);
+          params.append('action', 'workUpload');
+           params.append('stuEmail', getCookie('stuEmail'));
+           params.append('category', this.workUploadForm.category);
+           params.append('wName', this.workUploadForm.wName);
+           params.append('wSummary', this.workUploadForm.wSummary);
+           params.append('photos', photos);
+           params.append('detailContent', this.workUploadForm.detailContent);
+           this.$ajax.post('/api/studentBox.php', params)
+           .then((res) => {
+           console.log('works upload res:', res);
+           if (res.data === 1) {
+           this.$message({
+           message: '作品上传成功',
+           type: 'success'
+           });
+           setTimeout(function() {
+           this.$router.push({path: '/student/stuWorkShowBox'});
+           }.bind(this), 1000);
+           } else {
+           this.$message.error('作品上传失败，请重新填写上传的作品信息');
+           }
+           this.workUploadForm = {
+           category: '1',
+           wName: '',
+           wSummary: '',
+           dialogVisible: false,
+           dialogImageUrl: '',
+           detailContent: '' // 富文本内容
+           };
+           this.$refs['uploadWorks'].clearFiles();
+           });
+        }.bind(this), 3000);
       }
     }
   };

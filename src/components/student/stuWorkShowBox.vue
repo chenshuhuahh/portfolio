@@ -8,31 +8,25 @@
 
 <script type="text/ecmascript-6">
   import stuPhotoCard from './stuPhotoCard.vue';
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       return {
-        photoIntroduction: [
-          {
-            id: 1,
-            imgSrc: '../static/img/15.jpg',
-            workTitle: '明眸',
-            workDesc: '强烈的艺术感染力就是眼睛透出了撼人心魄的魅力',
-            studentName: '陈淑华',
-            loveNum: 10
-          },
-          {
-            id: 2,
-            imgSrc: '../static/img/11.jpg',
-            workTitle: 'Nature',
-            workDesc: '大自然的美莫过于随意',
-            studentName: '雷神索尔',
-            loveNum: 5
-          }
-        ]
+        photoIntroduction: []
       };
     },
     components: {
       stuPhotoCard
+    },
+    mounted() {
+      let params = new URLSearchParams();
+      params.append('action', 'showStuWorks');
+      params.append('stuEmail', getCookie('stuEmail'));
+      this.$ajax.post('/api/studentBox.php', params)
+        .then((res) => {
+          console.log(' showStuWorks array res:', res);
+          this.photoIntroduction = res.data;
+        });
     }
   };
 </script>

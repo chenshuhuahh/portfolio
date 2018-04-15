@@ -108,6 +108,7 @@
               } else {
                 this.$message.error('企业简介补充失败！');
               }
+              this.basicInfoForm.comIntro = '';
             });
         } else {
           this.$message.error('请填写相关信息！');
@@ -132,6 +133,7 @@
                 } else {
                   this.$message.error('密码修改失败！');
                 }
+                this.$refs[formName].resetFields();
               });
           } else {
             console.log('error submit!!');

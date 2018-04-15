@@ -1,7 +1,7 @@
 <template>
   <div class="stuPhotoCard">
     <div class="imageGrid">
-      <img :src="item.imgSrc" alt="" class="imgResponsive"/>
+      <img :src="item.work_photo" alt="" class="imgResponsive"/>
       <div class="imagePos">
         <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
           <i class="el-icon-view"></i>
@@ -16,10 +16,10 @@
     </div>
     <div class="infoGrid">
       <div class="workTitle">
-        <h4>{{item.workTitle}}</h4>
-        <span><i class="icon-heart"></i>{{item.loveNum}}</span>
+        <h4>{{item.work_name}}</h4>
+        <span><i class="icon-heart"></i>0</span>
       </div>
-      <p class="workDesc">{{item.workDesc}}</p>
+      <p class="workDesc">{{item.work_summary}}</p>
     </div>
   </div>
 </template>

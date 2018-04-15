@@ -17,9 +17,9 @@
 <style lang="scss" type="text/scss">
   @media (min-width: 768px) {
     .bothContentBox {
+      height: 100%;
       margin-left: 350px;
       margin-right: 50px;
-      height: 835px;
     }
   }
 </style>
