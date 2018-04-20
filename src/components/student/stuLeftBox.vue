@@ -255,7 +255,7 @@
       }
       .menu {
         width: 275px;
-        height: 587px;
+        height: 355px;
         text-align: left;
         .menu-ul {
           display: block;

@@ -1,7 +1,7 @@
 <template>
   <div class="stuPhotoCard">
     <div class="imageGrid">
-      <img :src="item.work_photo" alt="" class="imgResponsive"/>
+      <img :src="onePhoto" alt="" class="imgResponsive"/>
       <div class="imagePos">
         <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
           <i class="el-icon-view"></i>
@@ -32,7 +32,9 @@
       }
     },
     data () {
-      return {};
+      return {
+        onePhoto: ''
+      };
     },
     methods: {
       openDelMassage() {
@@ -54,6 +56,9 @@
           });
         });
       }
+    },
+    created() {
+      this.onePhoto = (this.item.work_photo.split(','))[0];
     }
   };
 </script>
@@ -119,6 +124,7 @@
         }
       }
       .workDesc {
+        line-height: 15px;
         margin-top: 20px;
         font-size: 12px;
         color: #999;
