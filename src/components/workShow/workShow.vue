@@ -1,10 +1,6 @@
 <template>
   <div class="workShowSection">
     <div class="selectMenu">
-      <!--      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-              <el-radio-button :label="false" v-show="isCollapse"><i class="el-icon-arrow-down"></i></el-radio-button>
-              <el-radio-button :label="true" v-show="!isCollapse"><i class="el-icon-arrow-up"></i></el-radio-button>
-            </el-radio-group>-->
       <el-menu class="el-menu-vertical" :collapse="true">
         <a href="#photos">
           <el-menu-item index="1">
@@ -33,17 +29,6 @@
       </el-menu>
     </div>
     <div class="workMain">
-      <!--<section class="selectionBox">
-        <el-input placeholder="请输入内容" v-model="selectBox" class="input-with-select">
-          <el-select v-model="select" slot="prepend" placeholder="请选择">
-            <el-option label="摄影作品" value="1"></el-option>
-            <el-option label="设计作品" value="3"></el-option>
-            <el-option label="文章作品" value="2"></el-option>
-            <el-option label="程序作品" value="4"></el-option>
-          </el-select>
-          <el-button slot="append" icon="el-icon-search"></el-button>
-        </el-input>
-      </section>-->
       <section class="photos" id="photos">
         <div class="text">
           <h4>摄影作品</h4>
@@ -55,7 +40,7 @@
         </div>
         <div class="stripeBox"></div>
         <div class="itemContainer">
-          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+          <div v-for="item in photosList" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
           </div>
         </div>
@@ -71,7 +56,7 @@
         </div>
         <div class="stripeBox"></div>
         <div class="itemContainer">
-          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+          <div v-for="item in designsList" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
           </div>
         </div>
@@ -87,7 +72,7 @@
         </div>
         <div class="stripeBox"></div>
         <div class="itemContainer">
-          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+          <div v-for="item in articlesList" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
           </div>
         </div>
@@ -103,7 +88,7 @@
         </div>
         <div class="stripeBox"></div>
         <div class="itemContainer">
-          <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+          <div v-for="item in programsList" class="itemCard" :key="item.id">
             <photoCard :item="item"></photoCard>
           </div>
         </div>
@@ -119,29 +104,26 @@
       return {
         select: '',
         selectBox: '',
-//        isCollapse: true,
-        photoIntroduction: [
-          {
-            id: 1,
-            imgSrc: '../static/img/6.jpg',
-            workTitle: '卡通恶搞造型',
-            workDesc: '身陈建安死哦车非常的成交出纳室',
-            studentName: '雷神索尔1',
-            loveNum: 10
-          },
-          {
-            id: 2,
-            imgSrc: '../static/img/9.jpg',
-            workTitle: '恶搞造型',
-            workDesc: '身陈建安死哦车非常的成交出纳室',
-            studentName: '雷神索尔2',
-            loveNum: 5
-          }
-        ]
+        photosList: [],
+        designsList: [],
+        articlesList: [],
+        programsList: []
       };
     },
     components: {
       photoCard
+    },
+    mounted() {
+      let params = new URLSearchParams();
+      params.append('action', 'workListShow');
+      this.$ajax.post('/api/workShowBox.php', params)
+        .then((res) => {
+          console.log('workShowBox res:', res);
+          this.photosList = res.data[0];
+          this.designsList = res.data[1];
+          this.articlesList = res.data[2];
+          this.programsList = res.data[3];
+        });
     }
   };
 </script>
@@ -154,16 +136,6 @@
     }
     .workMain {
       margin: 40px;
-      /*.selectionBox {
-        padding-bottom: 0;
-        width: 500px;
-        .el-select .el-input {
-          width: 110px;
-        }
-        .input-with-select .el-input-group__prepend {
-          background-color: #fff;
-        }
-      }*/
       section {
         padding: 30px 0;
         .text {
@@ -201,15 +173,6 @@
         margin-top: 50px;
         position: fixed;
         z-index: 999;
-        /*.el-menu-vertical:not(.el-menu--collapse) {*/
-        /*width: 170px;*/
-        /*min-height: 235px;*/
-        /*.el-menu-item {*/
-        /*span {*/
-        /*margin-left: 5px;*/
-        /*}*/
-        /*}*/
-        /*}*/
         .el-menu-vertical {
           .el-menu-item {
             i {

@@ -51,7 +51,7 @@
     background-size: cover;
     background-position: top center;
     text-align: center;
-    padding: 0 20px;
+    padding: 20px;
     .niches {
       max-width: 760px;
       margin: 0 auto;

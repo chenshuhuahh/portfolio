@@ -1,10 +1,10 @@
 <template>
   <div class="imageContainer" @mouseenter="isShow=true" @mouseleave="isShow=false">
-    <img :src="item.imgSrc" alt="">
+    <img :src="onePhoto" alt="">
     <transition name="roll">
       <div class="introduction" v-show="isShow">
-        <h3 class="workTitle">{{item.workTitle}}</h3>
-        <span class="studentName">{{item.studentName}}</span>
+        <h3 class="workTitle">{{item.work_name}}</h3>
+        <span class="studentName">{{item.stu_name}}</span>
         <div class="iconLink">
           <router-link  :to="{name: 'workDetail',
                              params: { workItem: item}}"
@@ -26,14 +26,19 @@
     },
     data () {
       return {
-        isShow: false
+        isShow: false,
+        onePhoto: ''
       };
+    },
+    created() {
+      this.onePhoto = (this.item.work_photo.split(','))[0];
     }
   };
 </script>
 
 <style lang="scss" type="text/scss">
   .imageContainer {
+    max-width: 100%;
     height: 222px;
     margin: 15px 0;
     display: inline-block;

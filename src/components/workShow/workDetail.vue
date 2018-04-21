@@ -3,41 +3,32 @@
     <div class="puzzleIcon"></div>
     <div class="desktopBannerBox">
       <el-carousel :interval="3000" type="card" height="350px">
-        <el-carousel-item v-for="item in photoList" :key="item.id">
-          <img :src="item.imgItem"/>
+        <el-carousel-item v-for="item in $route.params.workItem.work_photo.split(',')" :key="item.id">
+          <img :src="item"/>
         </el-carousel-item>
       </el-carousel>
     </div>
     <div class="mobileBannerBox">
       <el-carousel height="250px">
-        <el-carousel-item v-for="item in photoList" :key="item.id">
-          <img :src="item.imgItem"/>
+        <el-carousel-item v-for="item in $route.params.workItem.work_photo.split(',')" :key="item.id">
+          <img :src="item"/>
         </el-carousel-item>
       </el-carousel>
     </div>
     <div class="introductionBox">
-      <h3>{{$route.params.workItem.workTitle}}</h3>
+      <h3>{{$route.params.workItem.work_name}}</h3>
       <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: $route.params.workItem.studentName}}"
+                        params: { workType: $route.params.workItem.stu_id}}"
       >
-        ({{$route.params.workItem.studentName}})
+        ({{$route.params.workItem.stu_name}})
       </router-link>
+      <!--<span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i
+        class="icon-heart"></i>{{$route.params.workItem.loveNum}}</span>-->
       <span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i
-        class="icon-heart"></i>{{$route.params.workItem.loveNum}}</span>
-      <!--<div>{{$route.params.workItem.workDesc}}</div>-->
-      <div>
-        <p>Dream 这一单词，不仅仅是对人而言，在动物的眼中，我们也看出其独特风趣的梦想。</p>
-        <p><span class="ql-font-monospace">拍摄地点：</span>路边</p>
-        <p><span class="ql-font-monospace">拍摄模特：</span><span style="color: rgb(107, 36, 178);">流浪猫狗</span></p>
-        <p><span class="ql-font-monospace">灵感奇想</span>：</p>
-        <p>
-          <strong>在乡下路边走的时候，看见了许许多多的猫猫狗狗四处游荡，它们用友好的目光注视着路上走走停停的路人，没有一点恶意，看着这情景，马上拿起手机拍摄下来</strong>
-        </p>
-        <p>
-          <strong class="ql-font-monospace">后期处理：</strong>
-          <strong>Photoshop<span class="ql-cursor"/></strong>
-        </p>
-        <p><br></p>
+        class="icon-heart"></i>5</span>
+      <div class="ql-container ql-snow">
+        <div class="ql-editor" v-html="$route.params.workItem.work_desc">
+        </div>
       </div>
     </div>
     <div class="commentBox">
@@ -80,12 +71,6 @@
     data () {
       return {
         activeNames: ['1'],
-        photoList: [
-          {imgItem: '../static/img/15.jpg'},
-          {imgItem: '../static/img/14.jpg'},
-          {imgItem: '../static/img/16.jpg'},
-          {imgItem: '../static/img/6.jpg'}
-        ],
         data: '',
         favorite: false
       };
@@ -147,11 +132,12 @@
       margin-bottom: 50px;
       h3 {
         font-size: 30px;
-        margin-bottom: 10px;
+        margin-bottom: 14px;
       }
       span {
         display: block;
-        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-bottom: 20px;
       }
       p {
         margin: 10px 0;
@@ -210,6 +196,7 @@
         h3 {
           font-size: 36px;
           display: inline-block;
+          margin-bottom: 50px;
         }
         span {
           display: inline-block;
