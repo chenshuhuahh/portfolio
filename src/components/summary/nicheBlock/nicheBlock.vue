@@ -4,7 +4,7 @@
       <div class="niches clearfix">
         <div v-for="item in workType" class="block" :key="item.id">
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: item.typeTitle}}">
+                             params: { workType: item.typeTitle, workList: item.workList}}">
           <img :src="item.imgSrc" alt="item.typeTitle">
           <div class="text">{{item.typeTitle}}</div>
           </router-link>
@@ -18,29 +18,49 @@
   export default {
     data () {
       return {
-        workType: [
-          {
-            id: 1,
-            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/photographers.jpg',
-            typeTitle: '小摄影师'
-          },
-          {
-            id: 2,
-            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/architects.jpg',
-            typeTitle: '小设计师'
-          },
-          {
-            id: 3,
-            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/writer.jpg',
-            typeTitle: '小作家'
-          },
-          {
-            id: 4,
-            imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/coder.jpg',
-            typeTitle: '小程序员'
-          }
-        ]
+        photosList: [],
+        designsList: [],
+        articlesList: [],
+        programsList: [],
+        workType: []
       };
+    },
+    created() {
+      let params = new URLSearchParams();
+      params.append('action', 'workListShow');
+      this.$ajax.post('/api/workShowBox.php', params)
+        .then((res) => {
+          this.photosList = res.data[0];
+          this.designsList = res.data[1];
+          this.articlesList = res.data[2];
+          this.programsList = res.data[3];
+          this.workType = [
+            {
+              id: 1,
+              imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/photographers.jpg',
+              typeTitle: '小摄影师',
+              workList: this.photosList
+            },
+            {
+              id: 2,
+              imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/architects.jpg',
+              typeTitle: '小设计师',
+              workList: this.designsList
+            },
+            {
+              id: 3,
+              imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/writer.jpg',
+              typeTitle: '小作家',
+              workList: this.articlesList
+            },
+            {
+              id: 4,
+              imgSrc: 'http://p6c2yqflv.bkt.clouddn.com/staticImg/coder.jpg',
+              typeTitle: '小程序员',
+              workList: this.programsList
+            }
+          ];
+        });
     }
   };
 </script>

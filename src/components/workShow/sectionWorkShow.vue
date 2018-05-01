@@ -16,7 +16,7 @@
       <div class="wrongText"><span class="el-icon-warning"></span>&nbsp;抱歉 没搜索到您想要的作品</div>
     </div>
     <div class="sectionItemContainer">
-      <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
+      <div v-for="item in $route.params.workList" class="itemCard" :key="item.id">
         <sectionPhotoCard :item="item"></sectionPhotoCard>
       </div>
     </div>
@@ -29,52 +29,7 @@
     data () {
       return {
         searchWork: '',
-        photoIntroduction: [
-          {
-            id: 1,
-            imgSrc: '../static/img/24.jpg',
-            workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔',
-            loveNum: 2
-          },
-          {
-            id: 2,
-            imgSrc: '../static/img/9.jpg',
-            workTitle: '恶搞造型',
-            studentName: '雷神索尔'
-          },
-          {
-            id: 3,
-            imgSrc: '../static/img/7.jpg',
-            workTitle: 'Dream',
-            studentName: '陈淑华',
-            loveNum: 10
-          },
-          {
-            id: 4,
-            imgSrc: '../static/img/19.jpg',
-            workTitle: '卡通恶搞',
-            studentName: '雷神索尔'
-          },
-          {
-            id: 5,
-            imgSrc: '../static/img/16.jpg',
-            workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
-          },
-          {
-            id: 6,
-            imgSrc: '../static/img/25.jpg',
-            workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
-          },
-          {
-            id: 7,
-            imgSrc: '../static/img/23.jpg',
-            workTitle: '卡通恶搞造型',
-            studentName: '雷神索尔'
-          }
-        ]
+        photoIntroduction: []
       };
     },
     components: {

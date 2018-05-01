@@ -157,10 +157,10 @@
         const isLt2M = file.size / 1024 / 1024 < 2;
 
         if (!isJPG && !isPNG) {
-          this.$message.error('上传头像图片是 JPG/PNG 格式!');
+          this.$message.error('上传营业执照图片是 JPG/PNG 格式!');
         }
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
+          this.$message.error('上传营业执照图片大小不能超过 2MB!');
         }
         return (isJPG || isPNG) && isLt2M;
       }

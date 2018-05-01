@@ -1,9 +1,9 @@
 <template>
   <div class="sectionImageContainer" @mouseenter="isShow=true" @mouseleave="isShow=false">
-    <img :src="item.imgSrc" alt="">
+    <img :src="onePhoto" alt="">
     <router-link class="introduction" v-show="isShow" :to="{name: 'workDetail', params: { workItem: item}}">
-      <h3 class="workTitle">{{item.workTitle}}</h3>
-      <span class="studentName">{{item.studentName}}</span>
+      <h3 class="workTitle">{{item.work_name}}</h3>
+      <span class="studentName">{{item.stu_name}}</span>
     </router-link>
   </div>
 </template>
@@ -17,8 +17,12 @@
     },
     data () {
       return {
-        isShow: false
+        isShow: false,
+        onePhoto: ''
       };
+    },
+    created() {
+      this.onePhoto = (this.item.work_photo.split(','))[0];
     }
   };
 </script>

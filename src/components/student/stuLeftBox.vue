@@ -97,7 +97,7 @@
                 this.$message({message: '头像上传成功！', type: 'success'});
                 this.stuInfo.stu_avatar = this.imageUrl;
               } else {
-                this.$message.error('666！');
+                this.$message.error('upload error！');
               }
             });
         } else {

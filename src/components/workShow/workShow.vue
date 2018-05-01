@@ -33,7 +33,7 @@
         <div class="text">
           <h4>摄影作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: '摄影'}}"
+                             params: { workType: '摄影', workList: photosList}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -49,7 +49,7 @@
         <div class="text">
           <h4>设计作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: '设计'}}"
+                             params: { workType: '设计', workList: designsList}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -65,7 +65,7 @@
         <div class="text">
           <h4>文章作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: '文章'}}"
+                             params: { workType: '文章', workList: articlesList}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>
@@ -81,7 +81,7 @@
         <div class="text">
           <h4>程序作品</h4>
           <router-link :to="{name: 'sectionWorkShow',
-                             params: { workType: '程序'}}"
+                             params: { workType: '程序', workList: programsList}}"
           >
             <i class="el-icon-d-arrow-right"></i>
           </router-link>

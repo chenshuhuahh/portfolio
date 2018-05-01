@@ -15,15 +15,26 @@
         <el-form-item label="学校" prop="sSchool">
           <el-input id="sSchool" v-model="studentSignUpForm.sSchool" placeholder="请输入学校"></el-input>
         </el-form-item>
-        <el-form-item label="年级" prop="sGrade">
-          <el-select v-model="studentSignUpForm.sGrade" clearable filterable placeholder="请选择年级">
-            <el-option
-              v-for="item in studentSignUpForm.grades"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
+        <el-form-item label="入学年份" prop="sGrade">
+          <el-date-picker
+            v-model="studentSignUpForm.sGrade"
+            type="year"
+            value-format="yyyy"
+            placeholder="选择年"
+            @change="getYearValue">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="学生证照">
+          <el-upload
+            class="avatar-uploader"
+            action="http://upload-z2.qiniup.com/"
+            :show-file-list="false"
+            :data="postData"
+            :before-upload="beforeAvatarUpload"
+            :on-success="handleAvatarSuccess">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </el-form-item>
         <el-form-item label="性别" prop="sex">
           <el-radio-group v-model="studentSignUpForm.sex">
@@ -71,24 +82,15 @@
         }
       };
       return {
+        postData: {
+          token: ''
+        },
+        imageUrl: '',
         studentSignUpForm: {
           sName: '',
           sEmail: '',
           sno: '',
           sSchool: '',
-          grades: [{
-            value: '大一',
-            label: '大一'
-          }, {
-            value: '大二',
-            label: '大二'
-          }, {
-            value: '大三',
-            label: '大三'
-          }, {
-            value: '大四',
-            label: '大四'
-          }],
           sGrade: '',
           sPassword: '',
           sPasswordAgain: '',
@@ -110,7 +112,7 @@
             {required: true, message: '请输入学校名称', trigger: 'blur'}
           ],
           sGrade: [
-            {required: true, message: '请选择年级', trigger: 'change'}
+            {required: true, message: '请选择入学年份', trigger: 'change'}
           ],
           sPassword: [
             {required: true, validator: sPass, trigger: 'blur'},
@@ -126,6 +128,9 @@
       };
     },
     methods: {
+      getYearValue(val) {
+        this.studentSignUpForm.sGrade = val;
+      },
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -135,6 +140,7 @@
             params.append('sno', this.studentSignUpForm.sno);
             params.append('sSchool', this.studentSignUpForm.sSchool);
             params.append('sGrade', this.studentSignUpForm.sGrade);
+            params.append('sCard', this.imageUrl);
             params.append('sex', this.studentSignUpForm.sex);
             params.append('sEmail', this.studentSignUpForm.sEmail);
             params.append('sPassword', this.studentSignUpForm.sPassword);
@@ -162,7 +168,30 @@
       },
       goLogIn() {
         this.$router.push({path: '/logIn'});
+      },
+      handleAvatarSuccess(res) {
+        this.imageUrl = 'http://p6c2yqflv.bkt.clouddn.com/' + res.key;
+        console.log('res cLicense', res);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isPNG = file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG && !isPNG) {
+          this.$message.error('上传学生证图片是 JPG/PNG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传学生证图片大小不能超过 2MB!');
+        }
+        return (isJPG || isPNG) && isLt2M;
       }
+    },
+    created() {
+      this.$ajax.get('/api/getUpToken.php').then(res => {
+        console.log('student token res', res);
+        this.postData.token = res.data;
+      });
     }
   };
 </script>
@@ -176,6 +205,9 @@
     background-attachment: fixed;
     text-align: center;
     color: #fff;
+    .el-input__prefix {
+      left: 34px;
+    }
     h1 {
       padding-top: 110px;
       text-align: center;
@@ -190,6 +222,29 @@
       padding: 0 30px;
       .el-form-item__label, .el-radio {
         color: #fff;
+      }
+      .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+      }
+      .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 250px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+      }
+      .avatar {
+        width: 250px;
+        height: 178px;
+        display: block;
       }
       .registry {
         margin-right: 10px;
