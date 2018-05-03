@@ -18,6 +18,7 @@
           <li class="logIn" v-show="!isRole">
             <router-link to="/logIn">Log In</router-link>
           </li>
+          <li v-show="isRole" class="welcome">Welcome， {{userName}}</li>
           <li class="logout" @click="logOut" v-show="isRole">注销</li>
         </ul>
         <ul class="mainMenu">
@@ -56,7 +57,6 @@
           </li>
           <li @click="toggleActionMenu" v-show="!isRole">
             <router-link to="/logIn">Log In</router-link>
-            >
           </li>
           <li class="logout" @click="logOut" v-show="isRole">注销</li>
         </ul>
@@ -119,11 +119,25 @@
         this.$store.state.isRole = true;
         this.$store.state.userRole = '学生';
         this.$store.state.userLink = '/student/stuInfoBox';
+        let params = new URLSearchParams();
+        params.append('action', 'showBaseInfo');
+        params.append('stuEmail', getCookie('stuEmail'));
+        this.$ajax.post('/api/studentBox.php', params)
+          .then((res) => {
+            this.$store.state.userName = res.data.stu_name;
+          });
       }
       if (getCookie('comEmail')) {
         this.$store.state.isRole = true;
         this.$store.state.userRole = '企业';
         this.$store.state.userLink = '/company/comInfoBox';
+        let params = new URLSearchParams();
+        params.append('action', 'showBaseInfo');
+        params.append('comEmail', getCookie('comEmail'));
+        this.$ajax.post('/api/companyBox.php', params)
+          .then((res) => {
+            this.$store.state.userName = res.data.com_name;
+          });
       }
     },
     computed: {
@@ -135,6 +149,9 @@
       },
       isRole() {
         return this.$store.state.isRole;
+      },
+      userName() {
+        return this.$store.state.userName;
       }
     }
   };
@@ -321,6 +338,9 @@
           .logout {
             cursor: pointer;
             color: #44b2e2;
+          }
+          .welcome {
+            color: #fff;
           }
         }
         .mainMenu {

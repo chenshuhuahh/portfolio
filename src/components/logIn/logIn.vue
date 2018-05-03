@@ -1,5 +1,5 @@
 <template>
-  <div class="logInSection">
+  <div class="logInSection" v-loading="loading">
     <h1>Log In</h1>
     <div class="userLogInSection">
       <el-form ref="logInForm" :model="logInForm" :rules="logInRules" label-width="50px">
@@ -13,7 +13,7 @@
           <el-input id="email" v-model="logInForm.email" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input type="password" id="pass" v-model="logInForm.pass" placeholder="请输入密码"></el-input>
+          <el-input type="password" id="pass" v-model="logInForm.pass" placeholder="请输入密码" @keyup.enter.native="onSubmit('logInForm')"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit('logInForm')" class="log">登录</el-button>
@@ -44,7 +44,8 @@
           pass: [
             {required: true, message: '请输入密码', trigger: 'blur'}
           ]
-        }
+        },
+        loading: false
       };
     },
     methods: {
@@ -71,7 +72,9 @@
                       message: '成功登录，即将跳转个人中心页面',
                       type: 'success'
                     });
+                    this.loading = true;
                     setTimeout(function () {
+                      this.loading = false;
                       this.$router.push('/student/stuInfoBox');
                     }.bind(this), 3000);
                     this.$store.state.userRole = '学生';
@@ -82,7 +85,9 @@
                       message: '成功登录，即将跳转个人中心页面',
                       type: 'success'
                     });
+                    this.loading = true;
                     setTimeout(function () {
+                      this.loading = false;
                       this.$router.push('/company/comInfoBox');
                     }.bind(this), 1000);
                     this.$store.state.userRole = '企业';

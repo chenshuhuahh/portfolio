@@ -32,34 +32,37 @@
       </div>
     </div>
     <div class="commentBox">
-      <el-collapse v-model="activeNames">
-        <el-collapse-item title="米莫印品" name="1">
-          <div class="comComment"><i class="el-icon-edit"></i>留言：与现实生活一致，拍摄特点很突出</div>
-          <div class="stuComment">
-            <span v-html="emoji(data)"></span>
-            <i class="icon-compass"></i>回复
-          </div>
-          <emojiBigBox @ievent="ievent"></emojiBigBox>
-        </el-collapse-item>
-        <el-collapse-item title="爱范儿" name="2">
-          <div class="comComment"><i class="el-icon-edit"></i>留言：控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>
-          <div class="stuComment">页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。
-            <i class="icon-compass"></i>回复
+      <el-collapse v-model="activeNames" v-for="(list, key, index) in commentCollection" :key="key">
+        <el-collapse-item :title=key :name=index>
+          <div v-for="item in list" :key="item.id">
+            <div class="comComment"><i class="el-icon-edit"></i>留言：{{item.comm_content}}</div>
+            <div class="stuComment">
+              <span v-html="item.reply_content"></span>
+              <!--<span v-html="emoji(data)"></span>-->
+              <i class="icon-compass"></i>回复
+            </div>
+            <emojiBigBox @ievent="ievent"></emojiBigBox>
           </div>
         </el-collapse-item>
-        <el-collapse-item title="成都霓裳" name="3">
-          <div class="comComment"><i class="el-icon-edit"></i>留言：简化流程：设计简洁直观的操作流程；</div>
-          <div class="comComment"><i class="el-icon-edit"></i>留言：清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>
-          <div class="stuComment">帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。
-            <i class="icon-compass"></i>回复
-          </div>
-        </el-collapse-item>
-        <el-collapse-item title="先动优境" name="4">
-          <div class="comComment"><i class="el-icon-edit"></i>留言：用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>
-          <div class="stuComment">结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。
-            <i class="icon-compass"></i>回复
-          </div>
-        </el-collapse-item>
+        <!--<el-collapse-item title="爱范儿" name="2">-->
+          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>-->
+          <!--<div class="stuComment">页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。-->
+            <!--<i class="icon-compass"></i>回复-->
+          <!--</div>-->
+        <!--</el-collapse-item>-->
+        <!--<el-collapse-item title="成都霓裳" name="3">-->
+          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：简化流程：设计简洁直观的操作流程；</div>-->
+          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>-->
+          <!--<div class="stuComment">帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。-->
+            <!--<i class="icon-compass"></i>回复-->
+          <!--</div>-->
+        <!--</el-collapse-item>-->
+        <!--<el-collapse-item title="先动优境" name="4">-->
+          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>-->
+          <!--<div class="stuComment">结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。-->
+            <!--<i class="icon-compass"></i>回复-->
+          <!--</div>-->
+        <!--</el-collapse-item>-->
       </el-collapse>
     </div>
   </div>
@@ -67,12 +70,17 @@
 
 <script type="text/ecmascript-6">
   import emojiBigBox from '../emojiBox/emojiBox.vue';
+//  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       return {
         activeNames: ['1'],
         data: '',
-        favorite: false
+        favorite: false,
+        user: '',
+        commentCollection: [],
+        showCommentInfo: false, // 显示评论信息的盒子
+        showCommentBox: false // 显示评论框的盒子
       };
     },
     components: {
@@ -85,6 +93,22 @@
       toggleFavorite() {
         this.favorite = !this.favorite;
       }
+    },
+    mounted() {
+//      this.user = getCookie('stuEmail') ? getCookie('stuEmail') : getCookie('comEmail');
+      let workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
+      let params = new URLSearchParams();
+      params.append('action', 'showCommentInfo');
+      params.append('workId', workItem.work_id);
+      this.$ajax.post('/api/workShowBox.php', params)
+        .then((res) => {
+          console.log('showCommentInfo res:', res);
+          if (res.data === '0') {
+            this.showCommentBox = true;
+            this.showCommentInfo = false;
+          }
+          this.commentCollection = res.data;
+        });
     }
   };
 </script>

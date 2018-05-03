@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     isRole: false,
     userRole: '',
     userLink: '',
-    stuAvatar: '../../assets/6.jpg'
+    userName: ''
   }
 });
 
