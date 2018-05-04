@@ -32,82 +32,172 @@
       </div>
     </div>
     <div class="commentBox">
-      <el-collapse v-model="activeNames" v-for="(list, key, index) in commentCollection" :key="key">
-        <el-collapse-item :title=key :name=index>
+      <el-collapse v-model="activeNames" v-if="!!commentCollection">
+        <el-collapse-item v-for="(list, key, index) in commentCollection" :key="key" :title=list[0].com_name :name=index>
           <div v-for="item in list" :key="item.id">
-            <div class="comComment"><i class="el-icon-edit"></i>留言：{{item.comm_content}}</div>
-            <div class="stuComment">
-              <span v-html="item.reply_content"></span>
-              <!--<span v-html="emoji(data)"></span>-->
-              <i class="icon-compass"></i>回复
+            <div class="comComment" v-show="!!item.comm_content">
+              <i class="el-icon-edit"></i>
+              留言：<span v-html="emoji(item.comm_content)"></span>
+              <div class="commentTime">{{item.comm_time}}</div>
             </div>
-            <emojiBigBox @ievent="ievent"></emojiBigBox>
+            <div class="stuComment" v-show="!!item.reply_content">
+              <span v-html="emoji(item.reply_content)"></span>
+              <!--<span v-html="emoji(data[1])"></span>-->
+              <i class="icon-compass"></i>回复
+              <div class="commentTime">{{item.reply_time}}</div>
+            </div>
           </div>
+          <div class="comComment" v-show="showCommentInfo">
+            <i class="el-icon-edit"></i>
+            留言：<span v-html="emoji(data[1])"></span>
+            <div class="commentTime">{{date}}</div>
+          </div>
+          <div class="stuComment" v-show="showReplyInfo">
+            <span v-html="emoji(data[1])"></span>
+            <i class="icon-compass"></i>回复
+            <div class="commentTime">{{date}}</div>
+          </div>
+          <emojiBigBox @ievent="ievent" v-show="isLoginStudent" :comId=list[0].com_id></emojiBigBox>
+          <emojiBigBox @ievent="ievent" v-show="list[0].com_email == companyUser" :comId=list[0].com_id></emojiBigBox>
         </el-collapse-item>
-        <!--<el-collapse-item title="爱范儿" name="2">-->
-          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；</div>-->
-          <!--<div class="stuComment">页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。-->
-            <!--<i class="icon-compass"></i>回复-->
-          <!--</div>-->
-        <!--</el-collapse-item>-->
-        <!--<el-collapse-item title="成都霓裳" name="3">-->
-          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：简化流程：设计简洁直观的操作流程；</div>-->
-          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；</div>-->
-          <!--<div class="stuComment">帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。-->
-            <!--<i class="icon-compass"></i>回复-->
-          <!--</div>-->
-        <!--</el-collapse-item>-->
-        <!--<el-collapse-item title="先动优境" name="4">-->
-          <!--<div class="comComment"><i class="el-icon-edit"></i>留言：用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；</div>-->
-          <!--<div class="stuComment">结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。-->
-            <!--<i class="icon-compass"></i>回复-->
-          <!--</div>-->
-        <!--</el-collapse-item>-->
       </el-collapse>
+      <div class="firstComComment" v-show="!commentCollection.hasOwnProperty(companyUser)">
+        <div class="firstComName">开始评论</div>
+        <div class="comComment" v-show="showCommentInfo">
+          <i class="el-icon-edit"></i>
+          留言：<span v-html="emoji(data[1])"></span>
+          <div class="commentTime">{{date}}</div>
+        </div>
+        <emojiBigBox @ievent="ievent" :comId=companyUser></emojiBigBox>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import emojiBigBox from '../emojiBox/emojiBox.vue';
-//  import {getCookie} from '../../assets/js/cookie.js';
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     data () {
       return {
-        activeNames: ['1'],
-        data: '',
+        activeNames: ['3'],
+        data: [],
         favorite: false,
-        user: '',
+        workItem: '',
         commentCollection: [],
-        showCommentInfo: false, // 显示评论信息的盒子
-        showCommentBox: false // 显示评论框的盒子
+        showComment: true,
+        showReplyInfo: false, // 显示回复评论信息的盒子
+        isLoginStudent: false, // 是否有学生登录 有点的话就显示评论的框
+        showCommentInfo: false, // 显示企业发布评论的盒子
+        companyUser: '',
+        date: '', // 当前日期
+        comIsNotComment: true
       };
     },
     components: {
       emojiBigBox
     },
     methods: {
+      // 格式化new Date()得到的日期 转换成yyyy-mm-dd hh:mm:ss格式的
+      formatDateTime (date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        var second = date.getSeconds();
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+      },
+
       ievent(data) {
         this.data = data;// data为包含传过来所有数据的数组，第一个元素是对象，第二个元素是字符串
+//        console.log(this.data);
+        let params = new URLSearchParams();
+        this.date = this.formatDateTime(new Date());
+        params.append('workId', this.workItem.work_id);
+        params.append('comId', this.data[0]);
+        params.append('comment', this.data[1]);
+        params.append('replyTime', this.date);
+        if (getCookie('comEmail')) {
+          params.append('action', 'companyComment');
+          this.$ajax.post('/api/workShowBox.php', params)
+            .then((res) => {
+              console.log('companyComment res:', res);
+              if (res.data === 1) {
+                this.$message({
+                  message: '回复评论成功',
+                  type: 'success'
+                });
+                this.showCommentInfo = true;
+              } else {
+                this.$message.error('回复评论失败');
+              }
+            });
+        }
+        if (getCookie('stuEmail')) {
+          params.append('action', 'stuReplyComment');
+          this.$ajax.post('/api/workShowBox.php', params)
+            .then((res) => {
+              console.log('stuReplyComment res:', res);
+              if (res.data === 1) {
+                this.$message({
+                  message: '回复评论成功',
+                  type: 'success'
+                });
+                this.showReplyInfo = true;
+              } else {
+                this.$message.error('回复评论失败');
+              }
+            });
+        }
       },
       toggleFavorite() {
         this.favorite = !this.favorite;
+        if (this.companyUser) {
+          let params = new URLSearchParams();
+          params.append('workId', this.workItem.work_id);
+          params.append('comId', this.companyUser);
+          if (this.favorite) {
+            params.append('action', 'addFavorite');
+          } else {
+            params.append('action', 'removeFavorite');
+          }
+          this.$ajax.post('/api/workShowBox.php', params)
+            .then((res) => {
+              console.log('addFavorite res:', res);
+              if (res.data === 1) {
+                console.log('collection success');
+              } else {
+                console.log('collection error');
+              }
+            });
+        }
       }
     },
     mounted() {
-//      this.user = getCookie('stuEmail') ? getCookie('stuEmail') : getCookie('comEmail');
-      let workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
+      if (getCookie('comEmail')) {
+        this.companyUser = getCookie('comEmail');
+      }
+      if (getCookie('stuEmail')) {
+          this.isLoginStudent = true;
+      }
+      this.workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
       let params = new URLSearchParams();
       params.append('action', 'showCommentInfo');
-      params.append('workId', workItem.work_id);
+      params.append('workId', this.workItem.work_id);
       this.$ajax.post('/api/workShowBox.php', params)
         .then((res) => {
           console.log('showCommentInfo res:', res);
-          if (res.data === '0') {
-            this.showCommentBox = true;
-            this.showCommentInfo = false;
+          if (res.data === 0) {
+            this.commentCollection = '';
+          } else {
+            this.commentCollection = res.data;
           }
-          this.commentCollection = res.data;
         });
     }
   };
@@ -185,6 +275,7 @@
       -moz-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.12);
       box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.12);
       z-index: 10;
+      font-size: 13px;
       .el-collapse-item {
         z-index: 10;
       }
@@ -201,6 +292,15 @@
       .commentButton {
         margin-bottom: 10px;
         text-align: center;
+      }
+      .commentTime {
+        color: #ccc;
+      }
+      .firstComComment {
+        padding-top: 20px;
+      }
+      .firstComName {
+        margin-bottom: 20px;
       }
     }
   }
@@ -241,21 +341,18 @@
   @media (min-width: 925px) {
     .workDetail {
       padding: 0 100px 50px;
-
     }
   }
 
   @media (min-width: 1000px) {
     .workDetail {
       padding: 0 130px 50px;
-
     }
   }
 
   @media (min-width: 1126px) {
     .workDetail {
       padding: 0 250px 50px;
-
     }
   }
 </style>

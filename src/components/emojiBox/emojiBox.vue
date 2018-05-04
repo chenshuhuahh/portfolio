@@ -22,12 +22,20 @@
 <script type="text/ecmascript-6">
   import emoji from './emoji.vue';
   export default {
+    props: {
+      workId: {
+        type: String
+      },
+      comId: {
+        type: String
+      }
+    },
     data () {
       return {
         value: '',
         showEmoji: false,
-//        data: []
-        data: ''
+        data: []
+//        data: ''
       };
     },
     methods: {
@@ -36,8 +44,9 @@
         this.value += code;
       },
       submit () {
-//        this.data.push(this.value);
-        this.data = this.value;
+        this.data.push(this.comId);
+        this.data.push(this.value);
+//        this.data = this.value;
         this.value = '';
         this.$emit('ievent', this.data);
       }
