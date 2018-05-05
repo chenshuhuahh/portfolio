@@ -66,6 +66,7 @@
                   this.$message.error('密码输入错误');
                 } else {
                   this.$store.state.isRole = true;
+                  this.$store.state.userName = res.data;
                   if (this.logInForm.role === '1') {
                     setCookie('stuEmail', this.logInForm.email, 1000 * 60);
                     this.$message({

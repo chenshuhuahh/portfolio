@@ -1,5 +1,5 @@
 <template>
-  <div class="companySignUp">
+  <div class="companySignUp" v-loading="loading">
     <h1>Company Sign Up</h1>
     <div class="companySignUpSection">
       <el-form ref="companySignUpForm" :model="companySignUpForm" :rules="comSignUpRules" label-width="80px">
@@ -71,6 +71,7 @@
           token: ''
         },
         imageUrl: '',
+        loading: false,
         companySignUpForm: {
           cName: '',
           province: [],
@@ -131,7 +132,9 @@
                     message: '注册成功，即将跳转登录界面',
                     type: 'success'
                   });
+                  this.loading = true;
                   setTimeout(function() {
+                    this.loading = false;
                     this.$router.push({path: '/logIn'});
                   }.bind(this), 3000);
                 } else {

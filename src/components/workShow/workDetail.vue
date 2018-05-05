@@ -24,8 +24,10 @@
       </router-link>
       <!--<span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i
         class="icon-heart"></i>{{$route.params.workItem.loveNum}}</span>-->
-      <span class="iconFavorite" :class="{'active': favorite}" @click="toggleFavorite"><i
-        class="icon-heart"></i>5</span>
+      <span class="iconFavorite" :class="{'active': favorite}" @click="flag && toggleFavorite()">
+        <i class="icon-heart"></i>
+        {{favoriteNum}}
+      </span>
       <div class="ql-container ql-snow">
         <div class="ql-editor" v-html="$route.params.workItem.work_desc">
         </div>
@@ -61,14 +63,14 @@
           <emojiBigBox @ievent="ievent" v-show="list[0].com_email == companyUser" :comId=list[0].com_id></emojiBigBox>
         </el-collapse-item>
       </el-collapse>
-      <div class="firstComComment" v-show="!commentCollection.hasOwnProperty(companyUser)">
+      <div class="firstComComment" v-show="!isLoginStudent && !commentCollection.hasOwnProperty(companyUser)">
         <div class="firstComName">开始评论</div>
         <div class="comComment" v-show="showCommentInfo">
           <i class="el-icon-edit"></i>
           留言：<span v-html="emoji(data[1])"></span>
           <div class="commentTime">{{date}}</div>
         </div>
-        <emojiBigBox @ievent="ievent" :comId=companyUser></emojiBigBox>
+        <emojiBigBox @ievent="ievent" :comId=comInfoId></emojiBigBox>
       </div>
     </div>
   </div>
@@ -91,7 +93,10 @@
         showCommentInfo: false, // 显示企业发布评论的盒子
         companyUser: '',
         date: '', // 当前日期
-        comIsNotComment: true
+        comIsNotComment: true,
+        flag: true,
+        comInfoId: '',
+        favoriteNum: 0
       };
     },
     components: {
@@ -134,6 +139,24 @@
                   type: 'success'
                 });
                 this.showCommentInfo = true;
+                if (!this.commentCollection.hasOwnProperty(this.companyUser)) {
+                  let params2 = new URLSearchParams();
+                  params2.append('workId', this.workItem.work_id);
+                  params2.append('comEmail', this.companyUser);
+                  params2.append('action', 'addFavorite');
+                  this.$ajax.post('/api/workShowBox.php', params2)
+                    .then((res) => {
+                      console.log('addFavorite res:', res);
+                      if (res.data === 1) {
+                        this.favorite = true;
+                        this.favoriteNum = this.favoriteNum + 1;
+                        console.log('collection success');
+                      } else {
+                        this.favorite = false;
+                        console.log('collection error');
+                      }
+                    });
+                }
               } else {
                 this.$message.error('回复评论失败');
               }
@@ -161,32 +184,80 @@
         if (this.companyUser) {
           let params = new URLSearchParams();
           params.append('workId', this.workItem.work_id);
-          params.append('comId', this.companyUser);
+          params.append('comEmail', this.companyUser);
           if (this.favorite) {
             params.append('action', 'addFavorite');
+            this.$ajax.post('/api/workShowBox.php', params)
+              .then((res) => {
+                console.log('addFavorite res:', res);
+                if (res.data === 1) {
+                  this.favoriteNum = this.favoriteNum + 1;
+                  console.log('add collection success');
+                } else {
+                  console.log('add collection error');
+                }
+              });
           } else {
             params.append('action', 'removeFavorite');
+            this.$ajax.post('/api/workShowBox.php', params)
+              .then((res) => {
+                console.log('removeFavorite res:', res);
+                if (res.data === 1) {
+                  this.favoriteNum = this.favoriteNum - 1;
+                  console.log('remove collection success');
+                } else {
+                  console.log('remove collection error');
+                }
+              });
           }
-          this.$ajax.post('/api/workShowBox.php', params)
-            .then((res) => {
-              console.log('addFavorite res:', res);
-              if (res.data === 1) {
-                console.log('collection success');
-              } else {
-                console.log('collection error');
-              }
-            });
         }
       }
     },
     mounted() {
+      this.workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
+      let params4 = new URLSearchParams();
+      params4.append('action', 'showFavoriteNum');
+      params4.append('workId', this.workItem.work_id);
+      this.$ajax.post('/api/workShowBox.php', params4)
+        .then((res) => {
+          console.log('showFavoriteNum res:', res);
+          if (res.data === 0) {
+            this.favoriteNum = 0;
+          } else {
+            this.favoriteNum = res.data;
+          }
+        });
       if (getCookie('comEmail')) {
         this.companyUser = getCookie('comEmail');
+        let params2 = new URLSearchParams();
+        params2.append('action', 'showComFavorite');
+        params2.append('workId', this.workItem.work_id);
+        params2.append('comEmail', this.companyUser);
+        console.log(params2);
+        this.$ajax.post('/api/workShowBox.php', params2)
+          .then((res) => {
+            console.log('showComFavorite res:', res);
+            if (res.data === 1) {
+              this.favorite = true;
+            } else {
+              this.favorite = false;
+            }
+          });
+        let params3 = new URLSearchParams();
+        params3.append('action', 'showBaseInfo');
+        params3.append('comEmail', this.companyUser);
+        console.log('3' + params3);
+        this.$ajax.post('/api/companyBox.php', params3)
+          .then((res) => {
+            console.log('showBaseInfo res:', res);
+            this.comInfoId = res.data.com_id;
+          });
       }
       if (getCookie('stuEmail')) {
           this.isLoginStudent = true;
+          this.favorite = true;
+          this.flag = false;
       }
-      this.workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
       let params = new URLSearchParams();
       params.append('action', 'showCommentInfo');
       params.append('workId', this.workItem.work_id);
@@ -295,6 +366,7 @@
       }
       .commentTime {
         color: #ccc;
+        margin-top: 5px;
       }
       .firstComComment {
         padding-top: 20px;

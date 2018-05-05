@@ -9,7 +9,7 @@
     </el-input>
     <div class="icon clearfix">
       <i class="icon iconfont icon-face" @click="showEmoji = !showEmoji"></i>
-      <el-button type="success" size="small" @click="submit" class="submit">回复评论</el-button>
+      <el-button type="success" size="small" @click="submit" class="submit">提交</el-button>
       <transition name="fade" mode="">
         <div class="emoji-box" v-if="showEmoji">
           <emoji @select="selectEmoji"></emoji>

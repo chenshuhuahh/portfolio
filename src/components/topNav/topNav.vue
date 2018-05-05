@@ -18,7 +18,7 @@
           <li class="logIn" v-show="!isRole">
             <router-link to="/logIn">Log In</router-link>
           </li>
-          <li v-show="isRole" class="welcome">Welcome， {{userName}}</li>
+          <li v-show="isRole" class="welcome">Welcome， {{$store.state.userName}}</li>
           <li class="logout" @click="logOut" v-show="isRole">注销</li>
         </ul>
         <ul class="mainMenu">

@@ -90,6 +90,8 @@
                     type: 'success'
                   });
                   this.disabledAttr = true;
+                  this.$store.state.userName = this.comInfoModifyForm.com_name;
+                  this.$router.push('/summary');
                 } else {
                   this.$message.error('个人信息修改失败');
                 }

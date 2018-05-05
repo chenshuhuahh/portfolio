@@ -1,5 +1,5 @@
 <template>
-  <div class="studentSignUp">
+  <div class="studentSignUp" v-loading="loading">
     <h1>Student Sign Up</h1>
     <div class="studentSignUpSection">
       <el-form ref="studentSignUpForm" :model="studentSignUpForm" :rules="stuSignUpRules" label-width="77px">
@@ -86,6 +86,7 @@
           token: ''
         },
         imageUrl: '',
+        loading: false,
         studentSignUpForm: {
           sName: '',
           sEmail: '',
@@ -153,7 +154,9 @@
                     message: '注册成功，即将跳转登录界面',
                     type: 'success'
                   });
+                  this.loading = true;
                   setTimeout(function() {
+                    this.loading = false;
                     this.$router.push({path: '/logIn'});
                   }.bind(this), 3000);
                 } else {

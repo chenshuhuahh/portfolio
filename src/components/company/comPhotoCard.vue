@@ -1,7 +1,7 @@
 <template>
   <div class="comPhotoCard">
     <div class="imageGrid">
-      <img :src="item.imgSrc" alt="" class="imgResponsive"/>
+      <img :src="onePhoto" alt="" class="imgResponsive"/>
       <div class="imagePos">
         <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
           <i class="el-icon-view"></i>
@@ -10,15 +10,16 @@
     </div>
     <div class="infoGrid">
       <div class="workTitle">
-        <h4>{{item.workTitle}}</h4>
-        <span @click="cancleCollect"><i class="icon-heart"></i>{{item.loveNum}}</span>
+        <h4>{{item.work_name}}</h4>
+        <span @click="cancleCollect"><i class="icon-heart"></i>{{favoriteNum}}</span>
       </div>
-      <p class="workDesc">{{item.workDesc}}</p>
+      <p class="workDesc">{{item.work_summary}}</p>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import {getCookie} from '../../assets/js/cookie.js';
   export default {
     props: {
       item: {
@@ -26,7 +27,10 @@
       }
     },
     data () {
-      return {};
+      return {
+        onePhoto: '',
+        favoriteNum: 0
+      };
     },
     methods: {
       cancleCollect() {
@@ -36,7 +40,20 @@
           type: 'warning',
           center: true
         }).then(() => {
-          // 在这里做一些删除该作品收藏记录的操作
+          let params = new URLSearchParams();
+          params.append('workId', this.item.work_id);
+          params.append('comEmail', getCookie('comEmail'));
+          params.append('action', 'removeFavorite');
+          this.$ajax.post('/api/workShowBox.php', params)
+            .then((res) => {
+              console.log('removeFavorite res:', res);
+              if (res.data === 1) {
+                this.$router.push('/summary');
+                console.log('remove collection success');
+              } else {
+                console.log('remove collection error');
+              }
+            });
           this.$message({
             type: 'success',
             message: '取消收藏成功!'
@@ -48,6 +65,23 @@
           });
         });
       }
+    },
+    created() {
+      this.onePhoto = (this.item.work_photo.split(','))[0];
+    },
+    mounted() {
+      let params = new URLSearchParams();
+      params.append('action', 'showFavoriteNum');
+      params.append('workId', this.item.work_id);
+      this.$ajax.post('/api/workShowBox.php', params)
+        .then((res) => {
+          console.log('showFavoriteNum res:', res);
+          if (res.data === 0) {
+            this.favoriteNum = 0;
+          } else {
+            this.favoriteNum = res.data;
+          }
+        });
     }
   };
 </script>
@@ -114,9 +148,10 @@
         }
       }
       .workDesc {
-        margin-top: 20px;
+        margin-top: 15px;
         font-size: 12px;
         color: #999;
+        line-height: 16px;
       }
     }
   }

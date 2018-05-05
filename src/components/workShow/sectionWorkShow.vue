@@ -11,12 +11,12 @@
       <p>在Portfolio展示的优秀作品</p>
       <div class="puzzleIcon"></div>
     </div>
-    <div class="searchWrong">
+    <div class="searchWrong" v-if="!isSearchSomething">
       <img src="http://p6c2yqflv.bkt.clouddn.com/staticImg/timg.gif">
       <div class="wrongText"><span class="el-icon-warning"></span>&nbsp;抱歉 没搜索到您想要的作品</div>
     </div>
-    <div class="sectionItemContainer">
-      <div v-for="item in $route.params.workList" class="itemCard" :key="item.id">
+    <div class="sectionItemContainer" v-if="isSearchSomething">
+      <div v-for="item in photoIntroduction" class="itemCard" :key="item.id">
         <sectionPhotoCard :item="item"></sectionPhotoCard>
       </div>
     </div>
@@ -29,7 +29,9 @@
     data () {
       return {
         searchWork: '',
-        photoIntroduction: []
+        photoIntroduction: [],
+        workTypeId: '',
+        isSearchSomething: false
       };
     },
     components: {
@@ -40,11 +42,28 @@
         if (this.searchWork) {
           // 做搜索的时候，是对当前这个分块后的部分进行搜索，得到的结果更新photoIntroduction数组
           console.log(this.searchWork);
+          let params = new URLSearchParams();
+          params.append('action', 'searchWorks');
+          params.append('searchContent', this.searchWork);
+          params.append('workTypeId', this.workTypeId);
+          this.$ajax.post('/api/workShowBox.php', params)
+            .then((res) => {
+              if (res.data === 0) {
+                  this.isSearchSomething = false;
+              } else {
+                this.isSearchSomething = true;
+                this.photoIntroduction = res.data;
+              }
+            });
         } else {
           this.$message('请输入搜索内容');
           return false;
         }
       }
+    },
+    mounted() {
+      this.photoIntroduction = this.$route.params.workList;
+      this.workTypeId = this.$route.params.workTypeId;
     }
   };
 </script>
