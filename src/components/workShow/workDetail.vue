@@ -17,8 +17,8 @@
     </div>
     <div class="introductionBox">
       <h3>{{$route.params.workItem.work_name}}</h3>
-      <router-link :to="{name: 'sectionWorkShow',
-                        params: { workType: $route.params.workItem.stu_id}}"
+      <router-link class="textBlue" :to="{name: 'stuWorkShow',
+                        params: { studentId: $route.params.workItem.stu_id, studentName: $route.params.workItem.stu_name}}"
       >
         ({{$route.params.workItem.stu_name}})
       </router-link>
@@ -38,28 +38,39 @@
         <el-collapse-item v-for="(list, key, index) in commentCollection" :key="key" :title=list[0].com_name :name=index>
           <div v-for="item in list" :key="item.id">
             <div class="comComment" v-show="!!item.comm_content">
-              <i class="el-icon-edit"></i>
-              留言：<span v-html="emoji(item.comm_content)"></span>
+              <img class="avatarImg" :src="item.com_avatar" :alt="item.com_name" :title="item.com_name">
+              评论<i class="el-icon-edit"></i>：
+              <span v-html="emoji(item.comm_content)"></span>
               <div class="commentTime">{{item.comm_time}}</div>
             </div>
+            <div class="stuComment" v-show="isLoginStudent && !item.reply_content">
+              <span v-html="emoji(data[1])"></span>
+              ：<i class="icon-compass"></i>回复
+              <img class="avatarImg"
+                   :src="$route.params.workItem.stu_avatar"
+                   :alt="$route.params.workItem.stu_name"
+                   :title="$route.params.workItem.stu_name"
+              >
+              <div class="commentTime">{{date}}</div>
+            </div>
+            <emojiBigBox @ievent="ievent" v-show="isLoginStudent && !item.reply_content" :comId=item.com_id :commId="item.comm_id"></emojiBigBox>
             <div class="stuComment" v-show="!!item.reply_content">
               <span v-html="emoji(item.reply_content)"></span>
-              <!--<span v-html="emoji(data[1])"></span>-->
-              <i class="icon-compass"></i>回复
+              ：<i class="icon-compass"></i>回复
+              <img class="avatarImg"
+                   :src="$route.params.workItem.stu_avatar"
+                   :alt="$route.params.workItem.stu_name"
+                   :title="$route.params.workItem.stu_name"
+              >
               <div class="commentTime">{{item.reply_time}}</div>
             </div>
           </div>
-          <div class="comComment" v-show="showCommentInfo">
-            <i class="el-icon-edit"></i>
-            留言：<span v-html="emoji(data[1])"></span>
-            <div class="commentTime">{{date}}</div>
-          </div>
-          <div class="stuComment" v-show="showReplyInfo">
+          <div class="comComment" v-show="list[0].com_email == companyUser">
+            <img class="avatarImg" :src="list[0].com_avatar" :alt="list[0].com_name" :title="list[0].com_name">
+            评论<i class="el-icon-edit"></i>：
             <span v-html="emoji(data[1])"></span>
-            <i class="icon-compass"></i>回复
             <div class="commentTime">{{date}}</div>
           </div>
-          <emojiBigBox @ievent="ievent" v-show="isLoginStudent" :comId=list[0].com_id></emojiBigBox>
           <emojiBigBox @ievent="ievent" v-show="list[0].com_email == companyUser" :comId=list[0].com_id></emojiBigBox>
         </el-collapse-item>
       </el-collapse>
@@ -124,22 +135,23 @@
 //        console.log(this.data);
         let params = new URLSearchParams();
         this.date = this.formatDateTime(new Date());
-        params.append('workId', this.workItem.work_id);
-        params.append('comId', this.data[0]);
         params.append('comment', this.data[1]);
-        params.append('replyTime', this.date);
+        params.append('commTime', this.date);
         if (getCookie('comEmail')) {
           params.append('action', 'companyComment');
+          params.append('workId', this.workItem.work_id);
+          params.append('comId', this.data[0]);
           this.$ajax.post('/api/workShowBox.php', params)
             .then((res) => {
               console.log('companyComment res:', res);
               if (res.data === 1) {
                 this.$message({
-                  message: '回复评论成功',
+                  message: '评论成功',
                   type: 'success'
                 });
                 this.showCommentInfo = true;
                 if (!this.commentCollection.hasOwnProperty(this.companyUser)) {
+                  // 评论成功自动收藏该work
                   let params2 = new URLSearchParams();
                   params2.append('workId', this.workItem.work_id);
                   params2.append('comEmail', this.companyUser);
@@ -164,6 +176,8 @@
         }
         if (getCookie('stuEmail')) {
           params.append('action', 'stuReplyComment');
+          params.append('commId', this.data[2]);
+          console.log(this.data);
           this.$ajax.post('/api/workShowBox.php', params)
             .then((res) => {
               console.log('stuReplyComment res:', res);
@@ -215,6 +229,7 @@
     },
     mounted() {
       this.workItem = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
+      // 获取当前这个work有多少爱心
       let params4 = new URLSearchParams();
       params4.append('action', 'showFavoriteNum');
       params4.append('workId', this.workItem.work_id);
@@ -228,6 +243,7 @@
           }
         });
       if (getCookie('comEmail')) {
+        // 如果登录的是企业 则获取当前企业是否有收藏当前这个work 爱心的颜色是否要改变
         this.companyUser = getCookie('comEmail');
         let params2 = new URLSearchParams();
         params2.append('action', 'showComFavorite');
@@ -246,7 +262,7 @@
         let params3 = new URLSearchParams();
         params3.append('action', 'showBaseInfo');
         params3.append('comEmail', this.companyUser);
-        console.log('3' + params3);
+        // 拿到当前登录的企业的信息，传递给emoji评论盒子
         this.$ajax.post('/api/companyBox.php', params3)
           .then((res) => {
             console.log('showBaseInfo res:', res);
@@ -254,10 +270,12 @@
           });
       }
       if (getCookie('stuEmail')) {
+          // 如果登录的是学生
           this.isLoginStudent = true;
           this.favorite = true;
           this.flag = false;
       }
+      // 获取当前work的所有评论信息
       let params = new URLSearchParams();
       params.append('action', 'showCommentInfo');
       params.append('workId', this.workItem.work_id);
@@ -315,6 +333,9 @@
     .introductionBox {
       color: #808184;
       margin-bottom: 50px;
+      .textBlue {
+        color: #00a2d4;
+      }
       h3 {
         font-size: 30px;
         margin-bottom: 14px;
@@ -347,6 +368,11 @@
       box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.12);
       z-index: 10;
       font-size: 13px;
+      .avatarImg {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
       .el-collapse-item {
         z-index: 10;
       }
@@ -366,10 +392,12 @@
       }
       .commentTime {
         color: #ccc;
-        margin-top: 5px;
       }
       .firstComComment {
         padding-top: 20px;
+        .commentTime {
+          margin-top: 5px;
+        }
       }
       .firstComName {
         margin-bottom: 20px;

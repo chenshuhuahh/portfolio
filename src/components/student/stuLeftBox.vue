@@ -23,7 +23,7 @@
       <div class="studentInfo">
         <div class="sName">{{stuInfo.stu_name}}</div>
         <div class="sSchool">{{stuInfo.stu_school}}</div>
-        <div class="sLoveNum"><i class="icon-heart"></i>222</div>
+        <div class="sLoveNum"><i class="icon-heart"></i>{{favoriteNum}}</div>
         <el-tag type="info" size="medium" v-show="beforePass">未审核</el-tag>
         <el-tag type="success" size="medium" v-show="isPass">审核通过</el-tag>
         <el-tag type="danger" size="medium" v-show="notPass">审核不通过</el-tag>
@@ -56,6 +56,7 @@
         postData: {
           token: ''
         },
+        favoriteNum: 0,
         imageUrl: '',
         avatarUploadVisible: false,
         stuInfo: {
@@ -119,6 +120,16 @@
             this.notPass = true;
           } else {
             this.beforePass = true;
+          }
+        });
+      let params2 = new URLSearchParams();
+      params2.append('action', 'showFavoriteNum');
+      params2.append('stuEmail', getCookie('stuEmail'));
+      this.$ajax.post('/api/studentBox.php', params2)
+        .then((res) => {
+          console.log('showFavoriteNum res:', res);
+          if (res.data !== 0) {
+            this.favoriteNum = res.data;
           }
         });
     },

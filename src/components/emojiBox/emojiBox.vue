@@ -28,6 +28,9 @@
       },
       comId: {
         type: String
+      },
+      commId: {
+        type: String
       }
     },
     data () {
@@ -46,6 +49,9 @@
       submit () {
         this.data.push(this.comId);
         this.data.push(this.value);
+        if (this.commId) {
+          this.data.push(this.commId);
+        }
 //        this.data = this.value;
         this.value = '';
         this.$emit('ievent', this.data);

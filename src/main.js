@@ -16,6 +16,7 @@ import studentSignUp from './components/signUp/studentSignUp.vue';
 import companySignUp from './components/signUp/companySignUp.vue';
 import workShow from './components/workShow/workShow.vue';
 import sectionWorkShow from './components/workShow/sectionWorkShow.vue';
+import stuWorkShow from './components/workShow/stuWorkShow.vue';
 import workDetail from './components/workShow/workDetail.vue';
 import student from './components/student/student.vue';
 import stuInfoBox from './components/student/stuInfoBox.vue';
@@ -75,6 +76,11 @@ const routes = [
     path: '/workShow/sectionWorkShow',
     name: 'sectionWorkShow',
     component: sectionWorkShow
+  },
+  {
+    path: '/workShow/stuWorkShow',
+    name: 'stuWorkShow',
+    component: stuWorkShow
   },
   {
     path: '/workShow/workDetail',

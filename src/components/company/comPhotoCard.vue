@@ -1,21 +1,23 @@
 <template>
-  <div class="comPhotoCard">
-    <div class="imageGrid">
-      <img :src="onePhoto" alt="" class="imgResponsive"/>
-      <div class="imagePos">
-        <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
-          <i class="el-icon-view"></i>
-        </router-link>
+  <el-badge :value=badgeValue class="item">
+    <div class="comPhotoCard">
+      <div class="imageGrid">
+        <img :src="onePhoto" alt="" class="imgResponsive"/>
+        <div class="imagePos">
+          <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
+            <i class="el-icon-view"></i>
+          </router-link>
+        </div>
+      </div>
+      <div class="infoGrid">
+        <div class="workTitle">
+          <h4>{{item.work_name}}</h4>
+          <span @click="cancleCollect"><i class="icon-heart"></i>{{favoriteNum}}</span>
+        </div>
+        <p class="workDesc">{{item.work_summary}}</p>
       </div>
     </div>
-    <div class="infoGrid">
-      <div class="workTitle">
-        <h4>{{item.work_name}}</h4>
-        <span @click="cancleCollect"><i class="icon-heart"></i>{{favoriteNum}}</span>
-      </div>
-      <p class="workDesc">{{item.work_summary}}</p>
-    </div>
-  </div>
+  </el-badge>
 </template>
 
 <script type="text/ecmascript-6">
@@ -29,7 +31,8 @@
     data () {
       return {
         onePhoto: '',
-        favoriteNum: 0
+        favoriteNum: 0,
+        badgeValue: null
       };
     },
     methods: {
@@ -82,11 +85,26 @@
             this.favoriteNum = res.data;
           }
         });
+      let params2 = new URLSearchParams();
+      params2.append('action', 'getCommentMessage');
+      params2.append('workId', this.item.work_id);
+      this.$ajax.post('/api/studentBox.php', params2)
+        .then((res) => {
+          console.log('getCommentMessage res:', res);
+          if (res.data === 0) {
+            this.badgeValue = 'v';
+          } else {
+            this.badgeValue = null;
+          }
+        });
     }
   };
 </script>
 
 <style lang="scss" type="text/scss">
+  .item {
+    display: block;
+  }
   .comPhotoCard {
     .imageGrid {
       position: relative;

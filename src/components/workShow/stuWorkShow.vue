@@ -7,9 +7,17 @@
       @keyup.enter.native="handleSearch">
     </el-input>
     <div class="text">
-      <h3>{{$route.params.workType}}作品</h3>
+      <h3>{{$route.params.studentName}}de作品</h3>
       <p>在Portfolio展示的优秀作品</p>
       <div class="puzzleIcon"></div>
+    </div>
+    <div class="stuIntroduction">
+      <ul>
+        <li>{{stuIntroduction.stu_school}}</li>
+        <li>{{stuIntroduction.stu_grade}} 级</li>
+        <li>{{stuIntroduction.stu_email}}</li>
+        <li>{{stuIntroduction.stu_desc}}</li>
+      </ul>
     </div>
     <div class="searchWrong" v-if="!isSearchSomething">
       <img src="http://p6c2yqflv.bkt.clouddn.com/staticImg/timg.gif">
@@ -30,7 +38,7 @@
       return {
         searchWork: '',
         photoIntroduction: [],
-        workTypeId: '',
+        stuIntroduction: {},
         isSearchSomething: true
       };
     },
@@ -44,14 +52,14 @@
           // 做搜索的时候，是对当前这个分块后的部分进行搜索，得到的结果更新photoIntroduction数组
           console.log(this.searchWork);
           let params = new URLSearchParams();
-          params.append('action', 'searchWorks');
+          params.append('action', 'searchStuWorks');
           params.append('searchContent', this.searchWork);
-          params.append('workTypeId', this.workTypeId);
+          params.append('stuId', this.$route.params.studentId);
           this.$ajax.post('/api/workShowBox.php', params)
             .then((res) => {
-              console.log('searchList', res.data);
+              console.log('searchStuWorks', res.data);
               if (res.data === 0) {
-                  this.isSearchSomething = false;
+                this.isSearchSomething = false;
               } else {
                 this.isSearchSomething = true;
                 this.photoIntroduction = res.data;
@@ -64,8 +72,19 @@
       }
     },
     mounted() {
-      this.photoIntroduction = this.$route.params.workList;
-      this.workTypeId = this.$route.params.workTypeId;
+      let params = new URLSearchParams();
+      params.append('action', 'showOneStuWorks');
+      params.append('stuId', this.$route.params.studentId);
+      this.$ajax.post('/api/workShowBox.php', params)
+        .then((res) => {
+          console.log(' showOneStuWorks array res:', res);
+          this.photoIntroduction = res.data;
+        });
+      this.$ajax.post('/api/studentBox.php', params)
+        .then((res) => {
+          console.log(' showOneStuWorks array res:', res);
+          this.stuIntroduction = res.data;
+        });
     }
   };
 </script>
@@ -75,9 +94,20 @@
     margin-top: 50px;
     text-align: center;
     color: #808184;
+    .stuIntroduction {
+      ul {
+        margin: 10px 15px 0;
+      }
+      li {
+        margin-bottom: 10px;
+        &:last-child {
+          line-height: 21px;
+        }
+      }
+    }
     .el-input {
-      margin-top: 20px;
-      width: 300px;
+      margin-top: 12px;
+      width: 100%;
     }
     .searchWrong {
       text-align: center;
@@ -87,9 +117,8 @@
     .text {
       text-align: center;
       h3 {
-
-        font-size: 36px;
-        padding: 10px 0 10px;
+        font-size: 30px;
+        padding: 18px 0 10px;
       }
       p {
         margin-bottom: 10px;
@@ -119,6 +148,15 @@
       margin: 50px 10%;
       width: 80%;
       text-align: right;
+      .text {
+        h3 {
+          font-size: 36px;
+        }
+      }
+      .el-input {
+        margin-top: 20px;
+        width: 300px;
+      }
       .searchWrong {
         font-size: 18px;
       }
