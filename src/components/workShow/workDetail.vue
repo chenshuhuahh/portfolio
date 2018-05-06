@@ -74,7 +74,7 @@
           <emojiBigBox @ievent="ievent" v-show="list[0].com_email == companyUser" :comId=list[0].com_id></emojiBigBox>
         </el-collapse-item>
       </el-collapse>
-      <div class="firstComComment" v-show="!isLoginStudent && !commentCollection.hasOwnProperty(companyUser)">
+      <div class="firstComComment" v-if="companyUser && !commentCollection.hasOwnProperty(companyUser)">
         <div class="firstComName">开始评论</div>
         <div class="comComment" v-show="showCommentInfo">
           <i class="el-icon-edit"></i>
@@ -86,6 +86,7 @@
     </div>
     <el-dialog title="企业介绍" :visible.sync="dialogDescVisible">
       <ul>
+        <li><img :src="dialogShowObj.com_avatar" :alt="dialogShowObj.com_name"></li>
         <li>企业名称：{{dialogShowObj.com_name}}</li>
         <li>企业邮箱：{{dialogShowObj.com_email}}</li>
         <li>企业简介：{{dialogShowObj.com_desc}}</li>
@@ -285,12 +286,14 @@
             console.log('showBaseInfo res:', res);
             this.comInfoId = res.data.com_id;
           });
-      }
-      if (getCookie('stuEmail')) {
+      } else if (getCookie('stuEmail')) {
           // 如果登录的是学生
           this.isLoginStudent = true;
           this.favorite = true;
           this.flag = false;
+      } else {
+        this.favorite = true;
+        this.flag = false;
       }
       // 获取当前work的所有评论信息
       let params = new URLSearchParams();
@@ -305,6 +308,9 @@
             this.commentCollection = res.data;
           }
         });
+      console.log(!!this.companyUser);
+      console.log(this.isLoginStudent);
+      console.log(this.commentCollection.hasOwnProperty(this.companyUser));
     }
   };
 </script>
@@ -375,6 +381,11 @@
           padding-right: 5px;
         }
       }
+    }
+    .comInfoAvatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
     }
     .commentBox {
       text-align: left;

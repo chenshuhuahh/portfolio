@@ -12,7 +12,9 @@ const store = new Vuex.Store({
     isRole: false,
     userRole: '',
     userLink: '',
-    userName: ''
+    userName: '',
+    studentUser: '',
+    companyUser: ''
   }
 });
 

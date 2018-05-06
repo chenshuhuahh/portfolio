@@ -1,5 +1,5 @@
 <template>
-  <div class="comFavoriteWork">
+  <div class="comFavoriteWork" v-if="isShow">
     <div class="worksGrid" v-for="item in photoIntroduction" :key="item.id">
       <comPhotoCard :item="item"></comPhotoCard>
     </div>
@@ -12,7 +12,8 @@
   export default {
     data () {
       return {
-        photoIntroduction: []
+        photoIntroduction: [],
+        isShow: true
       };
     },
     components: {
@@ -27,6 +28,8 @@
           console.log('showThisComFavorite res:', res);
           if (res.data !== 0) {
             this.photoIntroduction = res.data;
+          } else {
+            this.isShow = false;
           }
         });
     }

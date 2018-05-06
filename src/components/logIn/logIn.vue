@@ -78,6 +78,7 @@
                       this.loading = false;
                       this.$router.push('/student/stuInfoBox');
                     }.bind(this), 3000);
+                    this.$store.state.studentUser = getCookie('stuEmail');
                     this.$store.state.userRole = '学生';
                     this.$store.state.userLink = '/student/stuInfoBox';
                   } else {
@@ -91,6 +92,7 @@
                       this.loading = false;
                       this.$router.push('/company/comInfoBox');
                     }.bind(this), 1000);
+                    this.$store.state.companyUser = getCookie('comEmail');
                     this.$store.state.userRole = '企业';
                     this.$store.state.userLink = '/company/comInfoBox';
                   }
