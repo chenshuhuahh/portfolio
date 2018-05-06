@@ -7,7 +7,7 @@
           <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}" v-show="!notPass && !beforePass">
             <i class="el-icon-view"></i>
           </router-link>
-          <router-link class="iconBox" :to="{name: 'workDetail', params: { workItem: item}}">
+          <router-link class="iconBox" :to="{name: 'stuWorkModify', params: { workItem: item}}">
             <i class="el-icon-edit"></i>
           </router-link>
           <div class="iconBox" @click="openDelMassage">

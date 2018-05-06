@@ -38,7 +38,7 @@
         <el-collapse-item v-for="(list, key, index) in commentCollection" :key="key" :title=list[0].com_name :name=index>
           <div v-for="item in list" :key="item.id">
             <div class="comComment" v-show="!!item.comm_content">
-              <img class="avatarImg" :src="item.com_avatar" :alt="item.com_name" :title="item.com_name">
+              <img class="avatarImg clickStyle" :src="item.com_avatar" :alt="item.com_name" :title="item.com_name" @click="dialogShow(item)">
               评论<i class="el-icon-edit"></i>：
               <span v-html="emoji(item.comm_content)"></span>
               <div class="commentTime">{{item.comm_time}}</div>
@@ -84,6 +84,15 @@
         <emojiBigBox @ievent="ievent" :comId=comInfoId></emojiBigBox>
       </div>
     </div>
+    <el-dialog title="企业介绍" :visible.sync="dialogDescVisible">
+      <ul>
+        <li>企业名称：{{dialogShowObj.com_name}}</li>
+        <li>企业邮箱：{{dialogShowObj.com_email}}</li>
+        <li>企业简介：{{dialogShowObj.com_desc}}</li>
+        <li>企业地址：{{dialogShowObj.com_address}}</li>
+        <li></li>
+      </ul>
+    </el-dialog>
   </div>
 </template>
 
@@ -107,7 +116,9 @@
         comIsNotComment: true,
         flag: true,
         comInfoId: '',
-        favoriteNum: 0
+        favoriteNum: 0,
+        dialogShowObj: {},
+        dialogDescVisible: false
       };
     },
     components: {
@@ -225,6 +236,12 @@
               });
           }
         }
+      },
+      dialogShow(row) {
+        // 记录数据
+        this.dialogShowObj = row;
+        // 显示弹窗
+        this.dialogDescVisible = true;
       }
     },
     mounted() {
@@ -372,6 +389,9 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
+      }
+      .clickStyle {
+        cursor: pointer;
       }
       .el-collapse-item {
         z-index: 10;

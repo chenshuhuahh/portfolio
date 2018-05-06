@@ -135,7 +135,7 @@
                   type: 'success'
                 });
                 setTimeout(function() {
-                  this.$router.push({path: '/student/stuWorkShowBox'});
+                  this.$router.push({path: '/summary'});
                 }.bind(this), 1000);
               } else {
                 this.$message.error('作品上传失败，请重新填写上传的作品信息');

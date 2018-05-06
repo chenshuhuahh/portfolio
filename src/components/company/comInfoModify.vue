@@ -20,6 +20,7 @@
           class="avatar-uploader"
           action="http://upload-z2.qiniup.com/"
           :show-file-list="false"
+          :data="postData"
           :on-success="handleLicenseSuccess"
           :before-upload="beforeLicenseUpload">
           <img v-if="comInfoModifyForm.com_license" :src="comInfoModifyForm.com_license" class="avatar">
@@ -86,14 +87,14 @@
                 console.log('company modify info res:', res);
                 if (res.data === 1) {
                   this.$message({
-                    message: '个人信息修改成功',
+                    message: '企业信息修改成功',
                     type: 'success'
                   });
                   this.disabledAttr = true;
                   this.$store.state.userName = this.comInfoModifyForm.com_name;
                   this.$router.push('/summary');
                 } else {
-                  this.$message.error('个人信息修改失败');
+                  this.$message.error('企业信息修改失败');
                 }
               });
           } else {
@@ -125,6 +126,7 @@
       }
     },
     mounted() {
+      this.disabledAttr = true;
       let params = new URLSearchParams();
       params.append('action', 'showBaseInfo');
       params.append('comEmail', getCookie('comEmail'));

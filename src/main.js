@@ -22,6 +22,7 @@ import student from './components/student/student.vue';
 import stuInfoBox from './components/student/stuInfoBox.vue';
 import stuWorkUploadBox from './components/student/stuWorkUploadBox.vue';
 import stuWorkShowBox from './components/student/stuWorkShowBox.vue';
+import stuWorkModify from './components/student/stuWorkModify.vue';
 import company from './components/company/company.vue';
 import comInfoBox from './components/company/comInfoBox.vue';
 import comInfoModify from './components/company/comInfoModify.vue';
@@ -93,7 +94,8 @@ const routes = [
     children: [
       {path: '/student/stuInfoBox', component: stuInfoBox},
       {path: '/student/stuWorkUploadBox', component: stuWorkUploadBox},
-      {path: '/student/stuWorkShowBox', component: stuWorkShowBox}
+      {path: '/student/stuWorkShowBox', component: stuWorkShowBox},
+      {path: '/student/stuWorkModify', name: 'stuWorkModify', component: stuWorkModify}
     ]
   },
   {
