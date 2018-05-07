@@ -62,7 +62,7 @@
         postData: {
           token: ''
         },
-        imageUrlList: '',
+        imageUrlList: [],
         disabledAttr: true,
         stuWorkModifyRules: {
           work_name: [
@@ -95,23 +95,30 @@
       },
       // 删除图片
       handleRemove(file, fileList) {
-        console.log(file, fileList);
+        this.imageUrlList = [];
+        console.log(file.url, fileList);
+        for (let i = 0; i < fileList.length; i++) {
+          this.imageUrlList.push(fileList[i].url);
+        }
         this.$message('已删除一张图片');
       },
       onModifySubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            this.$refs['uploadWorks'].submit();// 上传图片到七牛云
             // 利用一个弹框确认，保证图片上传七牛云成功，能获取到图片路径
             this.$confirm('是否确认修改作品?', '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
+              let photos = this.imageUrlList.join(',');
               let params = new URLSearchParams();
               params.append('action', 'stuModifyWork');
               params.append('workId', this.workItemModify.work_id);
               params.append('wName', this.workItemModify.work_name);
               params.append('wSummary', this.workItemModify.work_summary);
+              params.append('photos', photos);
               params.append('wDesc', this.workItemModify.work_desc);
               this.$ajax.post('/api/studentBox.php', params)
                 .then((res) => {
@@ -123,7 +130,7 @@
                     });
                     this.disabledAttr = true;
                     this.$router.push('/summary');
-                  } else if (res.data === 1) {
+                  } else if (res.data === -1) {
                     this.$message('作品信息没做修改');
                   } else {
                     this.$message.error('作品信息修改失败');
@@ -145,13 +152,15 @@
     mounted() {
       this.disabledAttr = true;
       this.workItemModify = this.$route.params.workItem; // 拿到router传过来的参数，需要加this
+      this.imageUrlList = this.workItemModify.work_photo.split(',');
       this.photosList = this.workItemModify.work_photo.split(',');
-      for (var i = 0; i < this.photosList.length; i++) {
+      for (let i = 0; i < this.photosList.length; i++) {
         this.photosList[i] = {url: this.photosList[i]};
       }
       if (this.workItemModify.cat_id === 3) {
         this.isUploadArticle = false;
       }
+      console.log(this.photosList);
     }
   };
 </script>

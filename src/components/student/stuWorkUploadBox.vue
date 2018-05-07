@@ -97,9 +97,10 @@
         });
       },
       // 图片上传七牛云后所做的操作
-      handleSuccess(res) {
+      handleSuccess(res, file, fileList) {
         const imageUrl = 'http://p6c2yqflv.bkt.clouddn.com/' + res.key;
         this.imageUrlList.push(imageUrl);
+        console.log(file, fileList);
       },
       // 删除图片
       handleRemove(file, fileList) {
