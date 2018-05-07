@@ -1,7 +1,7 @@
 <template>
   <div class="sectionWorkShow">
     <el-input
-      placeholder="请输入内容"
+      placeholder="请输入搜索内容"
       suffix-icon="el-icon-search"
       v-model="searchWork"
       @keyup.enter.native="handleSearch">
